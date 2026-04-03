@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>UI 设计专业词库</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#666;--border:#e8e5e0;--accent:#c45c3e;--accent2:#2d6a4f;--tag-bg:#f0ede8;--hover:#faf8f5;--shadow:0 1px 3px rgba(0,0,0,.06);--code-bg:#f5f3ef;--nav-bg:rgba(248,247,244,.92)}
+[data-theme="dark"]{--bg:#141413;--card:#1e1e1c;--text:#e8e5e0;--sub:#999;--border:#2e2e2a;--accent:#e07a5f;--accent2:#52b788;--tag-bg:#2a2a26;--hover:#252522;--shadow:0 1px 3px rgba(0,0,0,.3);--code-bg:#252522;--nav-bg:rgba(20,20,19,.92)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+
+/* 顶部导航 */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 24px;justify-content:space-between}
+.top-bar h1{font-size:15px;font-weight:600;letter-spacing:.5px}
+.top-bar h1 span{color:var(--accent);margin-right:6px}
+.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent)}
+
+/* 侧边导航 */
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:240px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0;z-index:50}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.nav-group{margin-bottom:8px}
+.nav-group-title{padding:8px 20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--sub)}
+.nav-item{display:block;padding:7px 20px 7px 28px;font-size:13px;color:var(--sub);cursor:pointer;transition:all .15s;border-left:2px solid transparent}
+.nav-item:hover{color:var(--text);background:var(--hover)}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:var(--hover);font-weight:500}
+
+/* 主内容区 */
+.main{margin-left:240px;padding:80px 48px 80px;max-width:960px}
+.hero{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.hero h2{font-size:32px;font-weight:700;line-height:1.3;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--sub);max-width:600px}
+.hero .tag-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.hero .tag{font-size:11px;padding:4px 10px;border-radius:4px;background:var(--tag-bg);color:var(--sub);font-weight:500}
+
+/* 章节 */
+.section{margin-bottom:64px}
+.section-head{margin-bottom:32px}
+.section-head h3{font-size:22px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.section-head h3 .num{font-size:13px;color:var(--accent);font-weight:600;min-width:24px}
+.section-head p{font-size:13px;color:var(--sub)}
+
+/* 术语卡片 */
+.term-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.term-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all .2s}
+.term-card:hover{box-shadow:var(--shadow);border-color:var(--accent)}
+.term-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.term-header h4{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.term-header h4 .en{font-size:12px;color:var(--sub);font-weight:400}
+.term-header .arrow{font-size:12px;color:var(--sub);transition:transform .2s}
+.term-card.open .arrow{transform:rotate(90deg)}
+.term-body{display:none;padding:0 20px 20px;animation:fadeIn .25s}
+.term-card.open .term-body{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.term-desc{font-size:13px;color:var(--sub);margin-bottom:16px;line-height:1.8}
+
+/* 案例展示区 */
+.demo-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;position:relative;min-height:80px;overflow:hidden}
+.demo-label{position:absolute;top:8px;right:10px;font-size:10px;color:var(--sub);letter-spacing:.5px;font-weight:500}
+
+/* 通用 demo 样式 */
+.demo-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.demo-col{display:flex;flex-direction:column;gap:8px;align-items:center}
+.demo-block{border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:500}
+.demo-text{font-size:11px;color:var(--sub);text-align:center;margin-top:4px}
+
+/* 按钮 demo */
+.demo-btn{padding:8px 20px;border-radius:6px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all .15s}
+.demo-btn.primary{background:var(--accent);color:#fff}
+.demo-btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
+.demo-btn.text{background:transparent;color:var(--accent);text-decoration:underline}
+.demo-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* 输入框 demo */
+.demo-input{padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;outline:none;transition:border .15s;width:180px}
+.demo-input:focus{border-color:var(--accent)}
+
+/* 开关 demo */
+.demo-switch{width:40px;height:22px;border-radius:11px;background:var(--border);position:relative;cursor:pointer;transition:background .2s}
+.demo-switch.on{background:var(--accent2)}
+.demo-switch::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.demo-switch.on::after{transform:translateX(18px)}
+
+/* 卡片 demo */
+.demo-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;width:200px}
+.demo-card .img{height:80px;background:var(--tag-bg);border-radius:4px;margin-bottom:10px}
+.demo-card .title{font-size:13px;font-weight:600;margin-bottom:4px}
+.demo-card .sub{font-size:11px;color:var(--sub)}
+
+/* Badge & Tag demo */
+.demo-badge{display:inline-flex;align-items:center;position:relative;padding:4px 8px}
+.demo-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);position:absolute;top:-2px;right:-2px}
+.demo-tag{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500}
+
+/* Skeleton demo */
+.skel{background:linear-gradient(90deg,var(--tag-bg) 25%,var(--border) 50%,var(--tag-bg) 75%);background-size:200% 100%;animation:skel 1.5s infinite;border-radius:4px}
+@keyframes skel{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Toast demo */
+.demo-toast{padding:10px 16px;border-radius:6px;font-size:12px;font-weight:500;display:inline-flex;align-items:center;gap:6px}
+
+/* Progress demo */
+.demo-progress{height:6px;background:var(--tag-bg);border-radius:3px;overflow:hidden;width:200px}
+.demo-progress .bar{height:100%;border-radius:3px;transition:width .6s}
+
+/* 色板 demo */
+.color-swatch{width:48px;height:48px;border-radius:6px;border:1px solid var(--border)}
+
+/* 圆角 demo */
+.radius-demo{width:56px;height:56px;background:var(--accent);opacity:.8}
+
+/* 阴影 demo */
+.shadow-demo{width:80px;height:56px;background:var(--card);border-radius:8px}
+
+/* 字重 demo */
+.weight-demo{font-size:16px;color:var(--text)}
+
+/* 状态 demo */
+.state-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* 动效 demo */
+.anim-box{width:40px;height:40px;background:var(--accent);border-radius:6px;cursor:pointer}
+.anim-box:hover{transform:scale(1.15)}
+.anim-ease{transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.anim-spring{transition:transform .5s cubic-bezier(.175,.885,.32,1.275)}
+.anim-box.rotate:hover{transform:rotate(90deg)}
+
+/* 布局 demo */
+.layout-box{display:flex;gap:4px}
+.layout-col{background:var(--accent);opacity:.6;border-radius:3px;height:48px}
+.layout-sidebar-demo{display:flex;gap:4px;width:240px;height:80px}
+.layout-sidebar-demo .side{width:60px;background:var(--accent2);opacity:.5;border-radius:3px}
+.layout-sidebar-demo .content{flex:1;background:var(--tag-bg);border-radius:3px}
+
+/* Glassmorphism demo */
+.glass-demo{backdrop-filter:blur(10px);background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:16px;color:#fff;font-size:12px;position:relative}
+.glass-bg{background:linear-gradient(135deg,#667eea,#764ba2);border-radius:10px;padding:24px}
+
+/* Neumorphism demo */
+.neu-demo{border-radius:12px;padding:20px;text-align:center;font-size:12px}
+[data-theme="dark"] .neu-demo{background:#1e1e1c;box-shadow:5px 5px 10px #111,inset -5px -5px 10px #2a2a28}
+:root .neu-demo{background:#e8e5e0;box-shadow:5px 5px 10px #d1cec9,inset -5px -5px 10px #fff}
+
+/* 代码块 */
+.code-block{background:var(--code-bg);border-radius:6px;padding:12px 16px;font-family:"SF Mono",Menlo,monospace;font-size:12px;color:var(--sub);overflow-x:auto;margin-top:12px}
+
+/* 搜索 */
+.search-wrap{padding:0 20px;margin-bottom:12px}
+.search-input{width:100%;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none}
+.search-input:focus{border-color:var(--accent)}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:72px 20px 60px}
+  .hero h2{font-size:24px}
+  .term-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1><span>/</span>UI Design Glossary</h1>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">&#9790;</button>
+</div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="search-wrap">
+    <input class="search-input" placeholder="搜索术语..." oninput="filterTerms(this.value)" />
+  </div>
+  <div id="navList"></div>
+</aside>
+
+<main class="main" id="mainContent">
+  <div class="hero">
+    <h2>UI 设计专业词库</h2>
+    <p>AI 精准校准专用 — 涵盖设计风格、布局、组件、视觉、交互、Prompt 指令六大领域，每个术语配可交互形态案例。</p>
+    <div class="tag-row">
+      <span class="tag">6 大章节</span>
+      <span class="tag">100+ 术语</span>
+      <span class="tag">可交互案例</span>
+      <span class="tag">深色模式</span>
+    </div>
+  </div>
+  <div id="content"></div>
+</main>
+
+<script>
+// === 主题切换 ===
+function toggleTheme(){
+  const d=document.documentElement;
+  const t=d.getAttribute("data-theme")==="dark"?"light":"dark";
+  d.setAttribute("data-theme",t);
+  document.getElementById("themeBtn").innerHTML=t==="dark"?"&#9788;":"&#9790;";
+  localStorage.setItem("theme",t);
+}
+(function(){const t=localStorage.getItem("theme")||"light";document.documentElement.setAttribute("data-theme",t);if(t==="dark")document.getElementById("themeBtn").innerHTML="&#9788;"})();
+
+// === 数据 ===
+const DATA=[
+// ========== 第1章 设计风格 ==========
+{
+  id:"style",title:"设计风格体系",num:"01",
+  desc:"定义整体基调与视觉方向。从大厂设计系统到主流视觉风格，决定产品的第一印象。",
+  terms:[
+    {name:"iOS HIG",en:"Human Interface Guidelines",desc:"Apple 官方设计规范。强调清晰性、遵从性、深度感。大量使用 SF Pro 字体、毛玻璃效果、圆角卡片。",
+     demo:'<div class="glass-bg" style="display:flex;gap:12px;align-items:center"><div class="glass-demo">毛玻璃效果</div><div style="font-size:11px;color:rgba(255,255,255,.7)">iOS 标志性视觉</div></div>'},
+    {name:"Material Design 3",en:"MD3 / Material You",desc:"Google 的设计系统。强调动态色彩（Dynamic Color）、大圆角、高对比度容器。",
+     demo:'<div class="demo-row"><div class="demo-block" style="width:80px;height:48px;border-radius:16px;background:#6750a4">Primary</div><div class="demo-block" style="width:80px;height:48px;border-radius:16px;background:#625b71">Secondary</div><div class="demo-block" style="width:80px;height:48px;border-radius:16px;background:#7d5260">Tertiary</div></div>'},
+    {name:"极简主义",en:"Minimalism",desc:"最少元素、最大留白。去除一切装饰性元素，只保留核心信息与交互。",
+     demo:'<div style="padding:20px;text-align:center"><div style="font-size:20px;font-weight:700;margin-bottom:8px">Hello.</div><div style="font-size:12px;color:var(--sub)">Less is more.</div></div>'},
+    {name:"扁平化 2.0",en:"Flat Design 2.0",desc:"在纯扁平基础上加入微妙阴影和层次感，保持简洁同时提升可用性。",
+     demo:'<div class="demo-row"><div style="width:64px;height:64px;background:var(--accent);border-radius:12px;box-shadow:0 2px 8px rgba(196,92,62,.25)"></div><div style="width:64px;height:64px;background:var(--accent2);border-radius:12px;box-shadow:0 2px 8px rgba(45,106,79,.25)"></div><div style="width:64px;height:64px;background:#4a7fb5;border-radius:12px;box-shadow:0 2px 8px rgba(74,127,181,.25)"></div></div>'},
+    {name:"玻璃拟态",en:"Glassmorphism",desc:"半透明背景 + 高斯模糊 + 细微边框，营造如玻璃般的深度感与层次感。",
+     demo:'<div class="glass-bg"><div class="glass-demo">backdrop-filter: blur(10px)<br>background: rgba(255,255,255,0.15)</div></div>'},
+    {name:"新拟态",en:"Neumorphism",desc:"通过凸起/凹陷的柔和阴影模拟实物触感。适合开关、旋钮等小组件。",
+     demo:'<div class="neu-demo">Neumorphism<br><span style="font-size:10px;color:var(--sub)">柔和凸起效果</span></div>'},
+    {name:"酸性设计",en:"Acid Design",desc:"高饱和度、变形字体、金属质感、液态形态。常见于音乐、潮牌、先锋设计。",
+     demo:'<div style="background:linear-gradient(135deg,#ff006e,#8338ec,#3a86ff);padding:20px;border-radius:8px;text-align:center"><span style="color:#fff;font-size:18px;font-weight:900;font-style:italic;letter-spacing:2px">ACID</span><div style="color:rgba(255,255,255,.6);font-size:10px;margin-top:4px">高饱和 / 变形 / 液态</div></div>'},
+    {name:"赛博朋克",en:"Cyberpunk",desc:"霓虹光效、深色背景、故障纹理、科幻感强烈。常用于游戏和科技产品。",
+     demo:'<div style="background:#0a0a1a;padding:20px;border-radius:8px;text-align:center;border:1px solid #00fff5"><span style="color:#00fff5;font-size:16px;font-weight:700;text-shadow:0 0 10px #00fff5">CYBER</span><span style="color:#ff2a6d;font-size:16px;font-weight:700;text-shadow:0 0 10px #ff2a6d;margin-left:8px">PUNK</span></div>'}
+  ]
+},
+// ========== 第2章 布局与结构 ==========
+{
+  id:"layout",title:"布局与结构",num:"02",
+  desc:"定义页面骨架与空间分配，决定信息的组织方式。",
+  terms:[
+    {name:"响应式布局",en:"Responsive Layout",desc:"根据屏幕宽度自动调整布局。通过媒体查询（Media Query）在不同断点切换排列方式。",
+     demo:'<div style="display:flex;gap:8px;align-items:end"><div style="width:30px;height:60px;background:var(--accent);opacity:.7;border-radius:3px;font-size:9px;color:#fff;display:flex;align-items:end;justify-content:center;padding:2px">M</div><div style="width:50px;height:60px;background:var(--accent);opacity:.8;border-radius:3px;font-size:9px;color:#fff;display:flex;align-items:end;justify-content:center;padding:2px">Tablet</div><div style="width:80px;height:60px;background:var(--accent);border-radius:3px;font-size:9px;color:#fff;display:flex;align-items:end;justify-content:center;padding:2px">Desktop</div></div>'},
+    {name:"栅格布局",en:"Grid Layout",desc:"将页面划分为等宽列（常见 12/24 列），内容放置在列中。水槽（Gutter）为列间距。",
+     demo:'<div class="layout-box" style="width:100%">'+Array.from({length:12},(_,i)=>'<div class="layout-col" style="flex:1;opacity:'+(i%2?.5:.7)+'"></div>').join("")+'</div><div style="font-size:10px;color:var(--sub);margin-top:6px">12 列栅格 · 8px 基础单位</div>'},
+    {name:"卡片式布局",en:"Card Layout",desc:"以卡片为基本单元组织内容，每张卡片是独立的信息容器。适合内容聚合类产品。",
+     demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:240px"><div style="background:var(--tag-bg);border-radius:6px;height:56px"></div><div style="background:var(--tag-bg);border-radius:6px;height:72px"></div><div style="background:var(--tag-bg);border-radius:6px;height:64px"></div><div style="background:var(--tag-bg);border-radius:6px;height:52px"></div></div>'},
+    {name:"侧边栏布局",en:"Sidebar Layout",desc:"左侧固定导航 + 右侧内容区。后台管理系统最常见的布局模式。",
+     demo:'<div class="layout-sidebar-demo"><div class="side"></div><div class="content"></div></div>'},
+    {name:"瀑布流布局",en:"Masonry / Waterfall",desc:"不等高卡片按列排列，像瀑布般错落有致。Pinterest、小红书典型布局。",
+     demo:'<div style="display:flex;gap:6px;max-width:200px"><div style="display:flex;flex-direction:column;gap:6px;flex:1"><div style="background:var(--tag-bg);border-radius:4px;height:60px"></div><div style="background:var(--tag-bg);border-radius:4px;height:40px"></div></div><div style="display:flex;flex-direction:column;gap:6px;flex:1"><div style="background:var(--tag-bg);border-radius:4px;height:40px"></div><div style="background:var(--tag-bg);border-radius:4px;height:64px"></div></div></div>'},
+    {name:"8px 栅格",en:"8px Grid",desc:"所有间距、尺寸以 8px 为基准倍数（8/16/24/32/48...）。确保视觉对齐与一致性。",
+     demo:'<div class="demo-row">'+[8,16,24,32,48].map(v=>'<div class="demo-col"><div style="width:'+v+'px;height:'+v+'px;background:var(--accent);opacity:.6;border-radius:3px"></div><div class="demo-text">'+v+'px</div></div>').join("")+'</div>'},
+    {name:"吸顶布局",en:"Sticky Header",desc:"导航栏固定在视口顶部，滚动时始终可见。提升导航效率。",
+     demo:'<div style="border:1px solid var(--border);border-radius:6px;height:80px;overflow:hidden;width:180px"><div style="background:var(--accent);height:24px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;position:sticky;top:0">Sticky NavBar</div><div style="padding:6px;font-size:9px;color:var(--sub);line-height:1.8">内容区域<br>滚动时导航固定<br>始终可见<br>提升效率</div></div>'}
+  ]
+},
+// ========== 第3章 标准UI组件 ==========
+{
+  id:"components",title:"标准 UI 组件",num:"03",
+  desc:"行业通用的组件命名与形态，AI 最容易识别和生成的标准化组件。",
+  terms:[
+    {name:"主按钮",en:"Primary Button",desc:"页面最重要的行动召唤（CTA）。使用主色填充，视觉权重最高。",
+     demo:'<div class="demo-row"><button class="demo-btn primary">主要操作</button><button class="demo-btn secondary">次要操作</button><button class="demo-btn text">文字按钮</button><button class="demo-btn primary" disabled>禁用</button></div>'},
+    {name:"输入框",en:"Input",desc:"用户输入文本信息的基础组件。包含默认、聚焦、错误、禁用等状态。",
+     demo:'<div class="demo-row"><input class="demo-input" placeholder="默认状态" /><input class="demo-input" value="聚焦状态" style="border-color:var(--accent)" /><input class="demo-input" value="错误状态" style="border-color:#e74c3c" /></div>'},
+    {name:"开关",en:"Switch / Toggle",desc:"在两种状态间切换（开/关、是/否）。提供即时反馈。",
+     demo:'<div class="demo-row"><div class="demo-switch" onclick="this.classList.toggle(\'on\')"></div><div class="demo-switch on" onclick="this.classList.toggle(\'on\')"></div></div>'},
+    {name:"卡片",en:"Card",desc:"独立信息容器，包含图片、标题、描述等内容。是内容聚合的基本单元。",
+     demo:'<div class="demo-row"><div class="demo-card"><div class="img"></div><div class="title">卡片标题</div><div class="sub">描述文字，简要说明内容</div></div></div>'},
+    {name:"标签",en:"Tag",desc:"用于标记和分类的小型组件。常用颜色区分不同类别。",
+     demo:'<div class="demo-row"><span class="demo-tag" style="background:var(--accent);color:#fff">热门</span><span class="demo-tag" style="background:var(--accent2);color:#fff">新品</span><span class="demo-tag" style="background:var(--tag-bg);color:var(--text)">默认</span><span class="demo-tag" style="background:#fef3c7;color:#92400e">预警</span></div>'},
+    {name:"徽标",en:"Badge",desc:"出现在图标或内容右上角的小红点或数字，提示未读/新消息。",
+     demo:'<div class="demo-row"><div class="demo-badge" style="background:var(--tag-bg);border-radius:6px;padding:8px 14px;font-size:13px">消息 <div class="dot"></div></div><div style="background:var(--tag-bg);border-radius:6px;padding:8px 14px;font-size:13px;position:relative">通知 <span style="position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font-size:9px;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center">5</span></div></div>'},
+    {name:"骨架屏",en:"Skeleton",desc:"内容加载前的占位动画，用灰色色块模拟最终内容的布局。",
+     demo:'<div style="width:200px"><div class="skel" style="width:100%;height:80px;margin-bottom:8px"></div><div class="skel" style="width:70%;height:12px;margin-bottom:6px"></div><div class="skel" style="width:90%;height:12px;margin-bottom:6px"></div><div class="skel" style="width:50%;height:12px"></div></div>'},
+    {name:"进度条",en:"Progress Bar",desc:"显示任务完成进度的条形组件。",
+     demo:'<div style="display:flex;flex-direction:column;gap:8px"><div class="demo-progress"><div class="bar" style="width:30%;background:var(--accent)"></div></div><div class="demo-progress"><div class="bar" style="width:65%;background:var(--accent2)"></div></div><div class="demo-progress"><div class="bar" style="width:100%;background:#4a7fb5"></div></div></div>'},
+    {name:"提示",en:"Toast",desc:"轻量级消息反馈，自动消失。用于操作成功、失败、警告等场景。",
+     demo:'<div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start"><div class="demo-toast" style="background:#ecfdf5;color:#065f46">&#10003; 保存成功</div><div class="demo-toast" style="background:#fef2f2;color:#991b1b">&#10007; 操作失败</div><div class="demo-toast" style="background:#fefce8;color:#854d0e">&#9888; 请注意</div></div>'},
+    {name:"模态框",en:"Modal / Dialog",desc:"覆盖在页面上的弹窗容器，需用户主动关闭。用于确认操作、表单填写等。",
+     demo:'<div style="background:rgba(0,0,0,.3);border-radius:8px;padding:24px;display:flex;align-items:center;justify-content:center"><div style="background:var(--card);border-radius:10px;padding:20px;width:200px;box-shadow:0 8px 32px rgba(0,0,0,.15)"><div style="font-size:14px;font-weight:600;margin-bottom:8px">确认删除？</div><div style="font-size:11px;color:var(--sub);margin-bottom:16px">此操作不可撤销</div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="demo-btn secondary" style="padding:6px 12px;font-size:11px">取消</button><button class="demo-btn primary" style="padding:6px 12px;font-size:11px">确认</button></div></div></div>'}
+  ]
+},
+// ========== 第4章 视觉样式 ==========
+{
+  id:"visual",title:"视觉样式术语",num:"04",
+  desc:"色彩、字体、质感、空间 —— 控制 UI 视觉品质的基础参数。",
+  terms:[
+    {name:"主色 / 辅助色 / 强调色",en:"Primary / Secondary / Accent",desc:"主色承载品牌识别，辅助色补充层次，强调色突出关键操作。三者构成完整色彩体系。",
+     demo:'<div class="demo-row"><div class="demo-col"><div class="color-swatch" style="background:var(--accent)"></div><div class="demo-text">Primary</div></div><div class="demo-col"><div class="color-swatch" style="background:var(--accent2)"></div><div class="demo-text">Secondary</div></div><div class="demo-col"><div class="color-swatch" style="background:#4a7fb5"></div><div class="demo-text">Accent</div></div><div class="demo-col"><div class="color-swatch" style="background:var(--sub)"></div><div class="demo-text">Neutral</div></div></div>'},
+    {name:"渐变色",en:"Gradient",desc:"两种或多种颜色的平滑过渡。线性渐变沿直线方向，径向渐变从中心向外扩散。",
+     demo:'<div class="demo-row"><div style="width:80px;height:48px;border-radius:8px;background:linear-gradient(135deg,#667eea,#764ba2)"></div><div style="width:80px;height:48px;border-radius:8px;background:linear-gradient(135deg,#f093fb,#f5576c)"></div><div style="width:80px;height:48px;border-radius:8px;background:radial-gradient(circle,#ffecd2,#fcb69f)"></div></div><div style="font-size:10px;color:var(--sub);margin-top:6px">线性渐变 &nbsp;·&nbsp; 线性渐变 &nbsp;·&nbsp; 径向渐变</div>'},
+    {name:"字重",en:"Font Weight",desc:"字体粗细程度。常见值：300 Light / 400 Regular / 500 Medium / 600 Semibold / 700 Bold。",
+     demo:'<div style="display:flex;flex-direction:column;gap:4px">'+[["300","Light"],["400","Regular"],["500","Medium"],["600","Semibold"],["700","Bold"]].map(w=>'<div class="weight-demo" style="font-weight:'+w[0]+'">'+w[0]+' '+w[1]+' 字重示例</div>').join("")+'</div>'},
+    {name:"圆角",en:"Border Radius",desc:"控制元素四角的弧度。小圆角（4-8px）偏商务，大圆角（16-24px）偏亲和。",
+     demo:'<div class="demo-row">'+[["0px","直角"],["4px","小圆角"],["8px","中圆角"],["16px","大圆角"],["50%","全圆"]].map(r=>'<div class="demo-col"><div class="radius-demo" style="border-radius:'+r[0]+'"></div><div class="demo-text">'+r[1]+'<br>'+r[0]+'</div></div>').join("")+'</div>'},
+    {name:"阴影",en:"Shadow / Elevation",desc:"模拟光照产生的投影效果。阴影越大，元素层级越高。分为外阴影和内阴影。",
+     demo:'<div class="demo-row"><div class="demo-col"><div class="shadow-demo" style="box-shadow:0 1px 2px rgba(0,0,0,.06)"></div><div class="demo-text">Level 1</div></div><div class="demo-col"><div class="shadow-demo" style="box-shadow:0 4px 12px rgba(0,0,0,.1)"></div><div class="demo-text">Level 2</div></div><div class="demo-col"><div class="shadow-demo" style="box-shadow:0 8px 24px rgba(0,0,0,.15)"></div><div class="demo-text">Level 3</div></div><div class="demo-col"><div class="shadow-demo" style="box-shadow:inset 0 2px 8px rgba(0,0,0,.12)"></div><div class="demo-text">Inner</div></div></div>'},
+    {name:"透明度",en:"Opacity",desc:"元素的不透明度。0 完全透明，1 完全不透明。常用于遮罩、弱化元素。",
+     demo:'<div class="demo-row">'+[1,.75,.5,.25,.1].map(o=>'<div class="demo-col"><div style="width:48px;height:48px;background:var(--accent);border-radius:6px;opacity:'+o+'"></div><div class="demo-text">'+Math.round(o*100)+'%</div></div>').join("")+'</div>'},
+    {name:"行高",en:"Line Height",desc:"文字行与行之间的垂直间距。正文推荐 1.5-1.8 倍行高，标题可缩至 1.2-1.3。",
+     demo:'<div style="display:flex;gap:16px">'+[["1.0","紧凑"],["1.5","适中"],["2.0","宽松"]].map(l=>'<div style="width:120px;font-size:12px;line-height:'+l[0]+';color:var(--sub);padding:8px;background:var(--tag-bg);border-radius:4px"><strong style="color:var(--text)">'+l[1]+' ('+l[0]+')</strong><br>行高决定文本的阅读舒适度，是排版中最基础的参数之一。</div>').join("")+'</div>'}
+  ]
+},
+// ========== 第5章 交互与动效 ==========
+{
+  id:"interaction",title:"交互与动效",num:"05",
+  desc:"状态变化与运动规律 —— 让静态界面活起来。",
+  terms:[
+    {name:"组件状态",en:"Component States",desc:"组件在不同交互阶段的视觉表现：默认、悬停、点击、聚焦、禁用、选中、加载、错误。",
+     demo:'<div class="demo-row" style="flex-wrap:wrap;gap:12px">'+[["Default","var(--tag-bg)","var(--text)"],["Hover","var(--accent)","#fff"],["Active","#a3412a","#fff"],["Focus","var(--tag-bg)","var(--accent)"],["Disabled","var(--tag-bg)","var(--border)"],["Error","#fef2f2","#dc2626"]].map(s=>'<div style="padding:6px 14px;border-radius:6px;background:'+s[1]+';color:'+s[2]+';font-size:11px;font-weight:500;'+(s[0]==="Focus"?"outline:2px solid var(--accent);outline-offset:2px;":"")+(s[0]==="Disabled"?"opacity:.5;":"")+'">'+s[0]+'</div>').join("")+'</div>'},
+    {name:"缓动函数",en:"Easing Functions",desc:"控制动画的速度曲线。缓入缓出最自然，弹性动画更活泼。悬停下方色块可体验。",
+     demo:'<div style="display:flex;gap:16px">'+[["ease-in-out","缓入缓出","anim-ease"],["spring","弹性","anim-spring"]].map(a=>'<div class="demo-col"><div class="anim-box '+a[2]+'"></div><div class="demo-text">'+a[1]+'</div></div>').join("")+'<div class="demo-col"><div class="anim-box anim-ease rotate"></div><div class="demo-text">旋转</div></div></div><div style="font-size:10px;color:var(--sub);margin-top:8px">悬停色块查看动效</div>'},
+    {name:"渐入渐出",en:"Fade In / Fade Out",desc:"元素通过透明度变化出现或消失。最基础、最常用的过渡效果。",
+     demo:'<div class="demo-row"><div id="fadeDemo" style="width:60px;height:40px;background:var(--accent);border-radius:6px;transition:opacity .5s"></div><button class="demo-btn secondary" style="font-size:11px;padding:6px 12px" onclick="var d=document.getElementById(\'fadeDemo\');d.style.opacity=d.style.opacity===\'0\'?\'1\':\'0\'">切换可见</button></div>'},
+    {name:"微交互",en:"Micro Interaction",desc:"细微的动态反馈：按钮点击缩放、图标弹跳、输入框聚焦发光。提升操作手感。",
+     demo:'<div class="demo-row"><button class="demo-btn primary" style="transition:transform .1s" onmousedown="this.style.transform=\'scale(.95)\'" onmouseup="this.style.transform=\'scale(1)\'" onmouseleave="this.style.transform=\'scale(1)\'">点我试试</button></div>'},
+    {name:"滚动动画",en:"Scroll Animation",desc:"元素随页面滚动逐步显现。常用于落地页（Landing Page）的视觉叙事。",
+     demo:'<div style="font-size:12px;color:var(--sub)">常见技法：<br>· 元素从下方淡入（translateY + opacity）<br>· 视差滚动（Parallax）<br>· 进度指示器联动<br>· IntersectionObserver API 触发</div>'},
+    {name:"页面转场",en:"Page Transition",desc:"页面切换时的过渡动画。常见模式：滑入滑出、渐变、缩放、共享元素过渡。",
+     demo:'<div style="display:flex;gap:8px">'+[["Slide","translateX"],["Fade","opacity"],["Scale","scale"],["Shared","共享元素"]].map(t=>'<div style="width:56px;height:40px;background:var(--tag-bg);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--sub)">'+t[0]+'</div>').join("")+'</div>'}
+  ]
+},
+// ========== 第6章 AI校准指令 ==========
+{
+  id:"prompt",title:"AI 校准指令",num:"06",
+  desc:"直接粘贴进 Prompt 的标准化指令，确保 AI 生成的 UI 符合专业标准。",
+  terms:[
+    {name:"像素级对齐",en:"Pixel Perfect Alignment",desc:"所有元素必须对齐到栅格。边距、间距必须是基础单位（如 8px）的整数倍。",
+     demo:'<div class="code-block">严格遵循 8px 基础栅格，所有间距为 8 的倍数。\n元素边界对齐到最近的栅格线。\n避免出现奇数像素的间距。</div>'},
+    {name:"信息层级清晰",en:"Clear Visual Hierarchy",desc:"通过字号、字重、颜色、间距建立明确的视觉层级：标题 > 副标题 > 正文 > 辅助文字。",
+     demo:'<div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:20px;font-weight:700">H1 页面标题</div><div style="font-size:16px;font-weight:600">H2 章节标题</div><div style="font-size:14px;font-weight:500;color:var(--sub)">H3 小节标题</div><div style="font-size:13px;color:var(--sub)">Body 正文内容</div><div style="font-size:11px;color:var(--border)">Caption 辅助说明</div></div>'},
+    {name:"留白与呼吸感",en:"Whitespace / Breathing Room",desc:"充足的留白让信息更易消化。段落间距 > 元素间距 > 组件内间距。",
+     demo:'<div class="code-block">区域间距: 48-64px\n段落间距: 24-32px\n组件内间距: 12-16px\n元素间距: 8px\n\n留白是设计中最被低估的工具。</div>'},
+    {name:"色彩体系统一",en:"Unified Color System",desc:"全局使用 CSS 变量定义色彩 Token。主色、辅助色、中性色、语义色各司其职。",
+     demo:'<div class="code-block">--color-primary: #C45C3E;\n--color-secondary: #2D6A4F;\n--color-accent: #4A7FB5;\n--color-neutral-100: #F8F7F4;\n--color-neutral-900: #1A1A1A;\n--color-success: #059669;\n--color-error: #DC2626;\n--color-warning: #D97706;</div>'},
+    {name:"突出 CTA",en:"Prominent Call-to-Action",desc:"核心操作按钮必须在视觉上最突出。通过颜色、大小、位置、留白来引导用户视线。",
+     demo:'<div style="text-align:center;padding:12px"><div style="font-size:13px;margin-bottom:12px;color:var(--sub)">次要信息在上方</div><button class="demo-btn primary" style="padding:12px 40px;font-size:15px;border-radius:8px">立即开始</button><div style="font-size:11px;margin-top:8px;color:var(--border)">辅助说明文字</div></div>'},
+    {name:"降低视觉噪音",en:"Reduce Visual Noise",desc:"去除不必要的线条、装饰、色彩。用留白和层级替代分割线，用灰度替代多色。",
+     demo:'<div style="display:flex;gap:16px"><div style="width:100px;border:2px solid var(--border);border-radius:6px;padding:8px"><div style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:4px;font-size:10px;color:var(--accent)">噪音较多</div><div style="font-size:9px;color:var(--sub);border-bottom:1px dashed var(--border);padding:2px 0">Item 1</div><div style="font-size:9px;color:var(--sub);border-bottom:1px dashed var(--border);padding:2px 0">Item 2</div></div><div style="width:100px;border-radius:6px;padding:8px;background:var(--tag-bg)"><div style="margin-bottom:8px;font-size:10px;font-weight:600">更克制</div><div style="font-size:9px;color:var(--sub);padding:3px 0">Item 1</div><div style="font-size:9px;color:var(--sub);padding:3px 0">Item 2</div></div></div>'}
+  ]
+}
+];
+
+// === 渲染 ===
+function render(){
+  const nav=document.getElementById("navList");
+  const ct=document.getElementById("content");
+  let navH="",ctH="";
+  DATA.forEach(sec=>{
+    navH+='<div class="nav-group"><div class="nav-group-title" style="cursor:pointer" onclick="navScrollTo(\'sec-'+sec.id+'\')">'+sec.num+' '+sec.title+'</div>';
+    sec.terms.forEach((t,i)=>{
+      navH+='<div class="nav-item" data-target="'+sec.id+"-"+i+'" onclick="navScrollTo(\''+sec.id+"-"+i+'\')">'+t.name+'</div>';
+    });
+    navH+="</div>";
+    ctH+='<div class="section" id="sec-'+sec.id+'"><div class="section-head"><h3><span class="num">'+sec.num+'</span>'+sec.title+'</h3><p>'+sec.desc+'</p></div><div class="term-grid">';
+    sec.terms.forEach((t,i)=>{
+      ctH+='<div class="term-card" id="'+sec.id+"-"+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span></h4><span class="arrow">&#9654;</span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div><div class="demo-box"><span class="demo-label">DEMO</span>'+t.demo+'</div></div></div>';
+    });
+    ctH+="</div></div>";
+  });
+  nav.innerHTML=navH;
+  ct.innerHTML=ctH;
+}
+function toggleCard(el){el.parentElement.classList.toggle("open")}
+
+// 点击导航跳转到对应术语卡片（避免覆盖原生 scrollTo）
+function navScrollTo(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  // 确保卡片展开
+  el.classList.add("open");
+  // 计算滚动位置，减去顶部导航栏高度 + 额外间距
+  const top=el.getBoundingClientRect().top+window.pageYOffset-72;
+  window.scrollTo({top:top,behavior:"smooth"});
+  // 高亮闪烁提示
+  el.style.boxShadow="0 0 0 2px var(--accent)";
+  setTimeout(()=>{el.style.boxShadow=""},1200);
+}
+
+function filterTerms(v){
+  const q=v.toLowerCase();
+  document.querySelectorAll(".term-card").forEach(c=>{
+    const t=c.textContent.toLowerCase();
+    c.style.display=t.includes(q)?"":"none";
+  });
+  document.querySelectorAll(".nav-item").forEach(n=>{
+    const t=n.textContent.toLowerCase();
+    n.style.display=t.includes(q)?"":"none";
+  });
+  // 搜索时也过滤章节标题
+  document.querySelectorAll(".nav-group").forEach(g=>{
+    const visible=g.querySelectorAll(".nav-item[style=''],.nav-item:not([style])");
+    g.style.display=visible.length?"":"none";
+  });
+}
+
+// 滚动时高亮左侧导航 + 侧边栏自动跟随
+let ticking=false;
+window.addEventListener("scroll",function(){
+  if(!ticking){
+    window.requestAnimationFrame(function(){
+      const cards=document.querySelectorAll(".term-card");
+      let currentId="";
+      // 找到当前视口中最靠近顶部的卡片
+      for(let i=0;i<cards.length;i++){
+        const rect=cards[i].getBoundingClientRect();
+        if(rect.top<=120) currentId=cards[i].id;
+      }
+      // 更新导航高亮
+      const navItems=document.querySelectorAll(".nav-item");
+      navItems.forEach(n=>{
+        const isActive=n.getAttribute("data-target")===currentId;
+        n.classList.toggle("active",isActive);
+        // 让侧边栏滚动到当前活跃项可见
+        if(isActive){
+          const sidebar=document.getElementById("sidebar");
+          const navRect=n.getBoundingClientRect();
+          const sideRect=sidebar.getBoundingClientRect();
+          if(navRect.top<sideRect.top+60||navRect.bottom>sideRect.bottom-20){
+            n.scrollIntoView({block:"center",behavior:"smooth"});
+          }
+        }
+      });
+      ticking=false;
+    });
+    ticking=true;
+  }
+});
+
+render();
+// 默认展开所有卡片
+document.querySelectorAll(".term-card").forEach(c=>c.classList.add("open"));
+</script>
+</body>
+</html>
