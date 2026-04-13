@@ -152,6 +152,20 @@ a{color:var(--accent);text-decoration:none}
 .search-input{width:100%;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none}
 .search-input:focus{border-color:var(--accent)}
 
+/* 配色方案卡片 */
+.palette-row{display:flex;gap:0;border-radius:8px;overflow:hidden;margin-bottom:12px}
+.palette-swatch{flex:1;height:56px;display:flex;align-items:flex-end;justify-content:center;padding:4px;font-size:9px;font-weight:600;letter-spacing:.3px;transition:flex .3s}
+.palette-swatch:hover{flex:1.6}
+.palette-swatch.light-text{color:rgba(255,255,255,.85)}
+.palette-swatch.dark-text{color:rgba(0,0,0,.6)}
+.palette-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+.palette-meta-item{font-size:11px;color:var(--sub);display:flex;align-items:center;gap:4px}
+.palette-meta-item strong{color:var(--text);font-weight:600}
+.palette-use{background:var(--tag-bg);border-radius:6px;padding:10px 14px;margin-bottom:10px;font-size:12px;color:var(--sub);line-height:1.8}
+.palette-use b{color:var(--text);font-weight:600}
+.palette-prompt{background:var(--code-bg);border-radius:6px;padding:12px 16px;font-family:"SF Mono",Menlo,monospace;font-size:11px;color:var(--sub);line-height:1.8;white-space:pre-wrap;border-left:3px solid var(--accent)}
+.palette-prompt .hl{color:var(--accent);font-weight:600}
+
 /* Responsive */
 @media(max-width:768px){
   .sidebar{display:none}
@@ -180,8 +194,8 @@ a{color:var(--accent);text-decoration:none}
     <h2>UI 设计专业词库</h2>
     <p>AI 精准校准专用 — 涵盖设计风格、布局、组件、视觉、交互、Prompt 指令六大领域，每个术语配可交互形态案例。</p>
     <div class="tag-row">
-      <span class="tag">6 大章节</span>
-      <span class="tag">100+ 术语</span>
+      <span class="tag">7 大章节</span>
+      <span class="tag">56 术语 + 12 配色方案</span>
       <span class="tag">可交互案例</span>
       <span class="tag">深色模式</span>
     </div>
@@ -330,6 +344,60 @@ const DATA=[
      demo:'<div style="text-align:center;padding:12px"><div style="font-size:13px;margin-bottom:12px;color:var(--sub)">次要信息在上方</div><button class="demo-btn primary" style="padding:12px 40px;font-size:15px;border-radius:8px">立即开始</button><div style="font-size:11px;margin-top:8px;color:var(--border)">辅助说明文字</div></div>'},
     {name:"降低视觉噪音",en:"Reduce Visual Noise",desc:"去除不必要的线条、装饰、色彩。用留白和层级替代分割线，用灰度替代多色。",
      demo:'<div style="display:flex;gap:16px"><div style="width:100px;border:2px solid var(--border);border-radius:6px;padding:8px"><div style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:4px;font-size:10px;color:var(--accent)">噪音较多</div><div style="font-size:9px;color:var(--sub);border-bottom:1px dashed var(--border);padding:2px 0">Item 1</div><div style="font-size:9px;color:var(--sub);border-bottom:1px dashed var(--border);padding:2px 0">Item 2</div></div><div style="width:100px;border-radius:6px;padding:8px;background:var(--tag-bg)"><div style="margin-bottom:8px;font-size:10px;font-weight:600">更克制</div><div style="font-size:9px;color:var(--sub);padding:3px 0">Item 1</div><div style="font-size:9px;color:var(--sub);padding:3px 0">Item 2</div></div></div>'}
+  ]
+},
+// ========== 第7章 经典配色方案 ==========
+{
+  id:"palette",title:"经典配色方案",num:"07",
+  desc:"12 套经过验证的配色体系，每套附带适用场景与可直接喂给 AI / 设计师的需求描述。",
+  terms:[
+    {name:"商务深灰暖棕",en:"Executive Warm",
+     desc:"沉稳、克制、高端。适合企业级后台、金融产品、咨询报告。深灰打底配暖棕色强调，传递专业可靠感。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#1A1916">#1A1916</div><div class="palette-swatch light-text" style="background:#2A2924">#2A2924</div><div class="palette-swatch light-text" style="background:#5C5A54">#5C5A54</div><div class="palette-swatch dark-text" style="background:#E8E5E0">#E8E5E0</div><div class="palette-swatch light-text" style="background:#C4652A">#C4652A</div></div><div class="palette-use"><b>适用场景：</b>企业级 SaaS 后台、金融仪表盘、咨询/研报落地页、数据分析工具<br><b>配色诉求：</b>去科技感、去AI感，传递「值得信赖的专业机构」气质。暖色点缀打破冷调沉闷。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n配色体系使用深灰暖棕色调。主背景 #FAFAF8（浅色）/ #1A1916（深色），卡片白底，强调色 #C4652A（赤褐色）仅用于 CTA 按钮、关键数据标注和导航活跃态。中性文字 #5C5A54，辅助信息 #8A877F。严禁使用蓝紫渐变、霓虹色或高饱和色。整体视觉参考高端咨询公司年报质感。</div>'},
+
+    {name:"科技冷蓝",en:"Tech Blue",
+     desc:"理性、科技、可信赖。蓝色系是全球使用率最高的 UI 配色——从 Facebook 到支付宝，蓝色 = 安全 + 专业。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#0F172A">#0F172A</div><div class="palette-swatch light-text" style="background:#1E40AF">#1E40AF</div><div class="palette-swatch light-text" style="background:#3B82F6">#3B82F6</div><div class="palette-swatch dark-text" style="background:#BFDBFE">#BFDBFE</div><div class="palette-swatch dark-text" style="background:#F0F9FF">#F0F9FF</div></div><div class="palette-use"><b>适用场景：</b>To-B 企业产品、云服务控制台、支付/金融 App、项目管理工具<br><b>配色诉求：</b>建立「安全可信」的心智，蓝色降低用户警戒心。适度使用深蓝提升权威感。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n使用科技蓝配色体系。主色 #3B82F6，深色变体 #1E40AF 用于导航/页头，浅色 #BFDBFE 用于选中态背景和标签。页面背景 #F0F9FF（浅色模式）/ #0F172A（深色模式）。强调交互用 #3B82F6 → hover 加深至 #2563EB。错误用 #EF4444，成功用 #22C55E，警告用 #F59E0B。整体感受：像 Stripe 或 Linear 那样干净利落的科技产品。</div>'},
+
+    {name:"自然绿意",en:"Nature Green",
+     desc:"健康、生长、可持续。绿色传递生命力和环保理念，适合健康、农业、ESG 类产品。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#14532D">#14532D</div><div class="palette-swatch light-text" style="background:#166534">#166534</div><div class="palette-swatch light-text" style="background:#22C55E">#22C55E</div><div class="palette-swatch dark-text" style="background:#BBF7D0">#BBF7D0</div><div class="palette-swatch dark-text" style="background:#F0FDF4">#F0FDF4</div></div><div class="palette-use"><b>适用场景：</b>健康管理 App、有机食品电商、ESG 报告、环保公益网站、运动健身产品<br><b>配色诉求：</b>传递「自然、清新、值得信赖」的品牌感。绿色明度不宜过高，避免荧光感。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n配色以自然绿为核心。主色 #22C55E，CTA 和关键操作使用此色。深色 #166534 用于标题和导航，浅色 #F0FDF4 为页面背景。卡片纯白底、阴影极轻（0 1px 3px rgba(0,0,0,.04)）。辅助用暖灰 #6B7280 而非冷灰，保持有温度的自然感。图标风格：线性、2px 描边、圆角端点。</div>'},
+
+    {name:"暗夜紫金",en:"Royal Purple",
+     desc:"高贵、神秘、创意。紫色在色彩心理学中代表创造力和奢华，适合创意工具和高端品牌。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#1E1B2E">#1E1B2E</div><div class="palette-swatch light-text" style="background:#5B21B6">#5B21B6</div><div class="palette-swatch light-text" style="background:#8B5CF6">#8B5CF6</div><div class="palette-swatch dark-text" style="background:#DDD6FE">#DDD6FE</div><div class="palette-swatch dark-text" style="background:#EDE9FE">#EDE9FE</div></div><div class="palette-use"><b>适用场景：</b>设计工具（如 Figma）、AI/创意产品、奢侈品牌电商、音乐/播客平台<br><b>配色诉求：</b>强调创造力与差异化。紫色比蓝色更有个性，适合想「脱颖而出」的产品。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n使用紫金配色方案。深紫 #5B21B6 为主色，亮紫 #8B5CF6 为交互态（按钮、链接、选中态）。深色模式背景 #1E1B2E，浅色模式 #EDE9FE。金色 #F59E0B 作为高光强调色，仅用于 Premium 标签、成就徽章等极少量场景。文字保持高对比，正文不使用紫色以免疲劳。</div>'},
+
+    {name:"莫兰迪柔雾",en:"Morandi Muted",
+     desc:"含蓄、优雅、高级灰。莫兰迪色系特点是所有颜色都加了灰度，降低饱和度，营造柔和质感。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#4A4543">#4A4543</div><div class="palette-swatch dark-text" style="background:#9B8E8A">#9B8E8A</div><div class="palette-swatch dark-text" style="background:#C4B8B0">#C4B8B0</div><div class="palette-swatch dark-text" style="background:#D5C4B6">#D5C4B6</div><div class="palette-swatch dark-text" style="background:#E8DDD4">#E8DDD4</div></div><div class="palette-use"><b>适用场景：</b>生活方式 App、家居电商、美妆品牌、读书/笔记类产品、摄影作品集<br><b>配色诉求：</b>「高级感」的核心密码——降低饱和度。每种颜色都像蒙了一层薄雾，优雅不抢眼。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n采用莫兰迪色系（低饱和度灰调色彩）。所有色彩 HSL 饱和度控制在 10-25% 之间。背景 #F5F0EB，卡片 #FFFDF9，主要强调 #9B8E8A（灰褐），次要 #A8B0A0（灰绿）。绝对禁止任何高饱和颜色。字重偏轻（300-400），字号可略大（16px 正文），行高 1.8。整体感受：像翻开一本日本杂志。</div>'},
+
+    {name:"中国红传统",en:"Chinese Red",
+     desc:"喜庆、热烈、文化传承。中国红 + 鎏金是东方美学的经典组合，适合节日运营和国潮品牌。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#1A0A0A">#1A0A0A</div><div class="palette-swatch light-text" style="background:#8B1A1A">#8B1A1A</div><div class="palette-swatch light-text" style="background:#DC2626">#DC2626</div><div class="palette-swatch dark-text" style="background:#D4A853">#D4A853</div><div class="palette-swatch dark-text" style="background:#FEF3E2">#FEF3E2</div></div><div class="palette-use"><b>适用场景：</b>春节/国庆运营活动页、国潮品牌官网、传统文化展示、红色主题报告<br><b>配色诉求：</b>高饱和红色传递热烈氛围，但需用暗色和金色平衡，避免廉价喜庆感。金色不要亮黄，用暗金 #D4A853。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n中国红配色。主色 #DC2626（正红），搭配暗金 #D4A853 和深底 #1A0A0A。红色面积控制在 20% 以内——大面积用深色/米白打底，红色只用于关键元素（CTA、标题装饰、图标）。金色更克制，仅线条/边框/小面积点缀。杜绝大红大金的「年货包装」风格，追求故宫文创的内敛质感。字体建议衬线体标题 + 无衬线正文。</div>'},
+
+    {name:"清新珊瑚",en:"Coral Fresh",
+     desc:"年轻、活力、亲和力。珊瑚橘（Pantone 2019 年度色）温暖且有能量，适合面向年轻用户的社交产品。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#1F1512">#1F1512</div><div class="palette-swatch light-text" style="background:#E8665D">#E8665D</div><div class="palette-swatch light-text" style="background:#FF7F6E">#FF7F6E</div><div class="palette-swatch dark-text" style="background:#FFD1C9">#FFD1C9</div><div class="palette-swatch dark-text" style="background:#FFF5F3">#FFF5F3</div></div><div class="palette-use"><b>适用场景：</b>社交 App、美食平台、生活服务、面向 Z 世代的消费品牌<br><b>配色诉求：</b>比红色更温柔，比橙色更精致。传递「温暖有趣」而非「严肃正式」。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n使用珊瑚橘为主色 #FF7F6E，hover 加深至 #E8665D。页面背景 #FFF5F3（浅模式），搭配纯白卡片。文字色用暖黑 #1F1512 而非纯黑。圆角统一 12-16px（偏亲和）。按钮用珊瑚色填充 + 纯白文字。图标线性 2px、端点圆角。动效弹性缓动，体现年轻活泼感。</div>'},
+
+    {name:"午夜渐变",en:"Midnight Gradient",
+     desc:"沉浸、高端、科技感。深色渐变背景打造「暗黑模式优先」的沉浸体验，适合高端产品发布。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#0F0C29">#0F0C29</div><div class="palette-swatch light-text" style="background:#302B63">#302B63</div><div class="palette-swatch light-text" style="background:#24243E">#24243E</div><div class="palette-swatch dark-text" style="background:#A78BFA">#A78BFA</div><div class="palette-swatch dark-text" style="background:#E0E7FF">#E0E7FF</div></div><div class="palette-use"><b>适用场景：</b>产品发布页（如 Apple 风格）、音乐播放器、数据可视化大屏、游戏官网<br><b>配色诉求：</b>暗色模式优先设计，背景使用深色渐变而非纯黑。亮色仅用于关键元素，形成强烈视觉层级。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n暗色模式优先，背景使用深色渐变 linear-gradient(135deg, #0F0C29, #302B63, #24243E)。文字主色 #E0E7FF（柔白非纯白），次要 rgba(255,255,255,.5)。强调色 #A78BFA（淡紫光），仅用于 CTA、图标、数据高亮。卡片背景 rgba(255,255,255,.05)，边框 rgba(255,255,255,.08)。阴影用 inset 发光效果替代传统投影。图片/插图用暗色调处理，禁止白底图片直接放置。</div>'},
+
+    {name:"日系无印",en:"MUJI Style",
+     desc:"极简、温暖、无印象。用最少的颜色和最大的留白，让内容本身成为主角。MUJI / 无印良品美学。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#333333">#333333</div><div class="palette-swatch dark-text" style="background:#888888">#888888</div><div class="palette-swatch dark-text" style="background:#C4B5A5">#C4B5A5</div><div class="palette-swatch dark-text" style="background:#ECE6DD">#ECE6DD</div><div class="palette-swatch dark-text" style="background:#F9F6F1">#F9F6F1</div></div><div class="palette-use"><b>适用场景：</b>笔记/阅读 App、极简工具、个人博客、作品集网站、冥想/专注类产品<br><b>配色诉求：</b>只用黑白灰 + 一个暖色中性色。让用户完全聚焦于内容，界面「消失」在背景中。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n极简无印风格。配色仅 3 色：#333333（文字）、#888888（辅助）、#F9F6F1（背景）。唯一暖色 #C4B5A5 仅用于极少量强调（选中态下划线、hover 下划线）。不使用填充色按钮——所有按钮为文字型或线框型。间距极大：section 间距 80px+，段落间距 32px。正文 16px、行高 2.0。字体：衬线体标题（如 Noto Serif SC），无衬线正文。整体如白纸般干净。</div>'},
+
+    {name:"赛博霓虹",en:"Cyber Neon",
+     desc:"未来、炫酷、刺激。霓虹色 + 深黑底是游戏和潮流科技产品的标配，能量感爆棚。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#0A0A0A">#0A0A0A</div><div class="palette-swatch light-text" style="background:#00FFF5">#00FFF5</div><div class="palette-swatch light-text" style="background:#FF2A6D">#FF2A6D</div><div class="palette-swatch light-text" style="background:#05FF00">#05FF00</div><div class="palette-swatch light-text" style="background:#B026FF">#B026FF</div></div><div class="palette-use"><b>适用场景：</b>游戏官网、电竞赛事、潮牌电商、音乐节宣传、黑客工具界面<br><b>配色诉求：</b>纯黑底 + 多个霓虹色交替使用，营造「电子夜店」氛围。颜色必须发光（text-shadow / box-shadow glow）。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n赛博霓虹风格，纯黑背景 #0A0A0A。主霓虹色 #00FFF5（青），辅助 #FF2A6D（洋红）、#05FF00（荧光绿）。所有霓虹色元素必须带发光效果：text-shadow: 0 0 10px currentColor, 0 0 40px currentColor; box-shadow: 0 0 15px rgba(0,255,245,.3)。文字用 #E0E0E0 而非纯白，降低刺眼感。字体用等宽体（如 JetBrains Mono）。边框用 1px 霓虹色线条，背景可用 scanline 纹理叠加。</div>'},
+
+    {name:"浅色中性",en:"Light Neutral",
+     desc:"安全、百搭、零风险。纯灰度 + 单一蓝色强调，是最不会出错的配色方案。适合 MVP 和功能型产品。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#111827">#111827</div><div class="palette-swatch light-text" style="background:#374151">#374151</div><div class="palette-swatch dark-text" style="background:#9CA3AF">#9CA3AF</div><div class="palette-swatch dark-text" style="background:#F3F4F6">#F3F4F6</div><div class="palette-swatch dark-text" style="background:#FFFFFF">#FFFFFF</div></div><div class="palette-use"><b>适用场景：</b>MVP 快速上线、内部工具、文档站点、管理后台、任何「先跑起来再说」的项目<br><b>配色诉求：</b>零决策成本配色——全灰度 + 一个蓝色强调。不追求个性，追求「不犯错」和「可维护」。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n使用 Tailwind CSS 默认灰色体系 gray-50 至 gray-900。唯一彩色为 blue-600 (#2563EB) 作为强调色，用于链接、主按钮、选中态。背景 #FFFFFF，卡片无阴影用 1px 边框 #E5E7EB 分隔。文字 #111827 / #6B7280 / #9CA3AF 三级灰。不使用渐变、不使用多彩色。这是最稳妥、最易维护的配色方案。</div>'},
+
+    {name:"暖阳橙黄",en:"Warm Sunshine",
+     desc:"热情、乐观、行动力。橙黄色系激发食欲和购买欲，是外卖、电商促销的常用色。",
+     demo:'<div class="palette-row"><div class="palette-swatch light-text" style="background:#1C1208">#1C1208</div><div class="palette-swatch light-text" style="background:#B45309">#B45309</div><div class="palette-swatch light-text" style="background:#F59E0B">#F59E0B</div><div class="palette-swatch dark-text" style="background:#FDE68A">#FDE68A</div><div class="palette-swatch dark-text" style="background:#FFFBEB">#FFFBEB</div></div><div class="palette-use"><b>适用场景：</b>外卖/餐饮 App、电商大促活动页、教育产品（激发学习热情）、儿童产品<br><b>配色诉求：</b>橙黄色刺激行动欲和食欲。注意控制面积——大面积橙色会廉价化，需用深色和白色平衡。</div><div class="palette-prompt"><span class="hl">AI / 设计师指令：</span>\n暖色系配色。主色 #F59E0B（琥珀色），CTA 按钮和价格标签使用此色。深色 #B45309 用于 hover 和重要标题。页面主体背景白色 / 奶黄 #FFFBEB，大面积暖色不超过 15%。文字用 #1C1208（暖黑），辅助 #78716C。圆角偏大 12-16px，整体圆润亲和。促销标签可用 #DC2626 红色搭配橙色使用。</div>'}
   ]
 }
 ];
