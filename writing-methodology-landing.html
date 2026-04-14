@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ori's Writing Methodology Dictionary — 61 Frameworks for Better Thinking & Writing</title>
+<meta name="description" content="9 chapters, 61 methodologies — from Pyramid Principle to Bayesian Thinking. Star-rated, with visual diagrams, memory quotes, and classic book references.">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#fafaf8;--card:#fff;--text:#1a1a1a;--sub:#666;--muted:#999;--border:#e8e5e0;--accent:#c4652a;--accent-light:rgba(196,101,42,.08);--accent2:#2d6a4f;--tag-bg:#f0ede8;--hover:#faf8f5;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);--shadow-lg:0 8px 32px rgba(0,0,0,.1);--nav-bg:rgba(250,250,248,.92);--radius:10px;--radius-lg:16px}
+[data-theme="dark"]{--bg:#141413;--card:#1e1e1c;--text:#e8e5e0;--sub:#999;--muted:#666;--border:#2e2e2a;--accent:#d4793e;--accent-light:rgba(212,121,62,.1);--accent2:#52b788;--tag-bg:#2a2a26;--hover:#252522;--shadow-sm:0 1px 3px rgba(0,0,0,.2);--shadow-md:0 4px 16px rgba(0,0,0,.25);--shadow-lg:0 8px 32px rgba(0,0,0,.3);--nav-bg:rgba(20,20,19,.92)}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue","PingFang SC","Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ===== Top Bar ===== */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 32px;justify-content:space-between;transition:box-shadow .3s}
+.top-bar.scrolled{box-shadow:var(--shadow-sm)}
+.top-bar-left{display:flex;align-items:center;gap:10px}
+.top-bar-left svg{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.top-bar-left span{font-size:14px;font-weight:600;letter-spacing:.3px}
+.top-bar-right{display:flex;align-items:center;gap:10px}
+.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent)}
+.theme-btn svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cta-nav{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .2s;text-decoration:none}
+.cta-nav:hover{opacity:.9;text-decoration:none;transform:translateY(-1px)}
+.cta-nav svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ===== Hero ===== */
+.hero{padding:120px 32px 80px;max-width:860px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--accent-light);border:1px solid rgba(196,101,42,.15);font-size:12px;font-weight:600;color:var(--accent);margin-bottom:24px}
+.hero-badge svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.hero h1{font-size:44px;font-weight:800;line-height:1.2;margin-bottom:16px;letter-spacing:-.5px}
+.hero h1 .hl{color:var(--accent)}
+.hero p{font-size:17px;color:var(--sub);max-width:560px;margin:0 auto 32px;line-height:1.8}
+.hero-stats{display:flex;justify-content:center;gap:32px;margin-bottom:40px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-size:36px;font-weight:800;color:var(--accent);line-height:1.1}
+.stat-label{font-size:12px;color:var(--sub);font-weight:500;margin-top:4px;letter-spacing:.5px}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 36px;border-radius:var(--radius);background:var(--accent);color:#fff;font-size:16px;font-weight:600;border:none;cursor:pointer;transition:all .2s;text-decoration:none;box-shadow:0 4px 14px rgba(196,101,42,.3)}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,101,42,.35);text-decoration:none}
+.hero-cta svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2}
+.hero-sub{margin-top:14px;font-size:13px;color:var(--muted)}
+
+/* ===== Features ===== */
+.features{padding:80px 32px;max-width:960px;margin:0 auto}
+.section-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:4px;background:var(--tag-bg);font-size:11px;font-weight:600;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.section-title{font-size:28px;font-weight:700;margin-bottom:40px;line-height:1.3}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px 24px;transition:all .25s;position:relative;overflow:hidden}
+.feat-card:hover{border-color:var(--accent);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.feat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity .25s}
+.feat-card:hover::before{opacity:1}
+.feat-icon{width:44px;height:44px;border-radius:var(--radius);background:var(--accent-light);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-icon svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.feat-card p{font-size:13px;color:var(--sub);line-height:1.7}
+
+/* ===== Chapters ===== */
+.chapters{padding:80px 32px;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.chapters-inner{max-width:960px;margin:0 auto}
+.chap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.chap-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;transition:all .2s;cursor:default}
+.chap-card:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.chap-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.chap-num{font-size:12px;font-weight:700;color:var(--accent);min-width:28px}
+.chap-name{font-size:15px;font-weight:700}
+.chap-count{font-size:11px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.chap-terms{display:flex;flex-wrap:wrap;gap:6px}
+.chap-tag{padding:3px 10px;border-radius:4px;font-size:11px;background:var(--tag-bg);color:var(--sub);font-weight:500;transition:all .15s}
+.chap-card:hover .chap-tag{background:var(--accent-light);color:var(--accent)}
+
+/* ===== Quote Showcase ===== */
+.quotes-showcase{padding:80px 32px;max-width:780px;margin:0 auto}
+.quote-carousel{display:grid;gap:16px}
+.quote-item{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:20px 24px;transition:all .2s}
+.quote-item:hover{transform:translateX(4px);border-left-color:var(--accent2)}
+.quote-text{font-size:15px;font-weight:500;line-height:1.8;margin-bottom:8px}
+.quote-source{font-size:12px;color:var(--muted)}
+
+/* ===== CTA Bottom ===== */
+.cta-section{padding:80px 32px;text-align:center;max-width:600px;margin:0 auto}
+.cta-section h2{font-size:28px;font-weight:700;margin-bottom:12px}
+.cta-section p{font-size:15px;color:var(--sub);margin-bottom:32px;line-height:1.8}
+.lock-hint{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--muted);margin-top:16px}
+.lock-hint svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* ===== Footer ===== */
+.footer{padding:32px;text-align:center;font-size:12px;color:var(--muted);border-top:1px solid var(--border)}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .hero{padding:100px 20px 60px}
+  .hero h1{font-size:30px}
+  .hero p{font-size:15px}
+  .hero-stats{gap:20px}
+  .stat-num{font-size:28px}
+  .features,.quotes-showcase,.cta-section{padding:60px 20px}
+  .chapters{padding:60px 20px}
+  .feat-grid{grid-template-columns:1fr}
+  .chap-grid{grid-template-columns:1fr}
+  .top-bar{padding:0 16px}
+  .cta-nav span{display:none}
+}
+@media(max-width:480px){
+  .hero h1{font-size:26px}
+  .hero-cta{padding:12px 28px;font-size:14px}
+}
+
+/* ===== Animations ===== */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out}
+.fade-up.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<nav class="top-bar" id="topBar">
+  <div class="top-bar-left">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <span>Writing Methodology Dictionary</span>
+  </div>
+  <div class="top-bar-right">
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a class="cta-nav" href="writing-methodology-glossary.html">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      <span>Enter Dictionary</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    Open Knowledge Project
+  </div>
+  <h1>Think Better,<br>Write <span class="hl">Sharper</span></h1>
+  <p>61 frameworks across 9 chapters — from the Pyramid Principle to Bayesian Thinking. Each methodology comes with star ratings, visual diagrams, memory quotes, and classic book references.</p>
+  <div class="hero-stats">
+    <div class="stat fade-up"><div class="stat-num">9</div><div class="stat-label">Chapters</div></div>
+    <div class="stat fade-up"><div class="stat-num">61</div><div class="stat-label">Methodologies</div></div>
+    <div class="stat fade-up"><div class="stat-num">122</div><div class="stat-label">Memory Quotes</div></div>
+    <div class="stat fade-up"><div class="stat-num">27+</div><div class="stat-label">Book References</div></div>
+  </div>
+  <a class="hero-cta" href="writing-methodology-glossary.html">
+    Open the Dictionary
+    <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+  </a>
+  <div class="hero-sub">Password-protected — request access from the author</div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="section-tag">FEATURES</div>
+  <h2 class="section-title">Not Just a Glossary.<br>A Thinking Toolkit.</h2>
+  <div class="feat-grid">
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <h3>Star Ratings</h3>
+      <p>Every methodology rated 1-5 stars based on classic status and scenario breadth. Sorted by importance within each chapter.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <h3>Visual Diagrams</h3>
+      <p>Original SVG/CSS visualizations for every framework — pyramids, funnels, cycles, spider charts, flow diagrams, and more.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+      </div>
+      <h3>Memory Quotes</h3>
+      <p>2 distilled quotes per methodology (122 total) — sharp, memorable, ready to be recalled when you need them most.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <h3>Book References</h3>
+      <p>27+ classic book references with WeChat Read links — tap to read the original sources that shaped these frameworks.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h3>Weekly Updates</h3>
+      <p>Automatically updated every week with new methodologies, refreshed examples, and current NEW badges for recent additions.</p>
+    </div>
+    <div class="feat-card fade-up">
+      <div class="feat-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></svg>
+      </div>
+      <h3>Dark Mode</h3>
+      <p>Full dark/light theme support. One click to switch. Your preference is remembered across sessions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Chapters -->
+<section class="chapters" id="chapters">
+  <div class="chapters-inner">
+    <div class="section-tag">9 CHAPTERS</div>
+    <h2 class="section-title">From Craft to Epistemology</h2>
+    <div class="chap-grid">
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">01</span>
+          <span class="chap-name">写作技法</span>
+          <span class="chap-count">8 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">强动词替代法</span><span class="chap-tag">短句破长句节奏</span><span class="chap-tag">类比锚定法</span><span class="chap-tag">具体胜于抽象</span><span class="chap-tag">钩子开头</span><span class="chap-tag">三一律</span><span class="chap-tag">框架效应</span><span class="chap-tag">弗雷塔格金字塔</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">02</span>
+          <span class="chap-name">结构化论证</span>
+          <span class="chap-count">6 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">金字塔原理</span><span class="chap-tag">MECE 法则</span><span class="chap-tag">SCQA 框架</span><span class="chap-tag">Issue Tree</span><span class="chap-tag">逻辑树</span><span class="chap-tag">假设驱动法</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">03</span>
+          <span class="chap-name">叙事与说服</span>
+          <span class="chap-count">8 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">英雄之旅</span><span class="chap-tag">AIDA</span><span class="chap-tag">修辞三角</span><span class="chap-tag">BAB</span><span class="chap-tag">PAS</span><span class="chap-tag">Show Don't Tell</span><span class="chap-tag">六顶思考帽</span><span class="chap-tag">精细化编码</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">04</span>
+          <span class="chap-name">认知科学与 AI 校准</span>
+          <span class="chap-count">7 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">双过程思维</span><span class="chap-tag">元认知提示</span><span class="chap-tag">认知负荷优化</span><span class="chap-tag">格莱斯准则</span><span class="chap-tag">第一性原理</span><span class="chap-tag">心智模型显式化</span><span class="chap-tag">情境学习</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">05</span>
+          <span class="chap-name">决策与评估</span>
+          <span class="chap-count">5 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">MCDA</span><span class="chap-tag">第二序思维</span><span class="chap-tag">反转思维</span><span class="chap-tag">Pre-Mortem</span><span class="chap-tag">六顶思考帽</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">06</span>
+          <span class="chap-name">产品与商业</span>
+          <span class="chap-count">5 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">JTBD</span><span class="chap-tag">双钻模型</span><span class="chap-tag">价值主张画布</span><span class="chap-tag">波特五力</span><span class="chap-tag">商业模式画布</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">07</span>
+          <span class="chap-name">创意生成与横向思维</span>
+          <span class="chap-count">6 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">SCAMPER</span><span class="chap-tag">横向思维</span><span class="chap-tag">类推思维</span><span class="chap-tag">思维链</span><span class="chap-tag">自我精炼</span><span class="chap-tag">渐进式披露</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">08</span>
+          <span class="chap-name">知识传递</span>
+          <span class="chap-count">5 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">费曼技巧</span><span class="chap-tag">SECI 模型</span><span class="chap-tag">布鲁姆分层</span><span class="chap-tag">间隔重复</span><span class="chap-tag">精细化编码</span>
+        </div>
+      </div>
+
+      <div class="chap-card fade-up">
+        <div class="chap-head">
+          <span class="chap-num">09</span>
+          <span class="chap-name">认识论与知识哲学</span>
+          <span class="chap-count">14 items</span>
+        </div>
+        <div class="chap-terms">
+          <span class="chap-tag">波兰尼默会知识</span><span class="chap-tag">库恩范式转换</span><span class="chap-tag">波普尔证伪</span><span class="chap-tag">奥卡姆剃刀</span><span class="chap-tag">苏格拉底诘问</span><span class="chap-tag">贝叶斯思维</span><span class="chap-tag">溯因推理</span><span class="chap-tag">确认偏差</span><span class="chap-tag">邓宁-克鲁格</span><span class="chap-tag">黑天鹅理论</span><span class="chap-tag">知识诅咒</span><span class="chap-tag">心智模型</span><span class="chap-tag">诠释学循环</span><span class="chap-tag">假设检验</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Quote Showcase -->
+<section class="quotes-showcase" id="quotes">
+  <div class="section-tag">MEMORY QUOTES</div>
+  <h2 class="section-title">Sharp Enough to Stick</h2>
+  <div class="quote-carousel">
+    <div class="quote-item fade-up">
+      <div class="quote-text">先说结论，再说为什么——永远别让老板替你总结。</div>
+      <div class="quote-source">金字塔原理 — Pyramid Principle</div>
+    </div>
+    <div class="quote-item fade-up">
+      <div class="quote-text">同样的牛排，「75%瘦肉」比「25%肥肉」多卖20%。</div>
+      <div class="quote-source">框架效应 — Framing Effect</div>
+    </div>
+    <div class="quote-item fade-up">
+      <div class="quote-text">每句话都应该交房租——占位不产出信息的句子，请搬走。</div>
+      <div class="quote-source">三一律与信息密度 — Unity of Purpose</div>
+    </div>
+    <div class="quote-item fade-up">
+      <div class="quote-text">读者给你的时间只有3秒——要么被钩住，要么被划走。</div>
+      <div class="quote-source">钩子开头 — Hook Opening</div>
+    </div>
+    <div class="quote-item fade-up">
+      <div class="quote-text">不重叠、不遗漏——拆问题的唯一合格标准。</div>
+      <div class="quote-source">MECE 法则 — Mutually Exclusive, Collectively Exhaustive</div>
+    </div>
+    <div class="quote-item fade-up">
+      <div class="quote-text">科学理论的标准不是可证实性，而是可证伪性。</div>
+      <div class="quote-source">波普尔证伪主义 — Popper's Falsifiability</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Bottom -->
+<section class="cta-section">
+  <h2>Ready to Level Up<br>Your Thinking?</h2>
+  <p>This is a living dictionary — updated weekly with new frameworks and fresh examples from the real world.</p>
+  <a class="hero-cta" href="writing-methodology-glossary.html">
+    Open the Dictionary
+    <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+  </a>
+  <div class="lock-hint">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    Password-protected — contact the author for access
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>Ori's Writing Methodology Dictionary &mdash; Built with care, updated weekly.</p>
+  <p style="margin-top:6px">
+    <a href="https://github.com/oriri-101/ui-design-glossary" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;color:var(--muted)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      View on GitHub
+    </a>
+  </p>
+</footer>
+
+<script>
+// Theme toggle
+function toggleTheme(){
+  const d=document.documentElement;
+  const t=d.getAttribute('data-theme')==='dark'?'light':'dark';
+  d.setAttribute('data-theme',t);
+  localStorage.setItem('theme',t);
+  updateThemeIcon(t);
+}
+function updateThemeIcon(t){
+  document.getElementById('themeIcon').innerHTML=t==='dark'
+    ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+    :'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+}
+(function(){
+  const t=localStorage.getItem('theme')||'light';
+  document.documentElement.setAttribute('data-theme',t);
+  updateThemeIcon(t);
+})();
+
+// Top bar shadow on scroll
+window.addEventListener('scroll',function(){
+  document.getElementById('topBar').classList.toggle('scrolled',window.scrollY>10);
+},{passive:true});
+
+// Intersection Observer for fade-up animations
+const observer=new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(function(el){observer.observe(el)});
+</script>
+</body>
+</html>
