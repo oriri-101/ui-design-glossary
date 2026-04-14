@@ -1,0 +1,9 @@
+# WorkBuddy internal data (contains sensitive memory/preferences)
+.workbuddy/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp scripts
+*.py
