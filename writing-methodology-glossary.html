@@ -178,14 +178,17 @@ a{color:var(--accent);text-decoration:none}
 .wbar span{flex:1;background:var(--accent);border-radius:2px 2px 0 0;min-width:4px;opacity:.7}
 @media(max-width:768px){.diagram svg{max-height:160px}}
 /* 提炼金句 */
-.quotes-box{margin-bottom:16px}
-.quotes-box .quote-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:8px;background:linear-gradient(135deg,var(--tag-bg) 0%,transparent 100%);border-left:3px solid var(--accent);margin-bottom:6px;transition:all .2s}
-.quotes-box .quote-item:hover{transform:translateX(4px);border-left-color:var(--accent2)}
-.quotes-box .quote-icon{flex-shrink:0;width:18px;height:18px;margin-top:1px}
-.quotes-box .quote-icon svg{width:18px;height:18px;fill:var(--accent);opacity:.6}
-.quotes-box .quote-text{font-size:13px;font-weight:500;color:var(--text);line-height:1.7;letter-spacing:.3px}
+.quotes-box{margin-bottom:16px;position:relative;padding-left:28px}
+.quotes-box .quotes-icon{position:absolute;left:0;top:10px;width:20px;height:20px;color:var(--accent);opacity:.5}
+.quotes-box .quote-line{padding:10px 14px;border-radius:8px;background:linear-gradient(135deg,var(--tag-bg) 0%,transparent 100%);border-left:3px solid var(--accent);margin-bottom:6px;font-size:13px;font-weight:500;color:var(--text);line-height:1.7;letter-spacing:.3px;transition:all .2s}
+.quotes-box .quote-line:hover{transform:translateX(4px);border-left-color:var(--accent2)}
 .quotes-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--sub);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .quotes-title svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* NEW标识 */
+.nav-new{display:inline-block;font-size:8px;font-weight:700;color:#fff;background:#dc2626;padding:1px 4px;border-radius:3px;margin-left:4px;vertical-align:middle;line-height:1.4;letter-spacing:.5px}
+.term-updated{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--sub);margin-left:12px}
+.term-updated svg{width:12px;height:12px}
 </style>
 </head>
 <body>
@@ -231,7 +234,7 @@ a{color:var(--accent);text-decoration:none}
       <span class="tag">47 方法论</span>
       <span class="tag">实战案例</span>
       <span class="tag">AI Prompt 指令</span>
-      <span class="tag">星级评分排序</span><span class="tag">经典书籍引用</span><span class="tag">可视化图示</span><span class="tag">记忆金句</span><span class="tag">正反对照</span>
+      <span class="tag">星级评分排序</span><span class="tag">经典书籍引用</span><span class="tag">可视化图示</span><span class="tag">记忆金句</span><span class="tag">更新追踪</span><span class="tag">正反对照</span>
       <span class="tag">深色模式</span>
     </div>
   </div>
@@ -295,35 +298,35 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>',
   desc:"方法论是骨架，技法是肌肉。让每一句话都有力量的微观写作术。",
   terms:[
-    {name:"强动词替代法",en:"Strong Verbs Over Weak Verb + Adverb",stars:3,books:[{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4",quote:"用名词和动词来写作"},{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118"}],quotes:["把「进行了讨论」改成「吵了一架」——动词有多强，画面就有多真。","名词是骨架，动词是肌肉——肌肉决定力量。"],
+    {name:"强动词替代法",en:"Strong Verbs Over Weak Verb + Adverb",stars:3,updated:"2026-04-14",books:[{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4",quote:"用名词和动词来写作"},{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118"}],quotes:["把「进行了讨论」改成「吵了一架」——动词有多强，画面就有多真。","名词是骨架，动词是肌肉——肌肉决定力量。"],
      desc:"一个精准的动词胜过一个弱动词加一个副词。「快速奔跑」不如「狂奔」；「非常喜欢」不如「着迷」。强动词自带画面感和力量感。",
      demo:'<table class="cmp-table"><tr><th style="width:50%">强动词（好）</th><th>弱动词+副词（差）</th></tr><tr><td class="good">股价<strong>腰斩</strong></td><td class="bad">股价<strong>大幅下降</strong></td></tr><tr><td class="good">用户增长<strong>停滞</strong></td><td class="bad">用户增长<strong>非常缓慢</strong></td></tr><tr><td class="good">数据<strong>印证</strong>了这个假设</td><td class="bad">数据<strong>非常好地支持</strong>了这个假设</td></tr><tr><td class="good">竞品<strong>蚕食</strong>市场份额</td><td class="bad">竞品<strong>逐渐占领</strong>市场份额</td></tr><tr><td class="good">政策信号<strong>释放</strong></td><td class="bad">政策信号<strong>慢慢出现</strong></td></tr></table>'},
 
-    {name:"短句破长句节奏",en:"Sentence Rhythm Variation",stars:3,books:[{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4"}],quotes:["长句是催眠药，短句是咖啡因。交替使用才是节奏。","一个观点。一句话。打完收工。"],
+    {name:"短句破长句节奏",en:"Sentence Rhythm Variation",stars:3,updated:"2026-04-14",books:[{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4"}],quotes:["长句是催眠药，短句是咖啡因。交替使用才是节奏。","一个观点。一句话。打完收工。"],
      desc:"长句承载信息，短句制造节奏感和力量感。<strong>连续3个短句 = 加速</strong>，<strong>一个长句后接一个短句 = 重锤</strong>。顶级写作者都是节奏大师。",
      demo:'<div class="callout"><strong>感受节奏差异：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><strong>无节奏（差）：</strong>「在经历了连续三个月的下滑之后，产品终于在四月迎来了一波比较明显的增长，其中海外市场表现尤为突出，这让很多之前一直在观望的团队成员感到非常振奋。」<br><br><strong>有节奏（好）：</strong>「三个月的下滑。团队的耐心见底。然后四月来了——海外DAU单月涨了23%，像一根被压弯太久的弹簧。猛地弹了起来。」</div>'},
 
-    {name:"类比锚定法",en:"Analogy Anchoring",stars:4,quotes:["不懂区块链？它就是一本谁都能看、谁都改不了的公共账本。","好的类比不是简化，是在已知和未知之间架一座桥。"],
+    {name:"类比锚定法",en:"Analogy Anchoring",stars:4,updated:"2026-04-14",quotes:["不懂区块链？它就是一本谁都能看、谁都改不了的公共账本。","好的类比不是简化，是在已知和未知之间架一座桥。"],
      desc:"用读者已知的概念解释未知的概念。类比的力量在于：它不需要读者学习新东西，只需要在已有知识上「搭一座桥」。好的类比能让复杂概念秒懂。",
      demo:'<table class="cmp-table"><tr><th>抽象概念</th><th>类比锚定</th></tr><tr><td>TCP/IP协议</td><td class="good">就像寄快递——你把数据装进包裹（封包），贴上收件地址（IP），选好快递公司（路由），对方拆包签收（确认）</td></tr><tr><td>微服务架构</td><td class="good">就像乐高积木——每个服务是独立的模块，可以单独替换、升级，而不用推倒整座城堡重建</td></tr><tr><td>沉没成本谬误</td><td class="good">你已经吃了半碗很难吃的面——继续吃完不会让你之前的痛苦消失，只会增加新的痛苦</td></tr><tr><td>复利效应</td><td class="good">雪球效应：关键不是雪有多厚，而是山坡够不够长</td></tr></table><div class="callout green"><strong>训练方法：</strong>每次遇到一个专业概念，强迫自己想一个生活中的类比。想不到说明你可能还没真正理解它。</div>'},
 
-    {name:"具体胜于抽象",en:"Specificity Over Abstraction",stars:4,books:[{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118",quote:"写作的秘密在于剥离每个句子中的杂质"}],quotes:["「效果显著提升」是废话，「转化率从2.3%涨到7.1%」是证据。","数字治百病，案例解千愁。"],
+    {name:"具体胜于抽象",en:"Specificity Over Abstraction",stars:4,updated:"2026-04-14",books:[{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118",quote:"写作的秘密在于剥离每个句子中的杂质"}],quotes:["「效果显著提升」是废话，「转化率从2.3%涨到7.1%」是证据。","数字治百病，案例解千愁。"],
      desc:"「效果显著提升」不如「转化率从3.2%提升到7.8%」。<strong>数字 > 形容词，案例 > 概括，细节 > 全貌</strong>。具体性是可信度的基础。",
      demo:'<table class="cmp-table"><tr><th style="width:50%">具体（可信）</th><th>抽象（空洞）</th></tr><tr><td class="good">「Notion在2023年将AI功能定价为每人每月10美元，上线首月付费转化率达18%，贡献了全年ARR增长的31%。」</td><td class="bad">「我们的新功能去年表现不错，取得了满意的增长。」</td></tr><tr><td class="good">「Tesla Model 3在中国市场从1月降价3.6万后，2月订单量从1.2万台飙升至5.4万台，同比增长350%。」</td><td class="bad">「坚持运营之后，增长了很多，产出了几篇爆款。」</td></tr></table><div class="callout amber"><strong>检查清单：</strong>写完每段话后数一下——有几个具体数字？有几个形容词可以被数字替代？</div>'},
 
-    {name:"钩子开头",en:"Hook Opening",stars:4,quotes:["读者给你的时间只有3秒——要么被钩住，要么被划走。","最好的开头让人忘记自己是在读东西。"],
+    {name:"钩子开头",en:"Hook Opening",stars:4,updated:"2026-04-14",quotes:["读者给你的时间只有3秒——要么被钩住，要么被划走。","最好的开头让人忘记自己是在读东西。"],
      desc:"前3秒决定读者去留。钩子的本质是制造<strong>信息缺口</strong>——让读者的大脑无法忽视。常见类型：反常识开头、数字冲击、悬念留白、直击痛点。",
      demo:'<div style="font-size:13px;line-height:2;color:var(--sub)"><span class="dtag red">反常识</span> 「老板说：这个需求很简单。我打开了文档，沉默了。」<br><span class="dtag blue">数字冲击</span> 「苹果用了15年杀死按键，又用1年把它复活了。」<br><span class="dtag amber">悬念留白</span> 「所有人都说这个功能没人用——直到它贡献了40%的日活。」<br><span class="dtag green">直击痛点</span> 「会议开了两小时，唯一的产出是「下次再讨论」。」<br><span class="dtag red">身份冲突</span> 「面试官问：你最大的优势是什么？我脑子一片空白。」</div><div class="callout" style="margin-top:12px"><strong>检验标准：</strong>把这句话发到群里，会不会有人追问「然后呢？」如果没人好奇，这个钩子就不合格。</div>'},
 
-    {name:"三一律与信息密度",en:"Unity of Purpose & Information Density",stars:3,quotes:["每句话都应该交房租——占位不产出信息的句子，请搬走。","写完之后删掉三分之一，剩下的才是精华。"],
+    {name:"三一律与信息密度",en:"Unity of Purpose & Information Density",stars:3,updated:"2026-04-14",quotes:["每句话都应该交房租——占位不产出信息的句子，请搬走。","写完之后删掉三分之一，剩下的才是精华。"],
      desc:"一篇内容只讲<strong>一个核心观点</strong>。所有段落、数据、故事都服务于这一个观点。同时确保每句话都有<strong>增量信息</strong>——删掉后如果不影响理解，那这句话就不该存在。",
      demo:'<div class="callout red"><strong>低密度示例（删掉后完全不影响理解的废话）：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px;text-decoration:line-through">「在当今这个快速变化的时代，用户体验变得越来越重要。很多企业都在思考如何提升产品的核心竞争力。作为一个关注行业趋势的观察者，我也一直在研究不同公司的做法。」</div><div class="callout green" style="margin-top:12px"><strong>高密度改写（每句都有增量）：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px">「2025年全球智能手机出货量涨了9%，但某品牌只涨了1.2%。复盘后发现问题出在一个决策上：砍掉了线下渠道。」</div>'},
 
-    {name:"框架效应",en:"Framing Effect",stars:4,books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979",quote:"同一信息的不同呈现方式常常会引发不同的情绪反应"}],quotes:["同样的牛排，「75%瘦肉」比「25%肥肉」多卖20%。","不是事实在说话，是框架在说话。"],
+    {name:"框架效应",en:"Framing Effect",stars:4,updated:"2026-04-14",books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979",quote:"同一信息的不同呈现方式常常会引发不同的情绪反应"}],quotes:["同样的牛排，「75%瘦肉」比「25%肥肉」多卖20%。","不是事实在说话，是框架在说话。"],
      desc:"Kahneman & Tversky 的前景理论核心发现：<strong>同一信息用不同框架呈现，会导致截然不同的决策</strong>。人类天生对「损失」比「收益」更敏感（损失厌恶约2.5倍）。框架不是欺骗，是表达策略。",
      demo:'<table class="cmp-table"><tr><th style="width:50%">正面框架（收益导向）</th><th>负面框架（损失导向）</th></tr><tr><td class="good">「这款产品帮助93%的用户节省了每周3小时」</td><td class="bad">「这款产品有7%的用户在首月就流失了」</td></tr><tr><td class="good">「90%的付费用户在6个月内收回了订阅成本」</td><td>「10%的用户表示产品未达到预期效果」</td></tr></table><div class="callout amber"><strong>AI Prompt 用法：</strong>「请用正面框架（收益导向）重写这段话」或「请分别用损失框架和收益框架各写一版文案，我来选」。当你写恐惧营销用损失框架，写品牌建设用收益框架。</div>'},
 
-    {name:"弗雷塔格金字塔",en:"Freytag\'s Pyramid / Narrative Arc",stars:3,books:[{title:"千面英雄",author:"约瑟夫·坎贝尔",url:"https://weread.qq.com/web/bookDetail/2d4323f0813ab71cfg01466a"}],quotes:["好故事像过山车——慢慢爬升，到顶尖叫，然后安全落地。","高潮不是结尾，高潮之后的落地才是故事的灵魂。"],
+    {name:"弗雷塔格金字塔",en:"Freytag\'s Pyramid / Narrative Arc",stars:3,updated:"2026-04-14",books:[{title:"千面英雄",author:"约瑟夫·坎贝尔",url:"https://weread.qq.com/web/bookDetail/2d4323f0813ab71cfg01466a"}],quotes:["好故事像过山车——慢慢爬升，到顶尖叫，然后安全落地。","高潮不是结尾，高潮之后的落地才是故事的灵魂。"],
      desc:"Gustav Freytag 提出的五幕剧结构：<strong>铺陈→上升→高潮→下降→结局</strong>。比「英雄之旅」更精确地描述了故事的<strong>张力曲线</strong>。任何好内容都有一条看不见的张力线在牵引读者。",
      demo:'<div style="font-size:12px;color:var(--sub);text-align:center;padding:16px;background:var(--tag-bg);border-radius:8px;line-height:2.2">铺陈 Exposition → 上升动作 Rising Action → <strong style="color:var(--accent);font-size:14px">高潮 Climax</strong> → 下降动作 Falling Action → 结局 Denouement</div><div class="callout" style="margin-top:12px"><strong>实战 — 小红书爆款笔记的张力曲线：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag blue">铺陈</span> 「三个Stanford辍学生，挤在一间车库里写代码」（建立身份+场景感）<br><span class="dtag amber">上升</span> 「直到他们做了一个决定——拒绝了Google 1200万美元的收购报价」（悬念升起）<br><span class="dtag red">高潮</span> 「服务器崩了。用户在Twitter上骂街。银行账户还剩412美元。」（张力顶峰）<br><span class="dtag amber">下降</span> 「但一封来自Y Combinator的邮件改变了一切...」（转折释放张力）<br><span class="dtag green">结局</span> 「五年后，这家公司叫Airbnb，估值310亿美元。」（回归平衡）</div>'}
   ]
@@ -334,23 +337,23 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M3 3h18v18H3z" fill="none"/><path d="M9 3v18"/><path d="M3 9h18"/></svg>',
   desc:"把混沌的信息变成清晰的结论。汇报、分析、策略推荐的底层操作系统。",
   terms:[
-    {name:"金字塔原理",en:"Pyramid Principle",stars:5,books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"任何事情都可以归纳出一个中心论点，这个中心论点可以由三到七个论据支撑"},{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118"}],quotes:["先说结论，再说为什么——永远别让老板替你总结。","如果你不能用一句话说清楚，那你还没想清楚。"],
+    {name:"金字塔原理",en:"Pyramid Principle",stars:5,updated:"2026-04-14",books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"任何事情都可以归纳出一个中心论点，这个中心论点可以由三到七个论据支撑"},{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118"}],quotes:["先说结论，再说为什么——永远别让老板替你总结。","如果你不能用一句话说清楚，那你还没想清楚。"],
      desc:"Barbara Minto 在麦肯锡创立的表达框架。核心规则：<strong>结论先行</strong>，然后用互不重叠的论据支撑，每个论据又可拆分为更小的支撑点。自上而下沟通，自下而上思考。",
      demo:'<div class="callout"><strong>核心公式：</strong>结论（1句）→ 支撑论据（3个以内）→ 细节数据</div><table class="cmp-table"><tr><th style="width:50%">正确示范</th><th>反面教材</th></tr><tr><td class="good">「建议Q3将东南亚市场推广预算从35%提升至45%。三个原因：一、印尼MAU同比增长127%，是增速最快的市场；二、本地化支付接入后转化率提升3.2倍；三、竞品在该区域的市占率仅8%，窗口期约6个月。」</td><td class="bad">「关于东南亚市场，我做了一些研究。首先看一下用户数据，然后分析竞品，接着看成本结构...最后建议做一些调整。」</td></tr></table><div class="code-block"><span class="hl">场景触发：</span>向上汇报、策略建议、分析报告、邮件沟通\n<span class="hl">关键检验：</span>删掉所有论据，结论是否独立成立？\n<span class="hl">常见错误：</span>把「过程」当「结论」，如"我分析了三个方面"不是结论</div>'},
 
-    {name:"MECE 法则",en:"Mutually Exclusive, Collectively Exhaustive",stars:5,books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"MECE是金字塔原理的基石——每组思想都必须互不重叠、完全穷尽"}],quotes:["不重叠、不遗漏——拆问题的唯一合格标准。","分类的目的不是好看，是确保没有盲区。"],
+    {name:"MECE 法则",en:"Mutually Exclusive, Collectively Exhaustive",stars:5,updated:"2026-04-14",books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"MECE是金字塔原理的基石——每组思想都必须互不重叠、完全穷尽"}],quotes:["不重叠、不遗漏——拆问题的唯一合格标准。","分类的目的不是好看，是确保没有盲区。"],
      desc:"拆解问题的黄金法则——<strong>相互独立、完全穷尽</strong>。每个分支之间不重叠，所有分支加起来覆盖全局。麦肯锡七步分析法的基石。",
      demo:'<div class="callout green"><strong>检验方法：</strong>1) 各分支之间有没有交叉？（ME）2) 所有分支加起来有没有遗漏？（CE）</div><table class="cmp-table"><tr><th style="width:50%">MECE 的拆法</th><th>非 MECE 的拆法</th></tr><tr><td class="good">用户增长 = 新用户获取 + 老用户留存 + 流失用户召回<br><em>（三者互斥且覆盖全量用户）</em></td><td class="bad">用户增长 = 社交传播 + 广告投放 + 内容营销 + 口碑推荐<br><em>（社交传播和口碑推荐有交叉；遗漏了自然搜索等渠道）</em></td></tr></table>'},
 
-    {name:"SCQA 框架",en:"Situation-Complication-Question-Answer",stars:4,books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"序言结构遵循情境-冲突-疑问-回答的叙述模式"}],quotes:["背景让人进入，冲突让人紧张，问题让人好奇，答案让人行动。","好的开头不是介绍自己，而是让对方感受到：这跟我有关。"],
+    {name:"SCQA 框架",en:"Situation-Complication-Question-Answer",stars:4,updated:"2026-04-14",books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832",quote:"序言结构遵循情境-冲突-疑问-回答的叙述模式"}],quotes:["背景让人进入，冲突让人紧张，问题让人好奇，答案让人行动。","好的开头不是介绍自己，而是让对方感受到：这跟我有关。"],
      desc:"开篇定调的经典四步法。先铺<strong>背景</strong>（Situation），再抛<strong>冲突</strong>（Complication），然后提出<strong>问题</strong>（Question），最后给出<strong>答案</strong>（Answer）。让读者在30秒内理解为什么要看你的内容。",
      demo:'<div class="callout"><strong>实战案例 — SaaS产品年度复盘开篇：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag blue">S 背景</span> 2025年SaaS行业分化加剧：AI原生产品ARR增速达65%，而传统CRM增速降至8%。<br><span class="dtag amber">C 冲突</span> 我们产品仍以传统表单模式为核心，用户7日留存率降至23%，远低于行业均值41%。<br><span class="dtag red">Q 问题</span> Q3的产品路线图应如何调整，才能在不损失现有客户的前提下切入AI赛道？<br><span class="dtag green">A 答案</span> 核心功能保持稳定迭代（60%资源），AI Copilot作为增长引擎（30%资源），预研Agent架构（10%资源）。</div>'},
 
-    {name:"逻辑树 / 问题树",en:"Issue Tree / Logic Tree",stars:4,books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832"}],quotes:["把大象装进冰箱只需三步，但你得先画出那三步。","能拆到可执行的才叫分析，拆不下去的还叫感觉。"],
+    {name:"逻辑树 / 问题树",en:"Issue Tree / Logic Tree",stars:4,updated:"2026-04-14",books:[{title:"金字塔原理",author:"芭芭拉·明托",url:"https://weread.qq.com/web/reader/ff4323b0813ab6e84g018832"}],quotes:["把大象装进冰箱只需三步，但你得先画出那三步。","能拆到可执行的才叫分析，拆不下去的还叫感觉。"],
      desc:"从一个根问题出发，逐级向下拆分为互不重叠的子问题，直到每个末端节点都是可直接执行或可直接验证的。是麦肯锡结构化思维的核心工具。",
      demo:'<div class="code-block"><span class="hl">根问题：</span>如何在6个月内将产品DAU从10万提升至30万？\n\n├── <span class="hl">1. 内容策略</span>\n│   ├── 用户获取（付费 vs 自然 vs 裂变）\n│   ├── 激活优化（新手引导 vs A/B测试 vs 个性化推荐）\n│   └── 留存策略（Push策略 vs 内容个性化 vs 社交关系链）\n│\n├── <span class="hl">2. 分发策略</span>\n│   ├── 渠道优先级（应用商店 > 信息流 > KOL > 社群）\n│   ├── 渠道素材本地化\n│   └── 各渠道CPA/LTV测算\n│\n└── <span class="hl">3. 转化留存</span>\n    ├── 用户生命周期管理\n    ├── 核心功能使用频次\n    └── 商业化路径（订阅 / 增值服务 / API）\n\n<span class="hl">检验标准：</span>每个末端节点能否直接分配给一个人去执行？</div>'},
 
-    {name:"假设驱动法",en:"Hypothesis-Driven Approach",stars:3,quotes:["不是数据太少，而是你在没有方向的海里捞针。","先猜答案再找证据——效率是穷举法的10倍。"],
+    {name:"假设驱动法",en:"Hypothesis-Driven Approach",stars:3,updated:"2026-04-14",quotes:["不是数据太少，而是你在没有方向的海里捞针。","先猜答案再找证据——效率是穷举法的10倍。"],
      desc:"不是先收集所有数据再得结论，而是<strong>先提出假设</strong>，再有针对性地收集证据去验证或推翻。麦肯锡新人入职第一课。大幅提升研究效率——避免在无关数据里迷失。",
      demo:'<div class="callout amber"><strong>核心区别：</strong>数据驱动 = 先看数据再说结论（归纳法）；假设驱动 = 先说假设再找证据（演绎法）</div><table class="cmp-table"><tr><th>步骤</th><th>示例</th></tr><tr><td>1. 提出假设</td><td>「在App首屏增加个性化推荐模块后，7日留存率将提升5个百分点以上」</td></tr><tr><td>2. 设计验证</td><td>选取3个功能近似的竞品App进行首屏改版前后的留存数据对比</td></tr><tr><td>3. 收集证据</td><td>Spotify、YouTube Music、网易云音乐在个性化推荐上线前后的留存变化</td></tr><tr><td>4. 验证/推翻</td><td>数据支持假设（3/3款产品推荐模块上线后留存率提升4-8%）→ 列入Q3优先级</td></tr></table>'}
   ]
@@ -361,27 +364,27 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>',
   desc:"从信息传递到人心触动。内容创作、演讲、融资叙事的核武器库。",
   terms:[
-    {name:"AIDA 模型",en:"Attention-Interest-Desire-Action",stars:5,quotes:["注意力是入场券，兴趣是座位，欲望是掌声，行动是票房。","标题抓眼球，正文抓心，结尾抓手——一步都不能丢。"],
+    {name:"AIDA 模型",en:"Attention-Interest-Desire-Action",stars:5,updated:"2026-04-14",quotes:["注意力是入场券，兴趣是座位，欲望是掌声，行动是票房。","标题抓眼球，正文抓心，结尾抓手——一步都不能丢。"],
      desc:"营销传播的经典四步模型。<strong>Attention</strong>（抓注意力）→ <strong>Interest</strong>（激发兴趣）→ <strong>Desire</strong>（制造渴望）→ <strong>Action</strong>（促成行动）。从标题到正文到CTA，每一步都是精心设计的漏斗。",
      demo:'<div class="callout"><strong>实战 — 社交媒体爆款标题拆解：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag red">A 注意力</span> 「设计师转行做产品的第一年，」<em>（身份反差 + 好奇心）</em><br><span class="dtag blue">I 兴趣</span> 「我用Notion搭了一套系统，效率翻了3倍」<em>（具体工具 + 量化收益）</em><br><span class="dtag amber">D 渴望</span> 内文展示Notion模板截图、工作流对比、效率数据<br><span class="dtag green">A 行动</span> 「评论区扣「模板」，免费发你我的Notion系统」<em>（明确CTA）</em></div><div class="code-block"><span class="hl">适用：</span>自媒体标题、营销文案、产品介绍页、邮件主题行\n<span class="hl">注意：</span>每一步的转化率都在衰减——A→I 的损耗最大，标题决定生死</div>'},
 
-    {name:"英雄之旅",en:"Hero\'s Journey",stars:5,books:[{title:"千面英雄",author:"约瑟夫·坎贝尔",url:"https://weread.qq.com/web/bookDetail/2d4323f0813ab71cfg01466a",quote:"英雄从日常世界出发，冒险进入超自然奇迹的领域；在那里遇到了传说中的力量，取得了决定性的胜利；英雄从神秘的历险中带着给予同胞恩惠的力量回来"}],quotes:["每个读者都在等一个主角——最好那个主角是他自己。","没有低谷的故事不是故事，是产品说明书。"],
+    {name:"英雄之旅",en:"Hero\'s Journey",stars:5,updated:"2026-04-14",books:[{title:"千面英雄",author:"约瑟夫·坎贝尔",url:"https://weread.qq.com/web/bookDetail/2d4323f0813ab71cfg01466a",quote:"英雄从日常世界出发，冒险进入超自然奇迹的领域；在那里遇到了传说中的力量，取得了决定性的胜利；英雄从神秘的历险中带着给予同胞恩惠的力量回来"}],quotes:["每个读者都在等一个主角——最好那个主角是他自己。","没有低谷的故事不是故事，是产品说明书。"],
      desc:"Joseph Campbell 提炼的叙事原型。<strong>平凡世界 → 冒险召唤 → 考验与盟友 → 最大危机 → 蜕变回归</strong>。从《星球大战》到乔布斯Stanford演讲，一切伟大故事都遵循这个结构。",
      demo:'<div style="display:flex;gap:0;flex-wrap:wrap;margin-bottom:12px"><div class="flow-step" style="border-radius:8px 0 0 8px"><div class="step-num">01</div><div class="step-label">平凡世界</div><div class="step-desc">小镇做题家</div></div><div class="flow-step"><div class="step-num">02</div><div class="step-label">冒险召唤</div><div class="step-desc">只身闯大城市</div></div><div class="flow-step"><div class="step-num">03</div><div class="step-label">考验与盟友</div><div class="step-desc">求职被拒30次</div></div><div class="flow-step"><div class="step-num">04</div><div class="step-label">最大危机</div><div class="step-desc">项目失败/被裁员</div></div><div class="flow-step" style="border-radius:0 8px 8px 0"><div class="step-num">05</div><div class="step-label">蜕变回归</div><div class="step-desc">找到热爱的事业</div></div></div><div class="callout green"><strong>使用诀窍：</strong>不需要五幕齐全。一篇小红书用「平凡→考验→蜕变」三幕就够。关键是让读者在你的故事里看到自己。</div>'},
 
-    {name:"亚里士多德修辞三角",en:"Ethos-Pathos-Logos",stars:4,quotes:["说服 = 你靠谱（Ethos）+ 他有感（Pathos）+ 逻辑通（Logos）。","光有道理没有温度，听众记住的是你的冷漠。"],
+    {name:"亚里士多德修辞三角",en:"Ethos-Pathos-Logos",stars:4,updated:"2026-04-14",quotes:["说服 = 你靠谱（Ethos）+ 他有感（Pathos）+ 逻辑通（Logos）。","光有道理没有温度，听众记住的是你的冷漠。"],
      desc:"说服力的三根支柱：<strong>Ethos</strong>（可信度——你是谁）、<strong>Pathos</strong>（情感共鸣——触动什么）、<strong>Logos</strong>（逻辑论证——数据说话）。任何有说服力的内容都在三者之间找到平衡。",
      demo:'<table class="cmp-table"><tr><th>维度</th><th>解释</th><th>实战技巧</th></tr><tr><td><strong>Ethos 可信度</strong></td><td>你凭什么说这些？</td><td>前置身份标签（行业从业者 / 多年实战经验）、展示真实数据、引用权威来源</td></tr><tr><td><strong>Pathos 情感</strong></td><td>为什么要在意？</td><td>讲故事、用画面感语言、类比读者自身处境、制造紧迫感</td></tr><tr><td><strong>Logos 逻辑</strong></td><td>证据在哪里？</td><td>数据支撑、因果链条、对比实验、排除替代解释</td></tr></table><div class="callout amber"><strong>陷阱：</strong>纯Logos=论文（没人看）、纯Pathos=鸡汤（不持久）、纯Ethos=自吹（招反感）。三者缺一不可。</div>'},
 
-    {name:"Before-After-Bridge",en:"BAB",stars:3,quotes:["先让他看到伤口，再让他看到痊愈，最后递上创可贴。","最短的说服结构：痛 → 爽 → 买。"],
+    {name:"Before-After-Bridge",en:"BAB",stars:3,updated:"2026-04-14",quotes:["先让他看到伤口，再让他看到痊愈，最后递上创可贴。","最短的说服结构：痛 → 爽 → 买。"],
      desc:"短内容种草的黄金结构。<strong>Before</strong>（你的痛点）→ <strong>After</strong>（解决后的美好画面）→ <strong>Bridge</strong>（我的方案就是那座桥）。简单粗暴但极其有效。",
      demo:'<div class="callout"><strong>示例 — 效率工具推广文案：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag red">Before</span> 每天被消息轰炸，待办清单越来越长，截止日期焦虑每晚睡前准时上线。<br><span class="dtag green">After</span> 不用反复切换App、不用手动同步，每天自动整理，一个月省出两个工作日。<br><span class="dtag blue">Bridge</span> 我用的方法：Notion日历+自动化工作流+AI摘要，10分钟就能搭好。</div>'},
 
-    {name:"PAS 公式",en:"Problem-Agitate-Solve",stars:3,quotes:["找到痛点只是开始，放大痛感才是转化的关键。","Problem让人点头，Agitate让人焦虑，Solution让人付费。"],
+    {name:"PAS 公式",en:"Problem-Agitate-Solve",stars:3,updated:"2026-04-14",quotes:["找到痛点只是开始，放大痛感才是转化的关键。","Problem让人点头，Agitate让人焦虑，Solution让人付费。"],
      desc:"与 BAB 类似但更有攻击性。<strong>Problem</strong>（指出问题）→ <strong>Agitate</strong>（搅动痛苦、放大焦虑）→ <strong>Solve</strong>（给出解决方案）。适合高转化场景。",
      demo:'<table class="cmp-table"><tr><th>步骤</th><th>作用</th><th>注意事项</th></tr><tr><td><strong>P 问题</strong></td><td>让读者点头「对，这就是我」</td><td>越具体越好——说「每天加班到10点」比「工作很累」强10倍</td></tr><tr><td><strong>A 搅动</strong></td><td>放大痛苦，制造不解决的后果</td><td>不要过度制造焦虑——煽动和共鸣只有一线之隔</td></tr><tr><td><strong>S 解决</strong></td><td>你的方案是唯一合理的出路</td><td>方案必须与前面的痛点精准匹配，不能答非所问</td></tr></table>'},
 
-    {name:"Show, Don\'t Tell",en:"展示而非告知",stars:4,books:[{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118",quote:"写作的秘密在于剥离每个句子中的杂质，只留下最干净的成分"},{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4",quote:"省略不必要的词"}],quotes:["别说\'她很伤心\'——说\'她把勺子放下，汤一口没动\'。","形容词是拐杖，细节才是双腿。"],
+    {name:"Show, Don\'t Tell",en:"展示而非告知",stars:4,updated:"2026-04-14",books:[{title:"写作法宝：非虚构写作指南",author:"威廉·津瑟",url:"https://weread.qq.com/web/bookDetail/d2932930813ab7818g011118",quote:"写作的秘密在于剥离每个句子中的杂质，只留下最干净的成分"},{title:"风格的要素",author:"威廉·斯特伦克",url:"https://weread.qq.com/web/bookDetail/f7432380811e3a896g0177c4",quote:"省略不必要的词"}],quotes:["别说\'她很伤心\'——说\'她把勺子放下，汤一口没动\'。","形容词是拐杖，细节才是双腿。"],
      desc:"写作第一定律。不要说「她很伤心」，写「她把咖啡杯握得太紧，指甲嵌进了掌心」。用<strong>具体画面</strong>替代抽象判断，让读者自己得出结论。",
      demo:'<table class="cmp-table"><tr><th style="width:50%">Show（好）</th><th>Tell（差）</th></tr><tr><td class="good">「连续三个sprint的feature全部delay，她每天早上打开Jira前都会深吸一口气，然后又把手从鼠标上移开。」</td><td class="bad">「项目delay的那段时间她压力很大。」</td></tr><tr><td class="good">「会议室里只剩下投影仪风扇的嗡嗡声。PPT停在第7页，没人说话。」</td><td class="bad">「汇报的时候气氛很尴尬。」</td></tr></table><div class="callout green"><strong>训练方法：</strong>写完一句话后问自己——「这句话能被拍成画面吗？」如果不能，就改到能为止。</div>'}
   ]
@@ -392,31 +395,31 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 3.4 2.1 6.3 5 7.4V19a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1.6c2.9-1.1 5-4 5-7.4a8 8 0 0 0-8-8z"/><line x1="9" y1="22" x2="15" y2="22"/></svg>',
   desc:"用认知科学武装 AI 的「大脑」。这些方法论可以直接注入 system prompt，让 AI 的思考更深、表达更准、输出更可控。",
   terms:[
-    {name:"双过程思维",en:"System 1 / System 2 Thinking",stars:5,books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979",quote:"系统1的运行是无意识且快速的，不怎么费脑力；系统2将注意力转移到需要费脑力的大脑活动上来"}],quotes:["系统1让你活着，系统2让你活得明白。","直觉是快捷方式，也是最常见的翻车路线。"],
+    {name:"双过程思维",en:"System 1 / System 2 Thinking",stars:5,updated:"2026-04-14",books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979",quote:"系统1的运行是无意识且快速的，不怎么费脑力；系统2将注意力转移到需要费脑力的大脑活动上来"}],quotes:["系统1让你活着，系统2让你活得明白。","直觉是快捷方式，也是最常见的翻车路线。"],
      desc:"Daniel Kahneman（诺贝尔经济学奖）提出。<strong>系统1</strong>：快、自动、直觉、容易出错。<strong>系统2</strong>：慢、刻意、逻辑严密、消耗精力。AI 默认以系统1模式生成——快速但浅。在 prompt 中显式激活系统2，能大幅提升复杂问题的解决质量。",
      demo:'<div class="callout"><strong>AI Prompt 用法——激活系统2：</strong></div><div class="code-block"><span class="hl">系统1（默认模式）：</span>\n问：「这个架构方案可行吗？」→ AI快速给出一个模糊回答\n\n<span class="hl">系统2（显式激活）：</span>\n「请执行慢思考模式：\n1. 问题分解：这个问题包含哪些子问题？\n2. 已知条件：列出所有显式和隐式信息\n3. 假设检查：你做了哪些假设？合理吗？\n4. 逐步推理：用严格逻辑推导\n5. 反向验证：用反例检验结论\n6. 最终答案：给出结论+置信度(0-100%)」</div><div class="callout green" style="margin-top:12px"><strong>核心洞察：</strong>「让我们一步步思考」这句简单的话就是在激活系统2。但更精确的方式是指定具体的思考步骤。</div>'},
 
-    {name:"元认知提示",en:"Metacognitive Prompting",stars:4,quotes:["想得更好的秘诀：在想的时候，再想一层「我为什么这么想」。","AI不审视自己的推理，跟学生不检查试卷一样危险。"],
+    {name:"元认知提示",en:"Metacognitive Prompting",stars:4,updated:"2026-04-14",quotes:["想得更好的秘诀：在想的时候，再想一层「我为什么这么想」。","AI不审视自己的推理，跟学生不检查试卷一样危险。"],
      desc:"元认知 = <strong>对认知的认知</strong>——思考自己是怎么思考的。在 prompt 中加入元认知指令，让 AI 反思自己的推理过程、识别不确定性、评估答案质量。2023年 LLM 研究热点，效果显著优于普通 Chain-of-Thought。",
      demo:'<div class="code-block"><span class="hl">元认知五步提示模板：</span>\n\n1. <span class="hl">理解检查</span>：用自己的话复述这个问题，确认理解正确\n2. <span class="hl">策略选择</span>：这个问题最适合用什么方法解决？为什么？\n3. <span class="hl">执行推理</span>：按选定策略逐步推导\n4. <span class="hl">自我审查</span>：我的推理有没有逻辑漏洞？有没有遗漏的视角？\n5. <span class="hl">置信度评估</span>：我对这个答案的置信度是多少(0-100%)？\n                 不确定的部分是什么？</div><div class="callout amber" style="margin-top:12px"><strong>与 Chain-of-Thought 的区别：</strong>CoT 让 AI 展示思考过程（系统2）；元认知让 AI 评估思考过程本身（系统2的系统2）。后者多了一层自我校准。</div>'},
 
-    {name:"认知负荷优化",en:"Cognitive Load Theory",stars:4,quotes:["信息过载不是读者笨，是你懒——懒得替他们分块。","好的表达是替读者的大脑做减法。"],
+    {name:"认知负荷优化",en:"Cognitive Load Theory",stars:4,updated:"2026-04-14",quotes:["信息过载不是读者笨，是你懒——懒得替他们分块。","好的表达是替读者的大脑做减法。"],
      desc:"John Sweller 提出。人类工作记忆容量有限——同时只能处理<strong>4-7个信息块</strong>。超过阈值就会信息过载、理解效率骤降。在 AI 输出中应用这个理论，意味着：控制段落信息密度、递进式展开、每隔几段设置「认知检查点」。",
      demo:'<table class="cmp-table"><tr><th>原则</th><th>AI Prompt 指令</th><th>效果</th></tr><tr><td>信息分块</td><td>「每段只讲1-2个核心概念」</td><td>降低内在认知负荷</td></tr><tr><td>递进式难度</td><td>「先讲基础→再讲中级→最后高级」</td><td>符合认知攀升规律</td></tr><tr><td>检查点</td><td>「每3-4段后插入一句小结」</td><td>给读者消化时间</td></tr><tr><td>术语首现定义</td><td>「关键术语第一次出现时必须定义」</td><td>减少外在认知负荷</td></tr><tr><td>多通道呈现</td><td>「用图表+文字+类比分散信息」</td><td>利用多感官通道</td></tr></table><div class="callout green" style="margin-top:12px"><strong>检验标准：</strong>给一个完全不懂的人读你的内容，如果他在第3段就放弃了——你的认知负荷管理出了问题。</div>'},
 
-    {name:"格莱斯合作准则",en:"Grice\'s Cooperative Principle",stars:3,quotes:["说够、说真、说相关、说清楚——日常对话的最低纲领。","废话之所以惹人烦，是因为它违反了每一条。"],
+    {name:"格莱斯合作准则",en:"Grice\'s Cooperative Principle",stars:3,updated:"2026-04-14",quotes:["说够、说真、说相关、说清楚——日常对话的最低纲领。","废话之所以惹人烦，是因为它违反了每一条。"],
      desc:"语言哲学家 H.P. Grice（1967）提出的四条会话准则：<strong>质量</strong>（说真话）、<strong>数量</strong>（信息适度）、<strong>关联</strong>（切题）、<strong>方式</strong>（清晰）。人类对话隐含遵守这四条规则，AI 也应该遵守——直接注入 system prompt 可显著提升输出的「人味」和可信度。",
      demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px"><div style="padding:12px;background:var(--tag-bg);border-radius:6px;border-left:3px solid var(--accent2)"><strong>质量准则 Quality</strong><br>只说有证据的事实<br><span style="color:var(--accent)">AI指令：「不确定的部分标注置信度」</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #3b82f6"><strong>数量准则 Quantity</strong><br>信息恰到好处，不多不少<br><span style="color:var(--accent)">AI指令：「避免过度详细或过于简略」</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #eab308"><strong>关联准则 Relevance</strong><br>每句话都与主题相关<br><span style="color:var(--accent)">AI指令：「删掉所有不直接回答问题的内容」</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #dc2626"><strong>方式准则 Manner</strong><br>表达清晰、有序、无歧义<br><span style="color:var(--accent)">AI指令：「先结论后展开，避免模糊表述」</span></div></div><div class="callout" style="margin-top:12px"><strong>优先级（准则冲突时）：</strong>质量 > 关联 > 方式 > 数量。宁可少说真话，也别多说废话。</div>'},
 
-    {name:"第一性原理",en:"First Principles Thinking",stars:5,books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a",quote:"我只想知道我将来会死在什么地方，这样我就不去那里了"}],quotes:["忘掉别人怎么做的，回到最基本的事实重新推导。——埃隆·马斯克","类比思维让你跟随，第一性原理让你超越。"],
+    {name:"第一性原理",en:"First Principles Thinking",stars:5,updated:"2026-04-14",books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a",quote:"我只想知道我将来会死在什么地方，这样我就不去那里了"}],quotes:["忘掉别人怎么做的，回到最基本的事实重新推导。——埃隆·马斯克","类比思维让你跟随，第一性原理让你超越。"],
      desc:"亚里士多德→笛卡尔→马斯克。<strong>抛开所有类比、惯例和经验，回到最基础的真命题重新推导</strong>。大多数人用类比思维（别人怎么做我就怎么做），第一性原理思维是拆到原子级别重新组装。这是产出颠覆性结论的唯一路径。",
      demo:'<div class="callout"><strong>类比思维 vs 第一性原理：</strong></div><table class="cmp-table"><tr><th>问题</th><th>类比思维</th><th>第一性原理</th></tr><tr><td>如何提高产品留存？</td><td class="bad">看竞品做了什么功能→抄一遍</td><td class="good">用户每次打开App是为了完成什么任务？→从核心任务出发重新设计体验</td></tr><tr><td>技术栈怎么选？</td><td class="bad">看Hacker News热度→选最火的框架</td><td class="good">我的核心约束是什么（团队能力/性能/上线时间）？→哪个技术栈最匹配这些约束？</td></tr></table><div class="code-block" style="margin-top:12px"><span class="hl">AI Prompt 用法：</span>\n「请用第一性原理分析这个问题：\n1. 这个领域公认的「基本事实」是什么？\n2. 当前通行做法基于哪些假设？\n3. 这些假设中，哪些是物理定律级别的硬约束，\n   哪些只是行业惯例？\n4. 如果从零开始，你会怎么做？」</div>'},
 
-    {name:"心智模型显式化",en:"Mental Model Elicitation",stars:3,books:[{title:"设计心理学",author:"唐纳德·诺曼",url:"https://weread.qq.com/web/reader/ad932ca05d1509ad998f4ff"}],quotes:["画不出来的理解是假理解——先画模型，再给答案。","概念地图是思维的X光片。"],
+    {name:"心智模型显式化",en:"Mental Model Elicitation",stars:3,updated:"2026-04-14",books:[{title:"设计心理学",author:"唐纳德·诺曼",url:"https://weread.qq.com/web/reader/ad932ca05d1509ad998f4ff"}],quotes:["画不出来的理解是假理解——先画模型，再给答案。","概念地图是思维的X光片。"],
      desc:"Donald Norman（设计心理学先驱）的核心概念。心智模型是人脑对「事物如何运作」的内部表征。<strong>让 AI 在回答前先画出一个概念模型</strong>（流程图、因果链、系统图），能迫使它深化理解，生成更符合用户认知的解释。",
      demo:'<div class="code-block"><span class="hl">AI Prompt 模板：</span>\n\n「在回答之前，请先：\n1. 画出这个问题的心智模型（用文字或 ASCII 图）\n2. 标出关键变量和它们之间的因果关系\n3. 用一个日常类比解释核心逻辑\n4. 指出这个模型的假设和局限\n5. 然后再给出你的回答」\n\n<span class="hl">示例输出：</span>\n问：「为什么微服务架构比单体架构更适合大型系统？」\nAI 先画出：\n单个服务故障 → 隔离在边界内 ─┐\n                              ├→ 系统整体可用性提升\n其他服务正常 → 继续响应请求 ─┘\n\n类比：「就像城市的电网分区供电，\n一个区停电不会导致全城瘫痪，\n每个区域独立运行又统一调度。」</div>'},
 
-    {name:"情境学习",en:"In-Context Learning / Few-Shot Prompting",stars:4,quotes:["与其解释一百条规则，不如给三个好例子。","AI是天生的模仿者——好例子是最好的指令。"],
+    {name:"情境学习",en:"In-Context Learning / Few-Shot Prompting",stars:4,updated:"2026-04-14",quotes:["与其解释一百条规则，不如给三个好例子。","AI是天生的模仿者——好例子是最好的指令。"],
      desc:"GPT-3 团队（2020）发现的 LLM 核心能力。<strong>在 prompt 中给出几个高质量示例，AI 就能「秒学」新任务</strong>——不需要训练、不需要微调。关键不在示例数量，而在示例质量和排列策略。",
      demo:'<div class="callout"><strong>示例选择三原则：</strong></div><table class="cmp-table"><tr><th>原则</th><th>说明</th><th>效果</th></tr><tr><td>相关性</td><td>示例与目标任务高度相似</td><td>准确率提升 40%+</td></tr><tr><td>难度递进</td><td>简单→中等→复杂排列</td><td>模型学习更稳定</td></tr><tr><td>格式一致</td><td>所有示例保持统一格式</td><td>输出格式可控</td></tr></table><div class="code-block" style="margin-top:12px"><span class="hl">实战 — 让 AI 学会你的写作风格：</span>\n\n「请学习以下3个示例的产品文案风格，然后用同样风格写新内容：\n\n[示例1 - 基础] 输入：新版本上线\n输出：V3.0凌晨灰度推送，首批10万用户已激活。好评率97%——用户在用留存投票。\n\n[示例2 - 中等] 输入：功能下线了\n输出：用了三年的导出功能，说关就关。公告只有两行字。\n不是按钮消失了，是你三年养成的工作习惯被删了。\n\n[示例3 - 高级] 输入：要不要加新功能\n输出：产品已经有47个功能了。理性说该做减法，\n但你手痒想加的那个功能，才是产品臃肿的开始。\n\n现在请用同样风格写：输入：要不要做国际化」</div>'}
   ]
@@ -427,23 +430,23 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
   desc:"在不确定性中做出高质量决策。职业规划、投资分析、产品优先级排序的思维工具箱。",
   terms:[
-    {name:"多准则决策分析",en:"MCDA / Weighted Scoring",stars:4,quotes:["拍脑袋能决定午饭，但不能决定人生。","加权评分不是消灭直觉，而是让直觉变得可审计。"],
+    {name:"多准则决策分析",en:"MCDA / Weighted Scoring",stars:4,updated:"2026-04-14",quotes:["拍脑袋能决定午饭，但不能决定人生。","加权评分不是消灭直觉，而是让直觉变得可审计。"],
      desc:"把主观判断变成定量评分。列出所有评估维度，分配权重，逐项打分，加权汇总。把「感觉A比B好」变成「A得87分、B得73分，差距主要在维度3和维度5」。",
      demo:'<table class="cmp-table"><tr><th>维度</th><th>权重</th><th>选项A: 自建团队</th><th>选项B: 外包合作</th></tr><tr><td>成本效率</td><td>25%</td><td>9 × 0.25 = 2.25</td><td>6 × 0.25 = 1.50</td></tr><tr><td>质量可控性</td><td>30%</td><td>8 × 0.30 = 2.40</td><td>7 × 0.30 = 2.10</td></tr><tr><td>响应速度</td><td>20%</td><td>5 × 0.20 = 1.00</td><td>8 × 0.20 = 1.60</td></tr><tr><td>知识沉淀</td><td>15%</td><td>7 × 0.15 = 1.05</td><td>6 × 0.15 = 0.90</td></tr><tr><td>灵活扩缩</td><td>10%</td><td>4 × 0.10 = 0.40</td><td>7 × 0.10 = 0.70</td></tr><tr><td><strong>总分</strong></td><td></td><td class="good"><strong>7.10</strong></td><td><strong>6.80</strong></td></tr></table><div class="callout amber"><strong>陷阱：</strong>权重本身也是主观判断——做完评分后，试着调整权重±5%看结论是否翻转（敏感性分析）。</div>'},
 
-    {name:"第二序思维",en:"Second-Order Thinking",stars:5,books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a"},{title:"投资最重要的事",author:"霍华德·马克斯",url:"https://weread.qq.com/web/bookDetail/a3c32b40813ab7da9g012be5",quote:"第二层次思考者知道，成功的投资与正确的想法恰恰相反——要做到出类拔萃，你必须有与众不同的想法"}],quotes:["庸人看结果，高手看结果的结果。","每个决定都有回声——问自己「然后呢？」至少三次。"],
+    {name:"第二序思维",en:"Second-Order Thinking",stars:5,updated:"2026-04-14",books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a"},{title:"投资最重要的事",author:"霍华德·马克斯",url:"https://weread.qq.com/web/bookDetail/a3c32b40813ab7da9g012be5",quote:"第二层次思考者知道，成功的投资与正确的想法恰恰相反——要做到出类拔萃，你必须有与众不同的想法"}],quotes:["庸人看结果，高手看结果的结果。","每个决定都有回声——问自己「然后呢？」至少三次。"],
      desc:"「然后呢？」的思维训练。大多数人只想到第一层后果（一阶），高手会追问：这个后果会引发什么新后果？<strong>第一序 = 直觉反应，第二序 = 连锁反应</strong>。Howard Marks 的投资哲学核心。",
      demo:'<div class="code-block"><span class="hl">一阶思维：</span>竞品降价30% → 跟着降价\n<span class="hl">二阶思维：</span>竞品降价 → 用户预期被锚定 → 恢复原价时流失率飙升 → 品牌价值受损\n             → 不是跟进降价的时候，而是用差异化价值拉开距离的时候\n\n<span class="hl">一阶思维：</span>招3个人扩张团队 → 好事\n<span class="hl">二阶思维：</span>扩到6人 → 但管理成本从10%涨到40% → 你从写代码变成开会\n             → 长期来看团队产出可能不升反降\n             → 需要量化：人均产出曲线 vs 管理时间占比的拐点</div>'},
 
-    {name:"反转思维",en:"Inversion / Charlie Munger",stars:5,books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a",quote:"反过来想，总是反过来想"}],quotes:["想知道怎么赢，先想清楚怎么输。——查理·芒格","反过来想，总是反过来想。"],
+    {name:"反转思维",en:"Inversion / Charlie Munger",stars:5,updated:"2026-04-14",books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a",quote:"反过来想，总是反过来想"}],quotes:["想知道怎么赢，先想清楚怎么输。——查理·芒格","反过来想，总是反过来想。"],
      desc:"查理·芒格最推崇的思维模型。不问「怎么做能成功」，而是问「<strong>怎么做一定会失败</strong>」，然后反向回避。「我只想知道我将来会死在什么地方，这样我就不去那里了。」",
      demo:'<div class="callout red"><strong>反转练习 — 如何让一个产品一定失败：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px">1. 需求不做调研，老板说什么做什么<br>2. 从不看数据，凭直觉做决策<br>3. 不听用户反馈，bug当feature<br>4. 所有功能一视同仁，不做优先级排序<br>5. 只抄竞品不做差异化<br>6. 不做复盘，同样的坑反复踩</div><div class="callout green" style="margin-top:12px"><strong>反转结论：</strong>以上6条的反面，就是做好产品的基本纪律。反转思维把模糊的目标变成了清晰的检查清单。</div>'},
 
-    {name:"Pre-Mortem 预验尸",en:"Pre-Mortem Analysis",stars:3,books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979"}],quotes:["假设项目已经失败了——现在告诉我，它是怎么死的。","在开始前就承认会失败，比在失败后找借口高级一百倍。"],
+    {name:"Pre-Mortem 预验尸",en:"Pre-Mortem Analysis",stars:3,updated:"2026-04-14",books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979"}],quotes:["假设项目已经失败了——现在告诉我，它是怎么死的。","在开始前就承认会失败，比在失败后找借口高级一百倍。"],
      desc:"Gary Klein 提出的决策工具。在项目<strong>开始之前</strong>假设它已经失败了，然后让每个人写下「它失败的原因是什么」。比 Post-Mortem（事后复盘）更有价值——因为此时还来得及改。",
      demo:'<div class="callout"><strong>场景：</strong>准备投入200万开发一款AI写作助手App</div><table class="cmp-table"><tr><th>假设失败原因</th><th>预防措施</th></tr><tr><td>市场已红海，ChatGPT/Claude等巨头碾压</td><td>差异化定位：不做通用写作，聚焦「学术论文润色」垂直场景</td></tr><tr><td>上线3个月DAU不足1000</td><td>设计MVP先验证核心场景，前1000用户免费换反馈</td></tr><tr><td>开发周期过长错过窗口期</td><td>限定MVP开发周期（8周），超时即砍功能</td></tr><tr><td>付费转化率低于2%</td><td>先做免费增值模式测试需求，验证付费意愿后再推订阅制</td></tr></table>'},
 
-    {name:"六顶思考帽",en:"Six Thinking Hats",stars:4,books:[{title:"六顶思考帽",author:"爱德华·德博诺",url:"https://weread.qq.com/web/bookDetail/27d322205d14e227d2f672b",quote:"六顶思考帽所强调的是一个非常简单的概念：它只允许思考者在同一时间内做一件事情"}],quotes:["不是每个人都对，而是每顶帽子都有用。","吵架是因为所有人同时戴着不同颜色的帽子。"],
+    {name:"六顶思考帽",en:"Six Thinking Hats",stars:4,updated:"2026-04-14",books:[{title:"六顶思考帽",author:"爱德华·德博诺",url:"https://weread.qq.com/web/bookDetail/27d322205d14e227d2f672b",quote:"六顶思考帽所强调的是一个非常简单的概念：它只允许思考者在同一时间内做一件事情"}],quotes:["不是每个人都对，而是每顶帽子都有用。","吵架是因为所有人同时戴着不同颜色的帽子。"],
      desc:"Edward de Bono 的平行思维工具。六种颜色代表六种思维模式，强制团队（或自己）依次戴上不同的帽子来审视同一个问题，避免混战式讨论。",
      demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px"><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #fff"><strong>白帽 — 数据</strong><br>现有数据是什么？还缺什么？</div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #dc2626"><strong>红帽 — 直觉</strong><br>你的直觉说什么？不需要理由。</div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #111"><strong>黑帽 — 风险</strong><br>有什么问题？最坏情况是什么？</div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #eab308"><strong>黄帽 — 价值</strong><br>好处是什么？最好情况是什么？</div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #22c55e"><strong>绿帽 — 创意</strong><br>还有没有其他可能？换个角度呢？</div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #3b82f6"><strong>蓝帽 — 流程</strong><br>讨论进程如何？下一步做什么？</div></div>'}
   ]
@@ -454,23 +457,23 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
   desc:"从用户需求到商业闭环。PRD、竞品分析、商业提案的核心框架。",
   terms:[
-    {name:"Jobs to be Done",en:"JTBD",stars:5,books:[{title:"创新者的窘境",author:"克莱顿·克里斯坦森",url:"https://weread.qq.com/web/bookDetail/7d532f107193a88f7d5ffeb",quote:"顾客并不是在购买产品或服务，而是在雇佣它们来完成某项工作"}],quotes:["人们不是在买电钻，是在买墙上的洞。","问用户「你想要什么功能」不如问「你雇佣这个产品完成什么工作」。"],
+    {name:"Jobs to be Done",en:"JTBD",stars:5,updated:"2026-04-14",books:[{title:"创新者的窘境",author:"克莱顿·克里斯坦森",url:"https://weread.qq.com/web/bookDetail/7d532f107193a88f7d5ffeb",quote:"顾客并不是在购买产品或服务，而是在雇佣它们来完成某项工作"}],quotes:["人们不是在买电钻，是在买墙上的洞。","问用户「你想要什么功能」不如问「你雇佣这个产品完成什么工作」。"],
      desc:"Clayton Christensen 提出。用户不是在「购买产品」，而是「雇佣产品来完成一项工作」。问的不是「用户要什么功能」，而是「用户在什么情境下，想要完成什么进步」。",
      demo:'<div class="callout"><strong>JTBD 格式模板：</strong></div><div class="code-block"><span class="hl">When</span> 当我在早高峰地铁上只有15分钟碎片时间\n<span class="hl">I want to</span> 我想快速浏览今天最重要的新闻摘要\n<span class="hl">So that</span> 这样我就能在到公司前了解行业动态，而不是花30分钟刷5个App</div><div class="callout amber" style="margin-top:12px"><strong>与用户故事的区别：</strong>用户故事 = "作为XX角色，我想要XX功能"（解决方案导向）；JTBD = "在XX场景下，我想完成XX进步"（需求本质导向）。JTBD 不预设解决方案。</div>'},
 
-    {name:"价值主张画布",en:"Value Proposition Canvas",stars:4,books:[{title:"商业模式新生代",author:"亚历山大·奥斯特瓦德",url:"https://weread.qq.com/web/bookDetail/5c1324d0813ab6cf2g01739a"}],quotes:["你觉得自己在止痛，用户觉得你在挠痒——这就是错配。","先画用户的痛，再画你的药。"],
+    {name:"价值主张画布",en:"Value Proposition Canvas",stars:4,updated:"2026-04-14",books:[{title:"商业模式新生代",author:"亚历山大·奥斯特瓦德",url:"https://weread.qq.com/web/bookDetail/5c1324d0813ab6cf2g01739a"}],quotes:["你觉得自己在止痛，用户觉得你在挠痒——这就是错配。","先画用户的痛，再画你的药。"],
      desc:"Alexander Osterwalder 的工具。右侧画用户画像（Customer Profile）：<strong>任务、痛点、收益</strong>；左侧画价值主张（Value Map）：<strong>产品/服务、止痛药、收益助推器</strong>。两侧匹配得越好，产品越有市场。",
      demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px"><div style="padding:12px;background:var(--tag-bg);border-radius:8px;border:2px solid var(--accent)"><strong style="color:var(--accent)">价值主张（你提供的）</strong><div style="margin-top:8px;line-height:2;color:var(--sub)"><strong>产品：</strong>AI驱动的会议纪要自动生成工具<br><strong>止痛药：</strong>自动录音转文字+提取行动项，省去手动整理<br><strong>收益助推：</strong>智能追踪待办进度，减少「会开了但没落地」</div></div><div style="padding:12px;background:var(--tag-bg);border-radius:8px;border:2px solid var(--accent2)"><strong style="color:var(--accent2)">用户画像（用户要的）</strong><div style="margin-top:8px;line-height:2;color:var(--sub)"><strong>任务：</strong>会后10分钟内输出可执行的纪要<br><strong>痛点：</strong>手动记录遗漏多、整理耗时、行动项无人跟进<br><strong>期望收益：</strong>会议效率翻倍、执行落地率提升、减少重复沟通</div></div></div>'},
 
-    {name:"双钻模型",en:"Double Diamond",stars:3,quotes:["先发散再收敛，做两次——一次找对问题，一次找对答案。","急着给方案的人，往往在解决错误的问题。"],
+    {name:"双钻模型",en:"Double Diamond",stars:3,updated:"2026-04-14",quotes:["先发散再收敛，做两次——一次找对问题，一次找对答案。","急着给方案的人，往往在解决错误的问题。"],
      desc:"英国设计委员会提出的设计思维模型。两次发散→收敛：<strong>发现（发散）→ 定义（收敛）→ 发展（发散）→ 交付（收敛）</strong>。前半段搞清楚「正确的问题」，后半段找到「问题的正确解法」。",
      demo:'<div style="display:flex;gap:0;flex-wrap:wrap;margin-bottom:12px"><div class="flow-step" style="border-radius:8px 0 0 8px;background:rgba(196,92,62,.1)"><div class="step-num">发散</div><div class="step-label">Discover</div><div class="step-desc">广泛调研</div></div><div class="flow-step" style="background:rgba(196,92,62,.2)"><div class="step-num">收敛</div><div class="step-label">Define</div><div class="step-desc">锁定问题</div></div><div class="flow-step" style="background:rgba(45,106,79,.1)"><div class="step-num">发散</div><div class="step-label">Develop</div><div class="step-desc">探索方案</div></div><div class="flow-step" style="border-radius:0 8px 8px 0;background:rgba(45,106,79,.2)"><div class="step-num">收敛</div><div class="step-label">Deliver</div><div class="step-desc">交付成果</div></div></div><div class="callout"><strong>关键洞察：</strong>大多数失败的产品不是「解法错了」，而是「问题没找对」。双钻模型强制你在第一个钻石里花足够的时间定义问题。</div>'},
 
-    {name:"波特五力",en:"Porter\'s Five Forces",stars:5,books:[{title:"竞争战略",author:"迈克尔·波特",url:"https://weread.qq.com/web/reader/50532a905cde3050538da2b",quote:"一个行业的竞争状态取决于五种基本作用力，这五种力量的合力决定了行业的最终利润潜力"}],quotes:["行业的钱不是你想赚就能赚——五种力量在分你的利润。","竞争对手只是五分之一的威胁，更大的威胁可能是你的客户和供应商。"],
+    {name:"波特五力",en:"Porter\'s Five Forces",stars:5,updated:"2026-04-14",books:[{title:"竞争战略",author:"迈克尔·波特",url:"https://weread.qq.com/web/reader/50532a905cde3050538da2b",quote:"一个行业的竞争状态取决于五种基本作用力，这五种力量的合力决定了行业的最终利润潜力"}],quotes:["行业的钱不是你想赚就能赚——五种力量在分你的利润。","竞争对手只是五分之一的威胁，更大的威胁可能是你的客户和供应商。"],
      desc:"Michael Porter 的行业竞争分析框架。五种力量共同决定行业利润空间：<strong>现有竞争者、潜在进入者、替代品威胁、买方议价能力、卖方议价能力</strong>。",
      demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px"><div style="padding:10px;background:var(--tag-bg);border-radius:6px;grid-column:1/3;text-align:center;border-left:3px solid var(--accent)"><strong>现有竞争者</strong> — 行业内厮杀激烈程度<br><em>例：新茶饮赛道——品牌数量爆炸，门店密度饱和</em></div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #eab308"><strong>潜在进入者</strong><br>进入门槛高低<br><em>低门槛加盟模式</em></div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #dc2626"><strong>替代品威胁</strong><br>咖啡/果汁替代<br><em>瑞幸9.9元咖啡分流</em></div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid var(--accent2)"><strong>买方议价力</strong><br>消费者选择极多<br><em>Z世代忠诚度低</em></div><div style="padding:10px;background:var(--tag-bg);border-radius:6px;border-left:3px solid #3b82f6"><strong>卖方议价力</strong><br>鲜果/奶源供应商<br><em>优质原料议价力强</em></div></div>'},
 
-    {name:"商业模式画布",en:"Business Model Canvas",stars:4,books:[{title:"商业模式新生代",author:"亚历山大·奥斯特瓦德",url:"https://weread.qq.com/web/bookDetail/5c1324d0813ab6cf2g01739a",quote:"商业模式描述的是一个组织如何创造、传递以及获取价值的基本原理"}],quotes:["九个格子画完，商业逻辑一目了然——填不满的格子就是你的盲区。","赚钱模式说不清楚的公司，花钱一定很清楚。"],
+    {name:"商业模式画布",en:"Business Model Canvas",stars:4,updated:"2026-04-14",books:[{title:"商业模式新生代",author:"亚历山大·奥斯特瓦德",url:"https://weread.qq.com/web/bookDetail/5c1324d0813ab6cf2g01739a",quote:"商业模式描述的是一个组织如何创造、传递以及获取价值的基本原理"}],quotes:["九个格子画完，商业逻辑一目了然——填不满的格子就是你的盲区。","赚钱模式说不清楚的公司，花钱一定很清楚。"],
      desc:"Alexander Osterwalder 的另一个经典工具。9个模块描述一个完整的商业模式：价值主张、客户细分、渠道通路、客户关系、收入来源、核心资源、关键业务、重要伙伴、成本结构。",
      demo:'<div class="code-block"><span class="hl">新茶饮品牌画布速写（示例）：</span>\n\n<span class="hl">价值主张：</span>高品质现制茶饮+社交空间体验\n<span class="hl">客户细分：</span>18-30岁都市年轻消费者\n<span class="hl">渠道通路：</span>线下门店/小程序/外卖平台/社交媒体\n<span class="hl">客户关系：</span>新品尝鲜获客 → 会员积分留存 → 周边IP转化\n<span class="hl">收入来源：</span>饮品销售 + 加盟费 + 联名IP周边\n<span class="hl">核心资源：</span>供应链 + 品牌IP + 研发配方 + 数字化系统\n<span class="hl">关键业务：</span>新品研发 + 供应链管理 + 门店运营标准化\n<span class="hl">重要伙伴：</span>鲜果供应商 + 加盟商 + 外卖平台\n<span class="hl">成本结构：</span>原材料 + 门店租金 + 人力 + 营销</div>'}
   ]
@@ -481,27 +484,27 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
   desc:"跳出思维惯性，产出「意料之外、情理之中」的内容。破解千篇一律的 AI 味道。",
   terms:[
-    {name:"SCAMPER 奔驰法",en:"SCAMPER Creative Checklist",stars:4,quotes:["没有灵感？试试：替换、组合、调整、修改、挪用、删减、反转。","创造力不是天赋，是一套可以练习的肌肉。"],
+    {name:"SCAMPER 奔驰法",en:"SCAMPER Creative Checklist",stars:4,updated:"2026-04-14",quotes:["没有灵感？试试：替换、组合、调整、修改、挪用、删减、反转。","创造力不是天赋，是一套可以练习的肌肉。"],
      desc:"Robert Eberle（1970s）在 Osborn 头脑风暴基础上发展的结构化创意工具。7个提问维度强制你从不同角度审视一个事物：<strong>S</strong>ubstitute 替代、<strong>C</strong>ombine 结合、<strong>A</strong>dapt 借用、<strong>M</strong>odify 修改、<strong>P</strong>ut to other uses 转用、<strong>E</strong>liminate 去除、<strong>R</strong>everse 反转。",
      demo:'<div class="callout"><strong>实战 — 用 SCAMPER 改造咖啡店体验：</strong></div><div style="font-size:12px;color:var(--sub);line-height:2.2;margin-top:8px"><span class="dtag blue">S 替代</span> 把纸质菜单替代为「桌面AR扫描点单」<br><span class="dtag green">C 结合</span> 把咖啡+书店+联合办公结合成「第三空间」<br><span class="dtag amber">A 借用</span> 借用健身房的「月卡」模式做咖啡订阅制<br><span class="dtag red">M 修改</span> 把大杯拿铁修改为「3口装迷你品鉴杯」系列<br><span class="dtag blue">P 转用</span> 把咖啡渣转用为植物肥料/手工皂原料<br><span class="dtag amber">E 去除</span> 去掉收银台排队环节，全部移动端预点单<br><span class="dtag red">R 反转</span> 不卖「提神醒脑」，反转为「助眠咖啡」系列</div><div class="code-block" style="margin-top:12px"><span class="hl">AI Prompt：</span>「请用 SCAMPER 7个维度分析 [你的产品/内容]，\n每个维度给出至少1个具体创意，并标注可行性(高/中/低)」</div>'},
 
-    {name:"横向思维",en:"Lateral Thinking",stars:4,books:[{title:"六顶思考帽",author:"爱德华·德博诺",url:"https://weread.qq.com/web/bookDetail/27d322205d14e227d2f672b"}],quotes:["挖不动了？换个地方挖——问题可能不在深度，在角度。","逻辑思维是在同一条路上走得更远，横向思维是换一条路。"],
+    {name:"横向思维",en:"Lateral Thinking",stars:4,updated:"2026-04-14",books:[{title:"六顶思考帽",author:"爱德华·德博诺",url:"https://weread.qq.com/web/bookDetail/27d322205d14e227d2f672b"}],quotes:["挖不动了？换个地方挖——问题可能不在深度，在角度。","逻辑思维是在同一条路上走得更远，横向思维是换一条路。"],
      desc:"Edward de Bono（1967）提出，与纵向思维（逻辑推演）相对。纵向思维在同一个洞里越挖越深，横向思维是<strong>换一个地方挖洞</strong>。核心技法：随机输入（Random Entry）、反向假设（Reversal）、激发（Provocation）。",
      demo:'<table class="cmp-table"><tr><th>技法</th><th>操作</th><th>示例</th></tr><tr><td><strong>随机输入</strong></td><td>引入一个完全无关的概念，看能激发什么联想</td><td class="good">「健身房+游戏」→ 运动副本制（完成动作=打怪升级，组队锻炼=Raid副本）</td></tr><tr><td><strong>反向假设</strong></td><td>故意颠倒现状的某个假设</td><td class="good">「如果医院不看病呢？」→ 以「预防」为核心的健康订阅服务（预防胜于治疗）</td></tr><tr><td><strong>激发</strong></td><td>提出一个荒谬的陈述(PO)，从中提取有价值的想法</td><td class="good">PO：「如果餐厅没有菜单」→ AI根据你的口味/过敏/心情自动配餐的概念</td></tr></table><div class="callout amber" style="margin-top:12px"><strong>AI Prompt：</strong>「请对[主题]使用横向思维的「随机输入」技法：从[不相关领域]中随机选一个概念，强行与[主题]建立联系，看能产生什么创意。不要评判可行性，先发散。」</div>'},
 
-    {name:"类推思维",en:"Analogical Reasoning / Cross-Domain Transfer",stars:3,quotes:["Uber之于出租车 = Airbnb之于酒店——跨领域的结构迁移是创新的捷径。","别人的成功方案 + 你的新场景 = 低风险的高回报。"],
+    {name:"类推思维",en:"Analogical Reasoning / Cross-Domain Transfer",stars:3,updated:"2026-04-14",quotes:["Uber之于出租车 = Airbnb之于酒店——跨领域的结构迁移是创新的捷径。","别人的成功方案 + 你的新场景 = 低风险的高回报。"],
      desc:"与「类比锚定法」（修辞层面的表达工具）不同，类推思维是<strong>认知层面的问题解决策略</strong>。核心：在结构上相似但表面不同的领域之间<strong>迁移解决方案</strong>。被认为是通向 AGI 的核心能力之一。",
      demo:'<div class="callout"><strong>跨域迁移案例库：</strong></div><table class="cmp-table"><tr><th>源领域</th><th>目标领域</th><th>迁移的核心结构</th></tr><tr><td>交响乐团编制</td><td>产品团队搭建</td><td class="good">小提琴(核心产出)、打击乐(节奏把控)、指挥(PM协调)、作曲家(战略方向) → 团队角色分配</td></tr><tr><td>城市交通调度</td><td>客服工单处理</td><td class="good">「走了A路线的车也走了B」→「高峰期实时调度」→ 动态负载均衡式内容推荐</td></tr><tr><td>消防响应等级</td><td>客服工单处理</td><td class="good">一级响应(紧急)/二级响应(重要)/三级响应(常规) → 工单处理优先级机制</td></tr></table><div class="code-block" style="margin-top:12px"><span class="hl">AI Prompt：</span>「我遇到了[问题]。请从3个完全不同的领域\n（如生物学、建筑学、军事学）中各找一个\n结构上相似的已解决问题，\n然后将解决方案迁移到我的问题上。」</div>'},
 
-    {name:"思维链",en:"Chain-of-Thought Prompting",stars:5,quotes:["跳过推理直接给答案，跟闭着眼睛射箭一样——偶尔中，多数飞。","展示你的计算过程——不是给老师看，是给自己找Bug。"],
+    {name:"思维链",en:"Chain-of-Thought Prompting",stars:5,updated:"2026-04-14",quotes:["跳过推理直接给答案，跟闭着眼睛射箭一样——偶尔中，多数飞。","展示你的计算过程——不是给老师看，是给自己找Bug。"],
      desc:"Wei et al.（2022, Google）提出的 LLM 推理增强技术。通过在 prompt 中加入「让我们一步步思考」或<strong>展示推理过程的示例</strong>，让 AI 从直觉跳答变成逐步推导。在数学、逻辑、策略分析等任务上效果提升 20-40%。",
      demo:'<div class="callout"><strong>三种 CoT 变体：</strong></div><table class="cmp-table"><tr><th>类型</th><th>触发方式</th><th>适用场景</th></tr><tr><td><strong>Zero-Shot CoT</strong></td><td>直接加「让我们一步步思考」</td><td>日常使用，最简单</td></tr><tr><td><strong>Few-Shot CoT</strong></td><td>给出包含推理过程的示例</td><td>复杂推理，需要示范</td></tr><tr><td><strong>Self-Consistency</strong></td><td>生成多条推理路径，投票选最一致的</td><td>高可靠性要求的决策</td></tr></table><div class="code-block" style="margin-top:12px"><span class="hl">实战对比：</span>\n\n<span class="hl">无 CoT：</span>「我们应该用微服务还是单体架构？」\n→ AI 直接给出「用微服务」（可能是偏见）\n\n<span class="hl">有 CoT：</span>「我们应该用微服务还是单体架构？请一步步分析：\n1. 先明确团队规模和技术能力\n2. 评估系统复杂度和模块耦合度\n3. 分析部署频率和独立扩展需求\n4. 考虑运维成本和监控复杂度\n5. 综合判断：推荐哪种架构及理由」\n→ AI 逐步推导，结论更可靠</div>'},
 
-    {name:"自我精炼",en:"Self-Refine / Iterative Refinement",stars:4,quotes:["好文章不是写出来的，是改出来的。","第一稿是对话，第二稿是打磨，第三稿才是作品。"],
+    {name:"自我精炼",en:"Self-Refine / Iterative Refinement",stars:4,updated:"2026-04-14",quotes:["好文章不是写出来的，是改出来的。","第一稿是对话，第二稿是打磨，第三稿才是作品。"],
      desc:"Madaan et al.（2023）提出。让 AI <strong>生成→自我反馈→改进</strong>的迭代循环。一次生成的内容像初稿，让 AI 自己审查并改进，相当于给 AI 装了一个「内部编辑」。通常2-3轮迭代后质量显著提升。",
      demo:'<div class="code-block"><span class="hl">三步自我精炼模板：</span>\n\n<span class="hl">Step 1 — 初稿生成：</span>\n「请写一段关于[主题]的内容」\n\n<span class="hl">Step 2 — 自我审查：</span>\n「现在请以严格的编辑身份审查上面的内容：\n- 有没有不准确或不确定的事实？\n- 有没有可以更具体的地方（用数字替代形容词）？\n- 逻辑链条是否完整？因果是否成立？\n- 有没有废话（删掉后不影响理解的句子）？\n- 语感是否自然？有没有明显的 AI 味道？\n列出所有问题。」\n\n<span class="hl">Step 3 — 定向改进：</span>\n「根据上面的审查意见，重写这段内容。\n改进标准：信息密度+10%，AI感-50%。」</div><div class="callout green" style="margin-top:12px"><strong>进阶用法：</strong>设置不同的「审查人设」——让 AI 先戴「黑帽」（挑毛病），再戴「绿帽」（想创意），最后戴「蓝帽」（综合改稿）。与六顶思考帽结合使用。</div>'},
 
-    {name:"渐进式披露",en:"Progressive Disclosure",stars:4,quotes:["3秒给结论，30秒给逻辑，3分钟给证据——让每个读者自己选深度。","信息不是越多越好，是在对的时候给对的量。"],
+    {name:"渐进式披露",en:"Progressive Disclosure",stars:4,updated:"2026-04-14",quotes:["3秒给结论，30秒给逻辑，3分钟给证据——让每个读者自己选深度。","信息不是越多越好，是在对的时候给对的量。"],
      desc:"交互设计领域的经典原则，被 2026 年 AI Agent 架构大规模采用。核心：<strong>不要一次性展示所有信息，而是按需分层展开</strong>。先给结论和摘要，读者想深入再展开细节。与认知负荷理论互补——它从「信息呈现的顺序」角度降低认知负担。",
      demo:'<div class="callout"><strong>三层披露结构：</strong></div><div style="font-size:12px;color:var(--sub);line-height:2.2;margin-top:8px"><span class="dtag red">L1 标题层</span> 一句话结论（3秒获取核心信息）<br>「Q3建议将搜索体验列为P0优先级，预期DAU提升15%」<br><br><span class="dtag amber">L2 摘要层</span> 3-5句支撑（30秒理解逻辑）<br>「三个原因：搜索转化率仅2.1%（行业均值5.8%）、用户调研排名第一痛点、竞品已上线AI搜索」<br><br><span class="dtag green">L3 详情层</span> 完整数据和分析（3分钟深度阅读）<br>「具体数据表格、历史对比、风险提示...」</div><div class="code-block" style="margin-top:12px"><span class="hl">AI Prompt：</span>「请用渐进式披露结构输出：\n- 第一层：一句话核心结论\n- 第二层：3-5句关键论据\n- 第三层：完整的数据支撑和详细分析\n让读者可以根据需要选择阅读深度。」</div>'}
   ]
@@ -512,15 +515,15 @@ const DATA=[
   icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
   desc:"把脑子里的东西准确传递到另一个脑子里。教程、词典、知识库的底层方法论。",
   terms:[
-    {name:"费曼技巧",en:"Feynman Technique",stars:5,books:[{title:"别逗了，费曼先生",author:"理查德·费曼",url:"https://weread.qq.com/web/bookDetail/97a32790813ab84e9g018f5b"}],quotes:["如果你不能把它解释给一个六年级学生听，你就没真正懂。","教是最好的学——因为你会在卡壳的地方发现自己的无知。"],
+    {name:"费曼技巧",en:"Feynman Technique",stars:5,updated:"2026-04-14",books:[{title:"别逗了，费曼先生",author:"理查德·费曼",url:"https://weread.qq.com/web/bookDetail/97a32790813ab84e9g018f5b"}],quotes:["如果你不能把它解释给一个六年级学生听，你就没真正懂。","教是最好的学——因为你会在卡壳的地方发现自己的无知。"],
      desc:"以物理学家 Richard Feynman 命名。核心检验：<strong>如果你不能把一个概念解释给一个12岁的孩子听，说明你自己也没真正理解它</strong>。四步法：选概念 → 用简单语言解释 → 发现卡壳的地方 → 回去重学卡壳的部分。",
      demo:'<table class="cmp-table"><tr><th style="width:50%">通过费曼检验（好）</th><th>未通过（差）</th></tr><tr><td class="good">「金字塔原理就像倒着长的树。树根是你的结论，摆在最上面。三根主枝是你的理由。每根枝上的叶子是具体证据。看你报告的人，从上往下看就行了。」</td><td class="bad">「金字塔原理是一种由中心论点统领各层级分论点的演绎/归纳混合逻辑架构，强调纵向的因果推理与横向的MECE分类原则。」</td></tr></table><div class="callout green"><strong>训练方式：</strong>学完一个新概念后，打开备忘录，假装对面坐着一个好奇但完全不懂的朋友，口语化地写下来。写不下去的地方就是你没理解的地方。</div>'},
 
-    {name:"SECI 知识转化模型",en:"Nonaka & Takeuchi",stars:4,quotes:["老师傅的手感变不成文档，但可以变成师徒制。","知识不流动就是存量，流动起来才是力量。"],
+    {name:"SECI 知识转化模型",en:"Nonaka & Takeuchi",stars:4,updated:"2026-04-14",quotes:["老师傅的手感变不成文档，但可以变成师徒制。","知识不流动就是存量，流动起来才是力量。"],
      desc:"野中郁次郎提出的知识创造理论。知识在<strong>默会知识</strong>（Tacit，只可意会）和<strong>显性知识</strong>（Explicit，可文档化）之间通过四种模式转化：社会化→外显化→组合化→内化。",
      demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:12px"><div style="padding:12px;background:var(--tag-bg);border-radius:6px"><strong>S 社会化</strong><br>默会→默会<br><em>师傅带徒弟，耳濡目染</em><br><span style="color:var(--accent)">例：跟着资深PM参加需求评审3个月</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px"><strong>E 外显化</strong><br>默会→显性<br><em>把经验写成方法论</em><br><span style="color:var(--accent)">例：把用户洞察写成标准化的需求文档模板</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px"><strong>C 组合化</strong><br>显性→显性<br><em>整合多个文档成体系</em><br><span style="color:var(--accent)">例：把分散的wiki整理成结构化的知识库</span></div><div style="padding:12px;background:var(--tag-bg);border-radius:6px"><strong>I 内化</strong><br>显性→默会<br><em>反复练习变成肌肉记忆</em><br><span style="color:var(--accent)">例：SCQA 用多了就自动带入汇报开头</span></div></div><div class="callout amber"><strong>核心洞察：</strong>企业知识库本身就是一次从「外显化」到「组合化」的知识转化——把分散在老员工脑子里的经验（默会知识）结构化为可检索的文档（显性知识）。</div>'},
 
-    {name:"布鲁姆认知分层",en:"Bloom\'s Taxonomy",stars:4,quotes:["记住不等于理解，理解不等于会用，会用不等于会创造。","真正的学会，是你能教别人——而且教出新东西。"],
+    {name:"布鲁姆认知分层",en:"Bloom\'s Taxonomy",stars:4,updated:"2026-04-14",quotes:["记住不等于理解，理解不等于会用，会用不等于会创造。","真正的学会，是你能教别人——而且教出新东西。"],
      desc:"Benjamin Bloom 提出的学习目标分层模型。从低到高：<strong>记忆 → 理解 → 应用 → 分析 → 评价 → 创造</strong>。好的教学内容应该引导学习者逐级攀升，而非停留在「记忆」层。",
      demo:'<div style="display:flex;flex-direction:column;gap:4px;font-size:12px">'+
      [["创造","设计一套新的客服工单处理模型","var(--accent)","#fff"],
@@ -532,11 +535,11 @@ const DATA=[
      ].map((l,i)=>'<div style="padding:8px 16px;background:'+l[2]+';color:'+l[3]+';border-radius:6px;margin-left:'+(5-i)*16+'px"><strong>L'+(6-i)+' '+l[0]+'</strong> — '+l[1]+'</div>').join('')+
      '</div><div class="callout green" style="margin-top:12px"><strong>检验：</strong>你的内容让读者停留在哪一层？如果只是「记住了金字塔原理」（L1），不如让他「用金字塔原理改写自己的上周汇报」（L3）。</div>'},
 
-    {name:"间隔重复",en:"Spaced Repetition",stars:3,quotes:["遗忘不是敌人，是信号——它告诉你该复习了。","重复的时机比重复的次数更重要。"],
+    {name:"间隔重复",en:"Spaced Repetition",stars:3,updated:"2026-04-14",quotes:["遗忘不是敌人，是信号——它告诉你该复习了。","重复的时机比重复的次数更重要。"],
      desc:"Ebbinghaus 遗忘曲线的实战对策。刚学的东西在24小时内忘70%——除非你在遗忘发生前<strong>有计划地复习</strong>。间隔逐渐拉长：1天→3天→7天→14天→30天。Anki 等工具的底层原理。",
      demo:'<div class="code-block"><span class="hl">遗忘曲线 vs 间隔复习效果：</span>\n\n不复习：  ████████░░░░░░░░░░░░  24h后记住30%\n复习1次：  █████████████░░░░░░░  3天后记住65%\n复习2次：  ████████████████░░░░  7天后记住80%\n复习3次：  ██████████████████░░  30天后记住90%\n\n<span class="hl">实操建议：</span>\n1. 学完新概念当天用自己的话复述一遍（费曼技巧）\n2. 3天后找一个实际场景应用一次\n3. 7天后尝试教给别人\n4. 30天后检查——能否不看笔记直接调用？</div>'},
 
-    {name:"精细化编码",en:"Elaborative Encoding",stars:2,quotes:["新知识是流浪汉，旧知识是房东——精细化编码就是给它找到住处。","越多挂钩，越难忘记。"],
+    {name:"精细化编码",en:"Elaborative Encoding",stars:2,updated:"2026-04-14",quotes:["新知识是流浪汉，旧知识是房东——精细化编码就是给它找到住处。","越多挂钩，越难忘记。"],
      desc:"记忆心理学核心策略。新知识不是独立存储的，而是与已有知识<strong>建立连接</strong>后才牢固。方法：类比、联想、与个人经验绑定、生成画面。越多连接，记忆越深。",
      demo:'<table class="cmp-table"><tr><th>新概念</th><th>精细化编码方式</th></tr><tr><td>MECE 法则</td><td>「就像分类垃圾桶——可回收、有害、厨余互不混放（ME），但加起来覆盖所有垃圾（CE）」</td></tr><tr><td>沉没成本</td><td>「就像电影看了半小时发现很烂——你已经花的票钱不应该成为继续看下去的理由」</td></tr><tr><td>复利效应</td><td>「就像滚雪球——雪球越大，每滚一圈粘的雪越多。关键不是雪多，是坡够长」</td></tr></table><div class="callout"><strong>与费曼技巧的区别：</strong>费曼技巧检验你是否理解；精细化编码帮助你记住。一个管入口，一个管存储。</div>'}
   ]
@@ -547,82 +550,82 @@ const DATA=[
 {
  title:"认识论与知识哲学",
  items:[
-    {name:"波兰尼默会知识",en:"Polanyi's Tacit Knowledge",stars:5,
+    {name:"波兰尼默会知识",en:"Polanyi's Tacit Knowledge",stars:5,updated:"2026-04-14",
      quotes:["我们知道的远比我们能说出来的多。——波兰尼","骑自行车的知识永远写不进教科书——这就是默会知识的力量。"],
      books:[{title:"《个人知识》迈克尔·波兰尼",url:"https://weread.qq.com/web/search/books?keyword=%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86+%E6%B3%A2%E5%85%B0%E5%B0%BC",quote:"We can know more than we can tell."}],
      desc:"波兰尼1958年提出：人类知识分为<strong>显性知识</strong>（可编码、可传授）和<strong>默会知识</strong>（只可意会、难以言传）。你能骑自行车但说不清如何保持平衡，你能识别人脸但说不清依据哪些特征——这都是默会知识。<strong>对AI的启示：</strong>AI只能处理显性知识，因此你的prompt越显式、越结构化，AI输出质量越高。把你的默会经验转化为显式规则，是人机协作的核心能力。",
      demo:'<table class="cmp-table"><tr><th>维度</th><th>显性知识</th><th>默会知识</th></tr><tr><td>形式</td><td>文档、公式、数据库</td><td>直觉、经验、身体记忆</td></tr><tr><td>传播方式</td><td>阅读、教学、搜索</td><td>师徒、模仿、亲身实践</td></tr><tr><td>举例</td><td>Python语法手册</td><td>资深工程师debug时的直觉</td></tr><tr><td>AI处理能力</td><td class="good">擅长</td><td class="bad">极弱——需人工显式化</td></tr></table><div class="callout amber"><strong>行动指南：</strong>写prompt时问自己：「我脑子里有什么判断标准没写出来？」——把它写出来，就是把默会知识显式化。</div>'},
 
-    {name:"库恩范式转换",en:"Kuhn's Paradigm Shift",stars:5,
+    {name:"库恩范式转换",en:"Kuhn's Paradigm Shift",stars:5,updated:"2026-04-14",
      quotes:["正常科学是在既定范式内解谜，革命科学是掀翻棋盘重来。","新范式不是旧范式的升级补丁，而是整个操作系统的更换。"],
      books:[{title:"《科学革命的结构》托马斯·库恩",url:"https://weread.qq.com/web/search/books?keyword=%E7%A7%91%E5%AD%A6%E9%9D%A9%E5%91%BD%E7%9A%84%E7%BB%93%E6%9E%84",quote:"科学革命不是积累，而是范式的整体更替。"}],
      desc:"库恩1962年提出：科学不是线性进步的，而是经历<strong>常规科学→异常积累→危机→革命→新范式</strong>的循环。旧范式内无法解释的「异常」越积越多，直到量变引发质变。<strong>对思考的启示：</strong>当你发现现有框架越来越多「补丁」时，可能不是框架需要修补，而是需要整个替换。产品、行业、个人认知都适用这个模型。",
      demo:'<div class="code-block"><span class="hl">范式转换实例：</span>\n\n<strong>物理学：</strong>牛顿力学 → 爱因斯坦相对论\n  异常：迈克尔逊-莫雷实验、水星进动\n  补丁失败：以太假说越补越漏\n  范式革命：时空是弯曲的，不是绝对的\n\n<strong>商业：</strong>功能手机 → 智能手机\n  异常：用户开始用手机上网、拍照、听歌\n  补丁失败：诺基亚给功能机加触摸屏\n  范式革命：iPhone重新定义了「手机是什么」\n\n<strong>个人认知：</strong>「努力=成功」→ 「杠杆×方向×努力=成功」\n  异常：很多人很努力但没结果\n  范式革命：方向和杠杆比纯粹努力更重要</div>'},
 
-    {name:"波普尔证伪主义",en:"Popper's Falsifiability",stars:5,
+    {name:"波普尔证伪主义",en:"Popper's Falsifiability",stars:5,updated:"2026-04-14",
      quotes:["一个不能被证伪的理论，不是太强大，而是太空虚。","科学的标志不是能被证实，而是敢被推翻。"],
      books:[{title:"《猜想与反驳》卡尔·波普尔",url:"https://weread.qq.com/web/search/books?keyword=%E7%8C%9C%E6%83%B3%E4%B8%8E%E5%8F%8D%E9%A9%B3",quote:"科学理论的标准不是可证实性，而是可证伪性。"}],
      desc:"波普尔提出：真正的科学理论必须能够被<strong>证伪</strong>——即存在某种可能的观察结果能推翻它。「明天可能下雨也可能不下雨」不是科学命题（永远对），「水在标准气压下100°C沸腾」是科学命题（可以被实验推翻）。<strong>实用价值：</strong>写分析报告时，先问自己「什么证据能推翻我的结论？」——如果找不到，说明你的结论可能太模糊了。",
      demo:'<table class="cmp-table"><tr><th>命题</th><th>可证伪？</th><th>评价</th></tr><tr><td>「这个功能上线后用户会更活跃」</td><td class="bad">否——「更活跃」没定义</td><td>改为：DAU提升10%以上</td></tr><tr><td>「如果7天留存率低于20%，说明引导流程有问题」</td><td class="good">是——有明确阈值和归因</td><td>可执行、可验证</td></tr><tr><td>「市场前景广阔」</td><td class="bad">否——永远正确的废话</td><td>改为：2026年TAM超过500亿</td></tr><tr><td>「用户不喜欢新界面是因为不习惯」</td><td class="bad">否——任何负面反馈都能归因为不习惯</td><td>需要设定时间窗口和对照组</td></tr></table><div class="callout green"><strong>波普尔检验法：</strong>写完任何结论后问一句——「什么数据能证明我错了？」能回答这个问题，你的结论才值得信任。</div>'},
 
-    {name:"奥卡姆剃刀",en:"Occam\'s Razor",stars:5,
+    {name:"奥卡姆剃刀",en:"Occam\'s Razor",stars:5,updated:"2026-04-14",
      quotes:["如无必要，勿增实体。——奥卡姆的威廉","解释越复杂，离真相可能越远——除非复杂本身有证据支撑。"],
      books:[{title:"《简单的力量》杰克·特劳特",url:"https://weread.qq.com/web/search/books?keyword=%E7%AE%80%E5%8D%95%E7%9A%84%E5%8A%9B%E9%87%8F",quote:"简单是终极的复杂。"}],
      desc:"14世纪逻辑学家奥卡姆的威廉提出：在能同样好地解释现象的多个假说中，<strong>选最简单的那个</strong>。不是说简单的一定对，而是在没有额外证据之前，复杂的假设不值得偏好。<strong>对写作和分析的启示：</strong>能用三个要素解释清楚的事情，不要用七个。报告中每增加一层因果链，都需要额外的证据支撑。",
      demo:'<div class="code-block"><span class="hl">场景：某电商APP改版后下单量下降15%</span>\n\n<strong>假设A（简单）：</strong>\n  新版结账流程多了2步 → 用户流失\n  验证方式：漏斗分析看哪一步流失最大\n\n<strong>假设B（复杂）：</strong>\n  改版触发了算法推荐偏移 → 推荐了低转化品类\n  → 同时竞品促销分流了用户 → 加上季节性波动\n  验证方式：需要4个独立分析\n\n<span class="hl">奥卡姆剃刀建议：</span>\n先验证假设A。如果漏斗数据确认是结账步骤流失，\n就不需要假设B的复杂解释。\n只有当A被排除后，才考虑更复杂的B。</div>'},
 
-    {name:"苏格拉底诘问法",en:"Socratic Questioning",stars:5,
+    {name:"苏格拉底诘问法",en:"Socratic Questioning",stars:5,updated:"2026-04-14",
      quotes:["我唯一知道的就是我什么都不知道。——苏格拉底","好问题比好答案更有价值——因为好问题改变思考方向。"],
      books:[{title:"《苏格拉底的申辩》柏拉图",url:"https://weread.qq.com/web/search/books?keyword=%E8%8B%8F%E6%A0%BC%E6%8B%89%E5%BA%95%E7%9A%84%E7%94%B3%E8%BE%A9",quote:"未经审视的人生不值得过。"}],
      desc:"苏格拉底不直接给答案，而是通过<strong>连续追问</strong>引导对方发现自己逻辑中的漏洞。六类经典问题：澄清类（你的意思是？）、假设类（你在假设什么？）、证据类（你怎么知道的？）、视角类（换个角度呢？）、后果类（这会导致什么？）、元问题类（为什么要问这个问题？）。<strong>对AI交互的启示：</strong>与其给AI一个大而模糊的prompt，不如用苏格拉底式追问拆解成6个精确小问题。",
      demo:'<table class="cmp-table"><tr><th>问题类型</th><th>经典追问</th><th>应用场景</th></tr><tr><td><strong>澄清类</strong></td><td>「你说的X具体指什么？能举个例子吗？」</td><td>需求评审中拆解模糊需求</td></tr><tr><td><strong>假设类</strong></td><td>「你在假设什么前提？如果前提不成立呢？」</td><td>商业计划审查</td></tr><tr><td><strong>证据类</strong></td><td>「支持这个判断的数据是什么？」</td><td>数据分析报告review</td></tr><tr><td><strong>视角类</strong></td><td>「如果你是竞争对手，你怎么看这件事？」</td><td>竞品分析、红队思维</td></tr><tr><td><strong>后果类</strong></td><td>「如果这样做了，最好和最坏的结果分别是？」</td><td>决策评估、风险预判</td></tr><tr><td><strong>元问题</strong></td><td>「我们为什么要讨论这个问题？它真的重要吗？」</td><td>会议效率、议题筛选</td></tr></table>'},
 
-    {name:"贝叶斯思维",en:"Bayesian Thinking",stars:5,
+    {name:"贝叶斯思维",en:"Bayesian Thinking",stars:5,updated:"2026-04-14",
      quotes:["先有判断不丢人，遇到新证据不更新才丢人。","所有观点都是概率，所有证据都在更新概率。"],
      books:[{title:"《信号与噪声》纳特·西尔弗",url:"https://weread.qq.com/web/search/books?keyword=%E4%BF%A1%E5%8F%B7%E4%B8%8E%E5%99%AA%E5%A3%B0",quote:"预测的关键不是拥有更多信息，而是更好地更新信念。"}],
      desc:"贝叶斯定理的思维方式：<strong>先有一个初始判断（先验概率），然后根据新证据不断更新</strong>。不追求「从零开始得出正确答案」，而是「每次新信息都让判断更准一点」。关键词：先验、似然、后验。<strong>实用价值：</strong>做决策时明确说出「我目前70%认为A方案更好」，然后随着数据积累更新这个数字——比「我觉得A好」更诚实也更可操作。",
      demo:'<div class="code-block"><span class="hl">案例：某产品功能是否值得投入</span>\n\n<strong>先验（拍脑袋）：</strong>60%值得投 — 基于行业趋势和直觉\n\n<strong>证据1：</strong>用户调研显示30%受访者主动提及该需求\n  → 更新至 72% — 需求确实存在\n\n<strong>证据2：</strong>竞品上线该功能后DAU无明显变化\n  → 更新至 55% — 需求存在但未必是增长引擎\n\n<strong>证据3：</strong>内部AB测试显示留存率+8%\n  → 更新至 78% — 有实际数据支撑\n\n<span class="hl">贝叶斯式决策记录：</span>\n每次新数据都明确记录：\n「从X%更新到Y%，因为[证据]」\n这比「综合考虑后我们决定投入」透明100倍。</div>'},
 
-    {name:"溯因推理",en:"Abductive Reasoning / Inference to Best Explanation",stars:4,
+    {name:"溯因推理",en:"Abductive Reasoning / Inference to Best Explanation",stars:4,updated:"2026-04-14",
      quotes:["演绎告诉你必然，归纳告诉你可能，溯因告诉你最合理。","面对不完整的证据，选最能解释全貌的那个故事。"],
      desc:"三大推理方式之一，由皮尔斯提出。<strong>演绎</strong>从规则推结论（必然正确但需要完备前提），<strong>归纳</strong>从案例推规则（概率性），<strong>溯因</strong>从结果推最佳解释（创造性跳跃）。医生看症状做诊断、侦探看线索锁嫌疑人、PM看数据异动找原因——都是溯因推理。",
      demo:'<table class="cmp-table"><tr><th>推理类型</th><th>逻辑</th><th>举例</th><th>特点</th></tr><tr><td><strong>演绎</strong></td><td>所有A是B → X是A → X是B</td><td>所有金属导电→铜是金属→铜导电</td><td>必然正确但保守</td></tr><tr><td><strong>归纳</strong></td><td>观察多个X是B → 所有X可能是B</td><td>1000只天鹅是白的→天鹅可能都是白的</td><td>概率性，一只黑天鹅就推翻</td></tr><tr><td class="good"><strong>溯因</strong></td><td>观察到B → A能最好解释B → 暂定A</td><td>地上湿了→最佳解释是下过雨→暂定下过雨</td><td>创造性，需持续验证</td></tr></table><div class="callout amber"><strong>PM日常就是溯因推理：</strong>数据跌了→最可能原因是什么→先查那个。关键是保持「暂定」心态——最佳解释不等于唯一解释。</div>'},
 
-    {name:"确认偏差",en:"Confirmation Bias",stars:4,
+    {name:"确认偏差",en:"Confirmation Bias",stars:4,updated:"2026-04-14",
      quotes:["你不是在找答案，你是在找同意你的证据。","大脑是律师不是科学家——它辩护而不是探索。"],
      books:[{title:"《思考，快与慢》丹尼尔·卡尼曼",url:"https://weread.qq.com/web/search/books?keyword=%E6%80%9D%E8%80%83%E5%BF%AB%E4%B8%8E%E6%85%A2",quote:"人倾向于寻找确认自己信念的证据，而忽略反面证据。"}],
      desc:"人类最顽固的认知偏差：一旦形成观点，我们会<strong>选择性地寻找、关注、记忆</strong>支持该观点的信息，同时忽略或贬低反面证据。你看好某只股票后会更关注利好消息，你决定一个方案后会更容易注意到支持它的数据。<strong>对抗方法：</strong>主动寻找反面证据（红队思维）、设定预注册判断标准、让持不同意见的人review你的分析。",
      demo:'<div class="code-block"><span class="hl">确认偏差如何扭曲分析：</span>\n\n预设：「新版首页设计更好」\n\n<strong>被确认偏差污染的分析：</strong>\n✓ 引用了3份支持新设计的用户反馈\n✗ 忽略了2份批评新设计的反馈\n✓ 强调了点击率提升5%\n✗ 没提到跳出率也升了8%\n→ 结论：新设计成功 ← 偏差结论\n\n<span class="hl">去偏差后的分析：</span>\n列出所有数据（正面+负面）\n  点击率 +5%   ← 利好\n  跳出率 +8%   ← 利空\n  反馈 3正2负  ← 中性偏正\n→ 结论：新设计有改善但跳出率问题需排查\n\n<span class="hl">实操工具：</span>\n写分析前先列一栏「反面证据」\n如果找不到任何反面数据——说明你还没认真找。</div>'},
 
-    {name:"邓宁-克鲁格效应",en:"Dunning-Kruger Effect",stars:4,
+    {name:"邓宁-克鲁格效应",en:"Dunning-Kruger Effect",stars:4,updated:"2026-04-14",
      quotes:["真正的无知不是知识的缺乏，而是对自身无知的无知。","能力不足的人有双重诅咒——既做错了，又不知道自己错了。"],
      desc:"心理学发现：<strong>能力最差的人最容易高估自己，能力最强的人反而容易低估自己</strong>。原因是：评估自己的能力本身就需要能力（元认知），而初学者恰恰缺乏这种元认知。曲线：从「不知道自己不知道」（盲目自信）→「知道自己不知道」（信心低谷）→「知道自己知道」（稳步上升）。",
      demo:'<div class="code-block"><span class="hl">邓宁-克鲁格曲线：</span>\n\n自信程度 ↑\n │\n █                                         ████\n █                                       ██\n ██                                    ██\n  █                                  ██\n  ██                               ██\n   █                              █\n   ██                           ██\n    █         ████████████████\n    ██     ███\n     █████\n └──────────────────────────────────────── 能力 →\n   愚昧之巅        绝望之谷       开悟之坡    大师高原\n\n<span class="hl">自检信号：</span>\n如果你觉得某个领域「很简单，没什么好学的」\n→ 大概率你还在愚昧之巅\n如果你觉得「越学越觉得自己不懂」\n→ 恭喜，你正在穿越绝望之谷</div>'},
 
-    {name:"诠释学循环",en:"Hermeneutic Circle",stars:3,
+    {name:"诠释学循环",en:"Hermeneutic Circle",stars:3,updated:"2026-04-14",
      quotes:["理解整体需要理解部分，理解部分需要理解整体——这不是悖论，是方法。","阅读不是单程票，是螺旋上升的旋转楼梯。"],
      desc:"源自施莱尔马赫和伽达默尔的哲学传统：<strong>理解一个文本的整体需要理解它的部分，而理解部分又需要对整体有把握</strong>——这构成一个循环。解决方式不是打破循环，而是在循环中<strong>螺旋式提升理解</strong>。每读一遍，理解都更深一层。<strong>实用价值：</strong>读复杂文档/代码时，第一遍快速扫全貌，第二遍精读细节，第三遍重建整体理解——这就是诠释学循环的实践。",
      demo:'<div class="code-block"><span class="hl">诠释学循环的实践方式：</span>\n\n读一份100页的行业研报：\n\n<strong>第1遍（鸟瞰）：</strong>\n  只看目录、摘要、每章结论 → 建立整体印象\n  耗时：15分钟\n  理解度：20%\n\n<strong>第2遍（精读）：</strong>\n  带着整体印象读关键章节 → 细节有了上下文\n  耗时：1小时\n  理解度：60%\n\n<strong>第3遍（重建）：</strong>\n  用自己的话重新组织全文逻辑 → 发现新关联\n  耗时：30分钟\n  理解度：85%\n\n每一遍都在更新对整体和部分的理解，\n这就是诠释学循环。</div>'},
 
-    {name:"黑天鹅理论",en:"Black Swan Theory",stars:4,
+    {name:"黑天鹅理论",en:"Black Swan Theory",stars:4,updated:"2026-04-14",
      quotes:["历史不是爬坡，是从悬崖到悬崖的跳跃。——塔勒布","你不需要预测黑天鹅，你需要让自己不怕黑天鹅。"],
      books:[{title:"《黑天鹅》纳西姆·塔勒布",url:"https://weread.qq.com/web/search/books?keyword=%E9%BB%91%E5%A4%A9%E9%B9%85+%E5%A1%94%E5%8B%92%E5%B8%83",quote:"我们对随机性的理解是如此贫乏，以至于我们不断被不可预测的事件惊呆。"}],
      desc:"塔勒布提出：极少数<strong>不可预测、影响巨大、事后可解释</strong>的事件主导了历史进程。9/11、iPhone诞生、COVID-19都是黑天鹅。关键不是预测黑天鹅（不可能），而是<strong>构建反脆弱性</strong>——让自己在意外中受益或至少不崩溃。",
      demo:'<table class="cmp-table"><tr><th>特征</th><th>说明</th><th>例子</th></tr><tr><td><strong>稀有性</strong></td><td>在正常预期之外</td><td>2020年全球疫情</td></tr><tr><td><strong>极端影响</strong></td><td>一旦发生，改变格局</td><td>iPhone重新定义手机行业</td></tr><tr><td><strong>事后可解释</strong></td><td>发生后人人马后炮</td><td>「其实移动互联网趋势早就有了」</td></tr></table><div class="callout green"><strong>应对策略：</strong>不要试图预测，而要做到两点：①减少对负面黑天鹅的暴露（限制下行风险）②增加对正面黑天鹅的暴露（多做小成本实验）。塔勒布称之为「杠铃策略」——90%极保守 + 10%极激进。</div>'},
 
-    {name:"知识诅咒",en:"Curse of Knowledge",stars:4,
+    {name:"知识诅咒",en:"Curse of Knowledge",stars:4,updated:"2026-04-14",
      quotes:["专家最大的盲区不是不够懂，而是忘了不懂是什么感觉。","敲桌子的人以为旋律很明显——这就是知识诅咒。"],
      books:[{title:"《让创意更有黏性》奇普·希思",url:"https://weread.qq.com/web/search/books?keyword=%E8%AE%A9%E5%88%9B%E6%84%8F%E6%9B%B4%E6%9C%89%E9%BB%8F%E6%80%A7",quote:"一旦你知道某件事，就很难想象不知道它是什么感觉。"}],
      desc:"1990年斯坦福实验：让一组人用手敲桌子「播放」歌曲旋律，另一组人猜歌名。敲桌子的人以为对方能猜中50%，实际猜中率只有2.5%。<strong>因为敲的人脑中有旋律，猜的人只听到敲击声。</strong>这就是知识诅咒——你一旦掌握某个知识，就很难还原到「不知道」的视角。<strong>对写作的启示：</strong>你觉得显而易见的事情，读者可能完全不懂。永远假设读者比你预期的更小白。",
      demo:'<div class="code-block"><span class="hl">知识诅咒的日常体现：</span>\n\n<strong>写PRD：</strong>\n  诅咒版：「接口按RESTful规范实现」\n  破除版：「用GET获取数据、POST创建数据、PUT修改数据」\n\n<strong>数据报告：</strong>\n  诅咒版：「DAU/MAU比值健康」\n  破除版：「每月活跃用户中有28%每天都来（行业平均20%）」\n\n<strong>向高管汇报：</strong>\n  诅咒版：「我们采用了微服务架构+K8s编排」\n  破除版：「我们把系统拆成了独立模块，可以单独升级不影响整体」\n\n<span class="hl">破除心法：</span>\n写完后找一个外行读 → 他皱眉的地方就是知识诅咒发作的地方。</div>'},
 
-    {name:"心智模型",en:"Mental Models",stars:4,
+    {name:"心智模型",en:"Mental Models",stars:4,updated:"2026-04-14",
      quotes:["你看到的世界不是世界本身，是你的心智模型投射的影子。","多一个模型，少一个盲区。——查理·芒格"],
      books:[{title:"《穷查理宝典》查理·芒格",url:"https://weread.qq.com/web/search/books?keyword=%E7%A9%B7%E6%9F%A5%E7%90%86%E5%AE%9D%E5%85%B8",quote:"你必须拥有多元的心智模型——如果你只有一两个，你会扭曲现实来适应你的模型。"}],
      desc:"芒格核心思想：人通过<strong>心智模型</strong>（简化的内在认知框架）来理解世界。只有一个模型就像只有一把锤子——看什么都像钉子。解决方案：<strong>构建跨学科的心智模型网格</strong>（物理、生物、心理学、经济学、历史……），用多个模型交叉验证同一问题。",
      demo:'<div class="code-block"><span class="hl">芒格的「格栅思维」实例：</span>\n\n<strong>问题：为什么某社交产品增长停滞？</strong>\n\n用「网络效应」模型看：\n  → 用户密度不够，新用户找不到朋友 → 冷启动失败\n\n用「进化论」模型看：\n  → 产品没有差异化，在竞争中被淘汰\n\n用「热力学」模型看：\n  → 系统趋向熵增（混乱），社区治理没跟上 → 劣币驱逐良币\n\n用「心理学」模型看：\n  → 社交压力太大，用户回避而非享受\n\n<span class="hl">综合判断：</span>\n单一模型可能误导你只解决一个维度的问题。\n多模型交叉 → 发现「冷启动 + 社区治理」是组合病因。</div>'},
 
-    {name:"可证伪假设检验",en:"Hypothesis Testing Framework",stars:3,
+    {name:"可证伪假设检验",en:"Hypothesis Testing Framework",stars:3,updated:"2026-04-14",
      quotes:["没有假设的研究是盲人摸象，没有检验的假设是自我欺骗。","好的假设不怕被推翻——怕的是永远不检验。"],
      desc:"科学方法的核心循环：<strong>观察→假设→预测→实验→分析→结论</strong>。关键步骤是把模糊的直觉转化为可检验的命题。不只是实验室的事——产品ABTest、市场调研、甚至复盘会议都在用这个框架。好的假设需要：具体、可测量、可证伪、有时间约束。",
      demo:'<div class="code-block"><span class="hl">从直觉到可检验假设的4步转化：</span>\n\n<strong>直觉：</strong>「用户觉得我们的搜索不好用」\n  ↓\n<strong>观察：</strong>搜索后跳出率42%，高于行业均值25%\n  ↓\n<strong>假设：</strong>如果在搜索结果中增加智能纠错和联想词，\n       搜索后跳出率将降低至30%以下（4周内）\n  ↓\n<strong>实验设计：</strong>ABTest，50%流量走新搜索\n  ↓\n<strong>判定标准：</strong>新版跳出率 ≤ 30% = 假设成立\n            新版跳出率 > 30% = 假设不成立，需新假设\n\n<span class="hl">关键要素清单：</span>\n□ 假设是否具体？（不是「变好」而是「降至30%」）\n□ 有没有时间约束？（4周内）\n□ 什么结果能证伪？（跳出率仍>30%）\n□ 样本量够不够？（至少各5000次搜索）</div>'}
@@ -697,6 +700,17 @@ DG['心智模型']='<div class="diagram"><svg viewBox="0 0 280 180" width="280" 
 DG['可证伪假设检验']='<div class="diagram"><div class="cyc"><div style="border-color:var(--accent)">1. 观察</div><span>\u2192</span><div style="border-color:#d97706">2. 假设</div><span>\u2192</span><div style="border-color:var(--accent2)">3. 预测</div><span>\u2192</span><div style="border-color:#3b82f6">4. 实验</div><span>\u2192</span><div style="border-color:#dc2626">5. 分析</div><span>\u21BA</span></div><div class="dlbl">科学方法的核心循环</div></div>';
 
 // === 渲染 ===
+
+// === 更新标识 ===
+function isNew(t){
+  if(!t.updated)return false;
+  const d=new Date(t.updated),now=new Date();
+  return (now-d)/(1000*60*60*24)<7;
+}
+function updatedBadge(t){
+  if(!t.updated)return '';
+  return '<span class="term-updated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+t.updated+'</span>';
+}
 function render(){
   const nav=document.getElementById("navList");
   const ct=document.getElementById("content");
@@ -704,14 +718,14 @@ function render(){
   DATA.forEach(sec=>{sec.terms.sort(function(a,b){return(b.stars||0)-(a.stars||0);});
     navH+='<div class="nav-group"><div class="nav-group-title" onclick="navScrollTo(\'sec-'+sec.id+'\')">'+sec.num+' '+sec.title+'</div>';
     sec.terms.forEach((t,i)=>{
-      navH+='<div class="nav-item" data-target="'+sec.id+"-"+i+'" onclick="navScrollTo(\''+sec.id+"-"+i+'\')">'+t.name+'</div>';
+      navH+='<div class="nav-item" data-target="'+sec.id+"-"+i+'" onclick="navScrollTo(\''+sec.id+"-"+i+'\')">'+t.name+(isNew(t)?'<span class="nav-new">NEW</span>':'')+'</div>';
     });
     navH+="</div>";
     ctH+='<div class="section" id="sec-'+sec.id+'"><div class="section-head"><h3>'+sec.icon+'<span class="num">'+sec.num+'</span>'+sec.title+'</h3><p>'+sec.desc+'</p></div><div class="term-grid">';
     sec.terms.forEach((t,i)=>{
       var starsH='<span class="stars">';for(var s=0;s<5;s++){starsH+='<svg class="star '+(s<t.stars?'active':'')+'" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';}starsH+='</span>';
       var booksH='';if(t.books&&t.books.length){booksH='<div class="book-refs"><div class="book-refs-title"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>经典著作</div>';t.books.forEach(function(b){booksH+='<div class="book-ref"><svg class="book-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><div><a href="'+b.url+'" target="_blank" rel="noopener">'+b.title+'</a> <span class="book-meta">— '+b.author+'</span>'+(b.quote?'<div class="book-quote">\u201c'+b.quote+'\u201d</div>':'')+'</div></div>';});booksH+='</div>';}
-      ctH+='<div class="term-card" id="'+sec.id+"-"+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span>'+starsH+'</h4><span class="arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div>'+(DG[t.name]||'')+'<div class="demo-box"><span class="demo-label">EXAMPLE</span>'+t.demo+'</div>'+booksH+'</div></div>';
+      ctH+='<div class="term-card" id="'+sec.id+"-"+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span>'+starsH+updatedBadge(t)+'</h4><span class="arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div>'+(t.quotes&&t.quotes.length?'<div class="quotes-box"><svg class="quotes-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+t.quotes.map(function(q){return '<div class="quote-line">'+q+'</div>';}).join('')+'</div>':'')+(DG[t.name]||'')+'<div class="demo-box"><span class="demo-label">EXAMPLE</span>'+t.demo+'</div>'+booksH+'</div></div>';
     });
     ctH+="</div></div>";
   });
