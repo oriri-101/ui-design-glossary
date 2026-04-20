@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>终端命令完全指南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+/* ══════════════════════════════════════════════════
+   DESIGN SYSTEM  —  Magazine × Dark × Gold
+   ══════════════════════════════════════════════════ */
+:root {
+  /* ── Dark theme (default) ── */
+  --ink:       #0a0a0c;
+  --ink2:      #111115;
+  --ink3:      #18181e;
+  --ink4:      #22222a;
+  --rule:      #2a2a35;
+  --muted:     #4a4a5a;
+  --body:      #b8b8c8;
+  --head:      #eeeef2;
+  --gold:      #e8a020;
+  --gold-lt:   #f0bc55;
+  --gold-dk:   #9c6b10;
+  --amber:     #f5d080;
+  --teal:      #3ec9a7;
+  --crimson:   #e05050;
+  --sky:       #60aaee;
+  /* terminal bg */
+  --term-bg:   #000002;
+  --term-bar:  #111115;
+
+  /* Type scale */
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Consolas, monospace;
+
+  /* Spacing */
+  --gap: 32px;
+  --col: 760px;
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --ink:       #faf9f6;
+  --ink2:      #f3f1ec;
+  --ink3:      #ebe8e0;
+  --ink4:      #e0ddd4;
+  --rule:      #d4cfc4;
+  --muted:     #8a8070;
+  --body:      #3a3530;
+  --head:      #1a1510;
+  --gold:      #b87010;
+  --gold-lt:   #d08828;
+  --gold-dk:   #8a5008;
+  --amber:     #7a4808;
+  --teal:      #1a8068;
+  --crimson:   #c03838;
+  --sky:       #2878b8;
+  --term-bg:   #1a1a20;
+  --term-bar:  #22222c;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--ink);
+  color: var(--body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
+}
+
+/* smooth theme transitions */
+*, *::before, *::after {
+  transition: background-color .25s, border-color .25s, color .2s;
+}
+
+/* ── Typography helpers ── */
+.display {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: -.02em;
+}
+.label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold);
+}
+.rule-h { border: none; border-top: 1px solid var(--rule); }
+
+/* ══════════════════════════════════════════════════
+   COVER
+   ══════════════════════════════════════════════════ */
+.cover {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative grid lines */
+.cover::before {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: .25;
+  pointer-events: none;
+}
+
+/* Gold spotlight */
+.cover::after {
+  content: "";
+  position: absolute;
+  width: 900px; height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,160,32,.18) 0%, transparent 70%);
+  top: -200px; right: -100px;
+  pointer-events: none;
+}
+
+.cover-masthead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 56px;
+  border-bottom: 1px solid var(--rule);
+  position: relative; z-index: 1;
+}
+.masthead-title {
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 700;
+  color: var(--gold);
+  letter-spacing: .08em;
+}
+.masthead-meta {
+  display: flex; gap: 28px;
+  font-size: 11px; color: var(--muted);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+
+.cover-body {
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 56px;
+  position: relative; z-index: 1;
+}
+
+.cover-issue {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 32px;
+}
+.issue-line {
+  width: 40px; height: 2px; background: var(--gold);
+}
+.issue-text {
+  font-size: 11px; font-weight: 700;
+  color: var(--gold); letter-spacing: .15em; text-transform: uppercase;
+}
+
+.cover-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 400; font-style: italic;
+  line-height: 1.0;
+  color: var(--head);
+  letter-spacing: -.03em;
+  margin-bottom: 12px;
+}
+.cover-h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.cover-sub {
+  font-size: 17px; color: var(--muted);
+  max-width: 540px; line-height: 1.6;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+
+.cover-stats {
+  display: flex; gap: 40px; flex-wrap: wrap;
+}
+.stat {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.stat-num {
+  font-size: 36px; font-weight: 800;
+  font-family: var(--font-serif);
+  color: var(--gold); line-height: 1;
+}
+.stat-label { font-size: 11px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+
+.cover-scroll {
+  padding: 28px 56px;
+  border-top: 1px solid var(--rule);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; color: var(--muted);
+  letter-spacing: .1em; text-transform: uppercase;
+  position: relative; z-index: 1;
+  cursor: pointer;
+}
+.scroll-arrow { animation: bounce 2s infinite; }
+@keyframes bounce {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(4px)}
+}
+
+/* ══════════════════════════════════════════════════
+   MAIN LAYOUT
+   ══════════════════════════════════════════════════ */
+.magazine {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 56px 80px;
+}
+
+/* ── TOC ── */
+.toc-section {
+  border-top: 3px solid var(--gold);
+  padding-top: 48px;
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+.toc-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 32px;
+}
+.toc-eyebrow { font-family: var(--font-serif); font-style: italic; font-size: 13px; color: var(--gold); }
+.toc-h2 { font-size: 32px; font-family: var(--font-serif); color: var(--head); font-weight: 400; }
+.toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1px; background: var(--rule); }
+.toc-item {
+  background: var(--ink2);
+  padding: 18px 22px;
+  display: flex; align-items: flex-start; gap: 14px;
+  cursor: pointer; text-decoration: none; color: inherit;
+  transition: background .15s;
+  border: none;
+}
+.toc-item:hover { background: var(--ink3); }
+.toc-item:hover .toc-title { color: var(--gold); }
+.toc-index {
+  font-family: var(--font-serif);
+  font-size: 28px; font-style: italic;
+  color: var(--rule); line-height: 1;
+  min-width: 36px; font-weight: 400;
+  transition: color .15s;
+}
+.toc-item:hover .toc-index { color: var(--gold-dk); }
+.toc-info { flex: 1; }
+.toc-title { font-size: 14px; font-weight: 600; color: var(--body); margin-bottom: 3px; transition: color .15s; }
+.toc-desc { font-size: 12px; color: var(--muted); }
+.toc-level {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px; align-self: center;
+  flex-shrink: 0;
+}
+.lv-b { background: rgba(62,201,167,.12); color: var(--teal); }
+.lv-i { background: rgba(96,170,238,.12); color: var(--sky); }
+.lv-a { background: rgba(232,160,32,.12); color: var(--gold); }
+.lv-e { background: rgba(224,80,80,.12);  color: var(--crimson); }
+
+/* ══════════════════════════════════════════════════
+   ARTICLE SECTIONS
+   ══════════════════════════════════════════════════ */
+.article {
+  margin-bottom: 72px;
+  border-top: 1px solid var(--rule);
+  padding-top: 48px;
+}
+
+.article-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 32px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.article-num {
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 52px;
+  color: var(--gold-dk); line-height: 1;
+  font-weight: 400;
+}
+.article-num-wrap { display: flex; align-items: flex-start; gap: 16px; }
+.article-title-block { flex: 1; padding-top: 6px; }
+.article-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.article-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 400; font-style: italic;
+  color: var(--head); line-height: 1.15;
+  letter-spacing: -.02em;
+}
+.article-deck { font-size: 15px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+.toggle-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--ink3); border: 1px solid var(--rule);
+  color: var(--muted); font-family: var(--font-mono);
+  font-size: 11px; padding: 6px 14px; border-radius: 4px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+  margin-top: 12px;
+}
+.toggle-btn:hover { border-color: var(--gold); color: var(--gold); }
+.toggle-icon { transition: transform .3s; }
+.toggle-icon.open { transform: rotate(180deg); }
+
+.article-body { display: none; }
+.article-body.open { display: block; }
+
+/* dropcap for first paragraphs */
+.dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 4em; font-weight: 400;
+  float: left; line-height: .8;
+  margin: 4px 8px -2px 0;
+  color: var(--gold);
+}
+
+/* intro text */
+.intro-text {
+  font-size: 16px; line-height: 1.75;
+  color: var(--body); max-width: var(--col);
+  margin-bottom: 32px;
+}
+
+/* pull quote */
+.pullquote {
+  border-left: 4px solid var(--gold);
+  padding: 12px 24px;
+  margin: 28px 0;
+  font-family: var(--font-serif);
+  font-style: italic; font-size: 22px;
+  color: var(--head); line-height: 1.4;
+}
+.pullquote span { color: var(--gold); }
+
+/* ── Terminal ── */
+.terminal {
+  background: var(--term-bg);
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  overflow: hidden;
+  margin: 28px 0;
+  font-family: var(--font-mono);
+  position: relative;
+}
+.terminal::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--amber), transparent);
+  transition: none;
+}
+.term-bar {
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--rule);
+  padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.term-dots { display: flex; gap: 7px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+.term-title {
+  flex: 1; text-align: center;
+  font-size: 11px; color: var(--muted);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.term-copy {
+  background: none; border: 1px solid var(--rule);
+  cursor: pointer; color: var(--muted);
+  font-size: 11px; padding: 3px 10px; border-radius: 3px;
+  transition: all .15s; font-family: var(--font-mono);
+}
+.term-copy:hover { border-color: var(--gold); color: var(--gold); }
+.term-body { padding: 20px 24px; font-size: 13px; line-height: 1.9; overflow-x: auto; }
+
+.ps      { color: var(--gold); }
+.cmd     { color: var(--head); }
+.arg     { color: var(--amber); }
+.flag    { color: var(--sky); }
+.path    { color: var(--teal); }
+.out     { color: var(--muted); }
+.comment { color: #383848; font-style: italic; }
+.err     { color: var(--crimson); }
+.hi      { color: var(--gold-lt); }
+
+/* interactive */
+.term-interactive .term-body { padding-bottom: 0; }
+.term-input-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 24px;
+  border-top: 1px solid var(--ink4);
+}
+.term-prompt { color: var(--gold); font-size: 13px; white-space: nowrap; }
+.term-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--head); caret-color: var(--gold);
+  font-family: var(--font-mono); font-size: 13px;
+}
+.term-output { min-height: 32px; padding: 4px 0; font-size: 13px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; }
+.term-hint { font-size: 11px; color: var(--muted); padding: 8px 24px 12px; border-top: 1px solid var(--ink4); font-family: var(--font-mono); }
+
+/* ── Command Table ── */
+.cmd-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 13px; margin: 24px 0;
+}
+.cmd-table thead tr { border-bottom: 2px solid var(--gold-dk); }
+.cmd-table th {
+  text-align: left; padding: 10px 16px;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--gold);
+}
+.cmd-table td { padding: 12px 16px; border-bottom: 1px solid var(--ink4); vertical-align: top; }
+.cmd-table tr:last-child td { border-bottom: none; }
+.cmd-table tr:hover td { background: var(--ink3); }
+.cmd-key { font-family: var(--font-mono); color: var(--amber); font-size: 13px; white-space: nowrap; }
+.cmd-desc { color: var(--body); }
+.cmd-ex { font-family: var(--font-mono); color: var(--muted); font-size: 12px; margin-top: 3px; }
+
+/* ── Cards ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 1px; background: var(--rule); margin: 24px 0; }
+.card {
+  background: var(--ink2); padding: 20px;
+  border-top: 2px solid transparent;
+  transition: border-color .15s;
+}
+.card:hover { border-color: var(--gold); }
+.card-title {
+  font-size: 10px; font-weight: 700;
+  color: var(--gold); text-transform: uppercase; letter-spacing: .12em;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.card-title::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.card code {
+  display: block; font-family: var(--font-mono);
+  font-size: 12px; color: var(--teal); margin: 4px 0;
+}
+.card code em { color: var(--muted); font-style: normal; font-size: 11px; margin-left: 6px; }
+
+/* ── Callout ── */
+.callout {
+  display: flex; gap: 14px;
+  padding: 16px 20px;
+  margin: 20px 0; font-size: 13.5px;
+}
+.callout-tip    { background: rgba(62,201,167,.07);  border-left: 3px solid var(--teal); }
+.callout-warn   { background: rgba(232,160,32,.07);  border-left: 3px solid var(--gold); }
+.callout-danger { background: rgba(224,80,80,.07);   border-left: 3px solid var(--crimson); }
+.callout-info   { background: rgba(96,170,238,.07);  border-left: 3px solid var(--sky); }
+.callout-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+.callout-body strong { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+/* ── Quiz ── */
+.quiz {
+  background: var(--ink2); border-top: 3px solid var(--gold);
+  padding: 24px; margin: 28px 0;
+}
+.quiz-tag { font-size: 10px; font-weight: 700; color: var(--gold); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+.quiz-q { font-size: 15px; font-weight: 600; color: var(--head); margin-bottom: 18px; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.quiz-opt {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px;
+  border: 1px solid var(--rule);
+  background: none; color: var(--body);
+  text-align: left; font-family: inherit; font-size: 13.5px;
+  cursor: pointer; transition: all .15s;
+  position: relative;
+}
+.quiz-opt::before {
+  content: "";
+  width: 0; height: 100%;
+  position: absolute; left: 0; top: 0;
+  background: var(--gold);
+  transition: width .2s;
+  opacity: .06;
+}
+.quiz-opt:hover { border-color: var(--gold); color: var(--head); }
+.quiz-opt:hover::before { width: 100%; }
+.quiz-opt.correct { border-color: var(--teal); color: var(--teal); background: rgba(62,201,167,.06); }
+.quiz-opt.wrong   { border-color: var(--crimson); color: var(--crimson); background: rgba(224,80,80,.06); }
+.quiz-opt:disabled { cursor: default; }
+.quiz-result { margin-top: 14px; font-size: 13px; padding: 10px 14px; display: none; font-family: var(--font-mono); }
+.quiz-result.correct { background: rgba(62,201,167,.08); color: var(--teal); display: block; border-left: 3px solid var(--teal); }
+.quiz-result.wrong   { background: rgba(224,80,80,.08);  color: var(--crimson); display: block; border-left: 3px solid var(--crimson); }
+
+/* ── Cheatsheet ── */
+.cheat-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 1px; background: var(--rule); margin: 24px 0; }
+.cheat-block { background: var(--ink2); overflow: hidden; }
+.cheat-head {
+  padding: 10px 16px; font-size: 10px; font-weight: 700;
+  color: var(--gold); text-transform: uppercase; letter-spacing: .12em;
+  border-bottom: 1px solid var(--rule); background: var(--ink3);
+  display: flex; align-items: center; gap: 8px;
+}
+.cheat-body { padding: 12px 16px; }
+.cheat-row { display: flex; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--ink4); font-size: 12.5px; align-items: baseline; }
+.cheat-row:last-child { border-bottom: none; }
+.cheat-code { font-family: var(--font-mono); color: var(--amber); white-space: nowrap; min-width: 140px; font-size: 12px; }
+.cheat-desc { color: var(--muted); }
+
+/* ── Progress ── */
+.progress-section { background: var(--ink2); border-top: 3px solid var(--gold); padding: 32px; margin: 64px 0; }
+.progress-title { font-family: var(--font-serif); font-style: italic; font-size: 26px; color: var(--head); margin-bottom: 8px; }
+.progress-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.prog-wrap { margin: 16px 0; }
+.prog-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px; }
+.prog-name { color: var(--body); font-weight: 500; }
+.prog-val { font-family: var(--font-mono); color: var(--gold); }
+.prog-bar { height: 4px; background: var(--rule); }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dk), var(--gold), var(--amber)); transition: width .6s ease; }
+
+/* ══════════════════════════════════════════════════
+   STICKY NAV
+   ══════════════════════════════════════════════════ */
+.snav {
+  position: fixed; right: 28px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px; z-index: 100;
+}
+.snav-item {
+  display: flex; align-items: center; gap: 0;
+  cursor: pointer; background: none; border: none;
+  justify-content: flex-end;
+}
+.snav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--rule); transition: all .25s;
+}
+.snav-item:hover .snav-dot,
+.snav-item.active .snav-dot {
+  background: var(--gold);
+  width: 20px; border-radius: 3px;
+}
+.snav-label {
+  position: absolute; right: 24px;
+  font-size: 11px; color: var(--gold);
+  background: var(--ink2); border: 1px solid var(--rule);
+  padding: 3px 10px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: opacity .2s;
+  font-family: var(--font-mono);
+}
+.snav-item:hover .snav-label { opacity: 1; }
+
+/* ══════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 40px 56px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; align-items: center;
+}
+.footer-left { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--gold); }
+.footer-right { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.8; }
+.footer-right a { color: var(--gold); text-decoration: none; }
+.footer-right a:hover { text-decoration: underline; }
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .cover-masthead, .cover-body, .cover-scroll { padding-left: 24px; padding-right: 24px; }
+  .cover-h1 { font-size: 42px; }
+  .magazine { padding-left: 24px; padding-right: 24px; }
+  .snav { display: none; }
+  footer { grid-template-columns: 1fr; padding: 28px 24px; }
+  .footer-right { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     COVER PAGE
+═══════════════════════════════════════════════ -->
+<div class="cover" id="top">
+  <div class="cover-masthead">
+    <div class="masthead-title">TERMINAL · COMPLETE GUIDE</div>
+    <div class="masthead-meta">
+      <span>April 2026</span>
+      <span>Vol. I</span>
+      <span>Interactive Edition</span>
+      <button id="themeToggle" onclick="toggleTheme()" title="切换亮色/暗色模式" style="
+        background:none; border:1px solid var(--rule); color:var(--muted);
+        font-family:var(--font-mono); font-size:11px; padding:4px 12px;
+        cursor:pointer; letter-spacing:.06em; text-transform:uppercase;
+        transition:border-color .15s, color .15s;
+      " onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'"
+         onmouseout="this.style.borderColor='var(--rule)';this.style.color='var(--muted)'">
+        ◐ Dark
+      </button>
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-issue">
+      <div class="issue-line"></div>
+      <div class="issue-text">命令行完全指南</div>
+    </div>
+
+    <h1 class="cover-h1">
+      掌握<br><em>终端</em><br>的艺术
+    </h1>
+
+    <p class="cover-sub">
+      从零基础到专家级应用，系统性地建立你的命令行思维。
+      每个章节配有实战终端、即时测验与速查手册。
+    </p>
+
+    <div class="cover-stats">
+      <div class="stat">
+        <div class="stat-num">8</div>
+        <div class="stat-label">章节</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50<span style="font-size:22px;color:var(--gold-dk)">+</span></div>
+        <div class="stat-label">核心命令</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">互动测验</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">练习空间</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-scroll" onclick="document.getElementById('toc-anchor').scrollIntoView({behavior:'smooth'})">
+    <span class="scroll-arrow">↓</span>
+    <span>开始阅读</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STICKY NAV
+═══════════════════════════════════════════════ -->
+<nav class="snav" id="sNav"></nav>
+
+<!-- ══════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════ -->
+<div class="magazine" id="toc-anchor">
+
+  <!-- TOC -->
+  <div class="toc-section">
+    <div class="toc-header">
+      <div>
+        <div class="toc-eyebrow">Contents</div>
+        <div class="toc-h2">目录</div>
+      </div>
+    </div>
+    <div class="toc-grid" id="tocGrid"></div>
+  </div>
+
+  <!-- §1 -->
+  <div class="article" id="s1">
+    <div class="article-header" onclick="toggle('s1')">
+      <div class="article-num-wrap">
+        <div class="article-num">01</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">入门 · Beginner</div>
+          <h2 class="article-h2">终端是什么？</h2>
+          <p class="article-deck">理解 Terminal、Shell 与 Kernel 的关系，建立正确的心智模型</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1">
+        <span>展开</span><span class="toggle-icon">▾</span>
+      </button>
+    </div>
+    <div class="article-body open">
+
+      <p class="intro-text dropcap">
+        终端是你与操作系统对话的窗口——不是隐喻，是字面意义。在图形界面出现之前，
+        整个计算机世界都通过这一行文字运转。如今，掌握终端仍是区分普通用户与专业开发者的核心技能之一。
+      </p>
+
+      <div class="pullquote">
+        "给我一个终端，我就能移动整座服务器。"
+        <br><span>— 每一个学会了 CLI 的人</span>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">三个核心层次</div>
+          <code>Terminal <em>你看到的窗口程序</em></code>
+          <code>Shell <em>解释命令的程序 (zsh/bash)</em></code>
+          <code>Kernel <em>与硬件通信的 OS 核心</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">主流 Shell</div>
+          <code>bash <em>Linux 默认，最广泛</em></code>
+          <code>zsh <em>macOS 默认，功能丰富</em></code>
+          <code>fish <em>智能补全，友好</em></code>
+          <code>sh <em>POSIX 兼容标准</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">提示符解读</div>
+          <code>user@host:~$ <em>完整格式</em></code>
+          <code>~ <em>代表家目录</em></code>
+          <code>$ <em>普通用户</em></code>
+          <code># <em>root 超级用户</em></code>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>如何打开终端</strong>
+          macOS: <code style="font-family:var(--font-mono);color:var(--amber)">Cmd+Space</code> → 搜索 Terminal ·
+          Linux: <code style="font-family:var(--font-mono);color:var(--amber)">Ctrl+Alt+T</code> ·
+          Windows: 搜索 Windows Terminal
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">first session</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 查看当前 Shell</span>
+<span class="ps">$</span> <span class="cmd">echo</span> <span class="arg">$SHELL</span>
+<span class="out">/bin/zsh</span>
+
+<span class="comment"># 当前用户名</span>
+<span class="ps">$</span> <span class="cmd">whoami</span>
+<span class="out">orion</span>
+
+<span class="comment"># 当前时间</span>
+<span class="ps">$</span> <span class="cmd">date</span>
+<span class="out">Mon Apr 20 10:30:00 CST 2026</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §2 -->
+  <div class="article" id="s2">
+    <div class="article-header" onclick="toggle('s2')">
+      <div class="article-num-wrap">
+        <div class="article-num">02</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">入门 · Beginner</div>
+          <h2 class="article-h2">文件系统导航</h2>
+          <p class="article-deck">在目录树中自由移动，查看、创建、复制、删除文件</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <table class="cmd-table">
+        <thead><tr><th>命令</th><th>作用</th><th>典型用法</th></tr></thead>
+        <tbody>
+          <tr><td class="cmd-key">pwd</td><td><div class="cmd-desc">显示当前路径</div></td><td class="cmd-ex">pwd</td></tr>
+          <tr><td class="cmd-key">ls</td><td><div class="cmd-desc">列出目录内容</div><div class="cmd-ex">-l 长格式 · -a 含隐藏 · -h 可读大小</div></td><td class="cmd-ex">ls -lah ~/Documents</td></tr>
+          <tr><td class="cmd-key">cd</td><td><div class="cmd-desc">切换目录</div><div class="cmd-ex">cd - 上次目录 · cd ~ 家目录</div></td><td class="cmd-ex">cd /usr/local/bin</td></tr>
+          <tr><td class="cmd-key">mkdir</td><td><div class="cmd-desc">创建目录</div><div class="cmd-ex">-p 递归创建</div></td><td class="cmd-ex">mkdir -p src/components</td></tr>
+          <tr><td class="cmd-key">touch</td><td><div class="cmd-desc">创建空文件</div></td><td class="cmd-ex">touch index.html</td></tr>
+          <tr><td class="cmd-key">rm</td><td><div class="cmd-desc">删除</div><div class="cmd-ex">-r 递归 · -f 强制</div></td><td class="cmd-ex">rm -rf build/</td></tr>
+          <tr><td class="cmd-key">cp / mv</td><td><div class="cmd-desc">复制 / 移动或重命名</div></td><td class="cmd-ex">cp -r src/ bak/ · mv a.txt b.txt</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-danger">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>无法撤销</strong>
+          终端删除不经回收站。<code style="font-family:var(--font-mono);color:var(--amber)">rm -rf /</code> 会毁掉整个系统，
+          执行前务必先用 <code style="font-family:var(--font-mono);color:var(--amber)">ls</code> 确认目标。
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">filesystem demo</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="ps">$</span> <span class="cmd">pwd</span>
+<span class="out">/Users/orion</span>
+
+<span class="ps">$</span> <span class="cmd">ls</span> <span class="flag">-lah</span>
+<span class="out">drwxr-xr-x  orion  staff   384B  <span style="color:var(--teal)">Documents</span>
+drwxr-xr-x  orion  staff   480B  <span style="color:var(--teal)">projects</span>
+-rw-r--r--  orion  staff   2.4K  .zshrc</span>
+
+<span class="ps">$</span> <span class="cmd">mkdir</span> <span class="flag">-p</span> <span class="path">demo/src/components</span>
+<span class="ps">$</span> <span class="cmd">tree</span> <span class="path">demo</span>
+<span class="out">demo
+└── src
+    └── components</span></div>
+      </div>
+
+      <p style="font-size:12px;color:var(--muted);margin:24px 0 8px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;">▶ 互动练习终端</p>
+      <div class="terminal term-interactive">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">sandbox terminal</div>
+        </div>
+        <div class="term-body">
+          <div class="term-output" id="out2"></div>
+        </div>
+        <div class="term-input-row">
+          <span class="term-prompt">orion@mac:~$&nbsp;</span>
+          <input class="term-input" id="in2" type="text" placeholder="输入命令按 Enter 执行…" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="term-hint">available: pwd · ls · echo · whoami · date · clear · help · uname</div>
+      </div>
+
+      <div class="quiz" id="q1">
+        <div class="quiz-tag">— Knowledge Check 02 —</div>
+        <div class="quiz-q">递归创建多级目录应使用哪个命令？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,false,'q1')">mkdir projects</button>
+          <button class="quiz-opt" onclick="ans(this,true,'q1')">mkdir -p a/b/c</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q1')">touch a/b/c</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q1')">cd -p a/b/c</button>
+        </div>
+        <div class="quiz-result" id="q1-r"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §3 -->
+  <div class="article" id="s3">
+    <div class="article-header" onclick="toggle('s3')">
+      <div class="article-num-wrap">
+        <div class="article-num">03</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">入门 · Beginner</div>
+          <h2 class="article-h2">查看与编辑文件</h2>
+          <p class="article-deck">cat、less、grep、重定向与管道的组合艺术</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">查看文件</div>
+          <code>cat file <em>输出全部内容</em></code>
+          <code>head -20 file <em>前20行</em></code>
+          <code>tail -f log <em>实时追踪</em></code>
+          <code>less file <em>分页浏览 (q退出)</em></code>
+          <code>wc -l file <em>统计行数</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">搜索内容</div>
+          <code>grep "txt" file <em>搜索匹配行</em></code>
+          <code>grep -r "txt" dir/ <em>递归搜索</em></code>
+          <code>grep -i <em>忽略大小写</em></code>
+          <code>grep -n <em>显示行号</em></code>
+          <code>grep -v <em>反向匹配</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">重定向与管道</div>
+          <code>> file <em>覆盖写入</em></code>
+          <code>>> file <em>追加写入</em></code>
+          <code>cmd1 | cmd2 <em>管道传递</em></code>
+          <code>2> err.log <em>重定向错误流</em></code>
+          <code>&> all.log <em>全部输出重定向</em></code>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">pipe & filter</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 管道：列进程 → 过滤 node → 统计行数</span>
+<span class="ps">$</span> <span class="cmd">ps</span> <span class="flag">aux</span> <span class="hi">|</span> <span class="cmd">grep</span> <span class="arg">node</span> <span class="hi">|</span> <span class="cmd">wc</span> <span class="flag">-l</span>
+<span class="out">4</span>
+
+<span class="comment"># 实时监控日志</span>
+<span class="ps">$</span> <span class="cmd">tail</span> <span class="flag">-n 50 -f</span> <span class="path">/var/log/system.log</span>
+
+<span class="comment"># 写入文件</span>
+<span class="ps">$</span> <span class="cmd">echo</span> <span class="arg">"Hello, Terminal!"</span> <span class="hi">></span> greeting.txt
+<span class="ps">$</span> <span class="cmd">cat</span> <span class="path">greeting.txt</span>
+<span class="out">Hello, Terminal!</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §4 -->
+  <div class="article" id="s4">
+    <div class="article-header" onclick="toggle('s4')">
+      <div class="article-num-wrap">
+        <div class="article-num">04</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">进阶 · Intermediate</div>
+          <h2 class="article-h2">进程管理</h2>
+          <p class="article-deck">查看、控制与优雅终止运行中的进程</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <table class="cmd-table">
+        <thead><tr><th>命令</th><th>功能描述</th><th>关键参数</th></tr></thead>
+        <tbody>
+          <tr><td class="cmd-key">ps aux</td><td><div class="cmd-desc">所有进程快照</div></td><td class="cmd-ex">a=所有 · u=用户格式 · x=无终端</td></tr>
+          <tr><td class="cmd-key">top / htop</td><td><div class="cmd-desc">动态进程监视器</div></td><td class="cmd-ex">htop 界面更友好，需安装</td></tr>
+          <tr><td class="cmd-key">kill &lt;PID&gt;</td><td><div class="cmd-desc">向进程发信号</div></td><td class="cmd-ex">-9 强制 · -15 优雅退出</td></tr>
+          <tr><td class="cmd-key">pkill &lt;name&gt;</td><td><div class="cmd-desc">按名称杀进程</div></td><td class="cmd-ex">pkill -9 node</td></tr>
+          <tr><td class="cmd-key">jobs/bg/fg</td><td><div class="cmd-desc">前后台任务管理</div></td><td class="cmd-ex">Ctrl+Z 挂起 · bg %1 后台</td></tr>
+          <tr><td class="cmd-key">nohup cmd &amp;</td><td><div class="cmd-desc">终端关闭后继续运行</div></td><td class="cmd-ex">输出到 nohup.out</td></tr>
+          <tr><td class="cmd-key">lsof -i :3000</td><td><div class="cmd-desc">查看端口占用</div></td><td class="cmd-ex">-i 指定网络</td></tr>
+        </tbody>
+      </table>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">process management</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 查找端口 3000 的进程</span>
+<span class="ps">$</span> <span class="cmd">lsof</span> <span class="flag">-i :3000</span>
+<span class="out">node  1234  orion  22u  IPv4  TCP *:3000 (LISTEN)</span>
+
+<span class="comment"># 优雅终止</span>
+<span class="ps">$</span> <span class="cmd">kill</span> <span class="arg">1234</span>
+
+<span class="comment"># 后台持久运行</span>
+<span class="ps">$</span> <span class="cmd">nohup</span> <span class="cmd">python3</span> <span class="arg">server.py</span> <span class="hi">&</span>
+<span class="out">[1] 5678</span></div>
+      </div>
+
+      <div class="quiz" id="q2">
+        <div class="quiz-tag">— Knowledge Check 04 —</div>
+        <div class="quiz-q">Ctrl+C 与 kill -9 的根本区别是什么？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,false,'q2')">完全相同，都是立即强制终止</button>
+          <button class="quiz-opt" onclick="ans(this,true,'q2')">Ctrl+C 发 SIGINT（可被程序捕获），kill -9 发 SIGKILL（不可捕获）</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q2')">Ctrl+C 只能终止前台进程，kill -9 无法终止进程</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q2')">没有区别，都发送 SIGKILL</button>
+        </div>
+        <div class="quiz-result" id="q2-r"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §5 -->
+  <div class="article" id="s5">
+    <div class="article-header" onclick="toggle('s5')">
+      <div class="article-num-wrap">
+        <div class="article-num">05</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">进阶 · Intermediate</div>
+          <h2 class="article-h2">环境变量与 Shell 配置</h2>
+          <p class="article-deck">$PATH、alias、~/.zshrc 与持久化设置</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">env & config</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 查看所有环境变量</span>
+<span class="ps">$</span> <span class="cmd">env</span>
+<span class="out">HOME=/Users/orion  SHELL=/bin/zsh  PATH=/usr/local/bin:...</span>
+
+<span class="comment"># 当前会话临时设置</span>
+<span class="ps">$</span> <span class="cmd">export</span> <span class="arg">NODE_ENV=production</span>
+
+<span class="comment"># 持久化写入 ~/.zshrc</span>
+<span class="ps">$</span> <span class="cmd">echo</span> <span class="arg">'export EDITOR=vim'</span> <span class="hi">>></span> <span class="path">~/.zshrc</span>
+<span class="ps">$</span> <span class="cmd">source</span> <span class="path">~/.zshrc</span>
+
+<span class="comment"># 别名</span>
+<span class="ps">$</span> <span class="cmd">alias</span> <span class="arg">ll='ls -lah'</span>
+<span class="ps">$</span> <span class="cmd">alias</span> <span class="arg">gs='git status'</span></div>
+      </div>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">
+          <strong>$PATH 优先级</strong>
+          Shell 从左到右在 $PATH 中查找可执行文件。
+          <code style="font-family:var(--font-mono);color:var(--amber)">export PATH="$HOME/.local/bin:$PATH"</code>
+          可将自定义目录置于最高优先级。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §6 -->
+  <div class="article" id="s6">
+    <div class="article-header" onclick="toggle('s6')">
+      <div class="article-num-wrap">
+        <div class="article-num">06</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">高阶 · Advanced</div>
+          <h2 class="article-h2">Shell 脚本编程</h2>
+          <p class="article-deck">变量、条件、循环、函数与自动化部署</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">deploy.sh</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="hi">#!/bin/bash</span>
+<span class="arg">APP_NAME</span>=<span class="out">"myapp"</span>
+<span class="arg">TIMESTAMP</span>=$(<span class="cmd">date</span> <span class="flag">+%Y%m%d_%H%M%S</span>)
+
+<span class="cyan">log()</span> { <span class="cmd">echo</span> <span class="arg">"[$(date +'%H:%M:%S')] $1"</span>; }
+<span class="cmd">set</span> <span class="flag">-e</span>   <span class="comment"># 遇错即停</span>
+
+log <span class="arg">"部署 $APP_NAME 开始..."</span>
+
+<span class="hi">if</span> [[ ! <span class="flag">-d</span> <span class="arg">"/var/www/$APP_NAME"</span> ]]; <span class="hi">then</span>
+  <span class="cmd">mkdir</span> <span class="flag">-p</span> <span class="arg">"/var/www/$APP_NAME"</span>
+<span class="hi">fi</span>
+
+<span class="hi">for</span> <span class="arg">i</span> <span class="hi">in</span> 1 2 3; <span class="hi">do</span>
+  <span class="cmd">cp</span> <span class="flag">-r</span> <span class="path">./dist</span> <span class="arg">"/var/www/$APP_NAME/build_${TIMESTAMP}_$i"</span>
+<span class="hi">done</span>
+
+log <span class="arg">"✅ 完成"</span></div>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">条件判断</div>
+          <code>-f file <em>文件存在</em></code>
+          <code>-d dir <em>目录存在</em></code>
+          <code>-z "$v" <em>字符串为空</em></code>
+          <code>-n "$v" <em>字符串非空</em></code>
+          <code>$a -eq $b <em>数字相等</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">特殊变量</div>
+          <code>$0 <em>脚本名</em></code>
+          <code>$1..$9 <em>位置参数</em></code>
+          <code>$# <em>参数个数</em></code>
+          <code>$@ <em>所有参数</em></code>
+          <code>$? <em>上条命令退出码</em></code>
+        </div>
+        <div class="card">
+          <div class="card-title">调试技巧</div>
+          <code>bash -x script.sh <em>执行追踪</em></code>
+          <code>bash -n script.sh <em>语法检查</em></code>
+          <code>set -e <em>遇错停止</em></code>
+          <code>set -u <em>未定义报错</em></code>
+          <code>set -o pipefail <em>管道失败报错</em></code>
+        </div>
+      </div>
+
+      <div class="quiz" id="q3">
+        <div class="quiz-tag">— Knowledge Check 06 —</div>
+        <div class="quiz-q"><code style="font-family:var(--font-mono)">#!/bin/bash</code> 这行叫什么？有何作用？</div>
+        <div class="quiz-opts">
+          <button class="quiz-opt" onclick="ans(this,false,'q3')">普通注释，告诉读者这是 bash 脚本</button>
+          <button class="quiz-opt" onclick="ans(this,true,'q3')">Shebang 行，告诉系统用哪个解释器执行脚本</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q3')">import 语句，导入 bash 标准库</button>
+          <button class="quiz-opt" onclick="ans(this,false,'q3')">版权声明，没有功能意义</button>
+        </div>
+        <div class="quiz-result" id="q3-r"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §7 -->
+  <div class="article" id="s7">
+    <div class="article-header" onclick="toggle('s7')">
+      <div class="article-num-wrap">
+        <div class="article-num">07</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">高阶 · Advanced</div>
+          <h2 class="article-h2">SSH 与远程操作</h2>
+          <p class="article-deck">密钥认证、安全连接、文件传输与端口转发</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">ssh workflow</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 1. 生成 ED25519 密钥对</span>
+<span class="ps">$</span> <span class="cmd">ssh-keygen</span> <span class="flag">-t ed25519 -C</span> <span class="arg">"orion@work"</span>
+
+<span class="comment"># 2. 上传公钥到服务器</span>
+<span class="ps">$</span> <span class="cmd">ssh-copy-id</span> <span class="flag">-i</span> <span class="path">~/.ssh/id_ed25519.pub</span> <span class="arg">user@server.com</span>
+
+<span class="comment"># 3. 无密码登录</span>
+<span class="ps">$</span> <span class="cmd">ssh</span> <span class="arg">user@server.com</span>
+
+<span class="comment"># 4. 高效传输（rsync 增量同步）</span>
+<span class="ps">$</span> <span class="cmd">rsync</span> <span class="flag">-avz --progress</span> <span class="path">./dist/</span> <span class="arg">user@server:/var/www/html/</span>
+
+<span class="comment"># 5. 本地 8080 → 远程 3000 隧道</span>
+<span class="ps">$</span> <span class="cmd">ssh</span> <span class="flag">-L 8080:localhost:3000</span> <span class="arg">user@server.com</span></div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>~/.ssh/config 简化连接</strong>
+          <code style="font-family:var(--font-mono);color:var(--amber);display:block;margin-top:8px;line-height:2.2">Host prod<br>&nbsp;&nbsp;HostName server.example.com<br>&nbsp;&nbsp;User ubuntu<br>&nbsp;&nbsp;IdentityFile ~/.ssh/id_ed25519</code>
+          之后只需 <code style="font-family:var(--font-mono);color:var(--gold)">ssh prod</code>。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- §8 -->
+  <div class="article" id="s8">
+    <div class="article-header" onclick="toggle('s8')">
+      <div class="article-num-wrap">
+        <div class="article-num">08</div>
+        <div class="article-title-block">
+          <div class="article-eyebrow">专家 · Expert</div>
+          <h2 class="article-h2">高级技巧与效率提升</h2>
+          <p class="article-deck">快捷键、tmux、awk/sed、find 与生产力最大化</p>
+        </div>
+      </div>
+      <button class="toggle-btn" tabindex="-1"><span>展开</span><span class="toggle-icon">▾</span></button>
+    </div>
+    <div class="article-body">
+
+      <div class="cheat-grid">
+        <div class="cheat-block">
+          <div class="cheat-head">⌨ 快捷键 (Readline)</div>
+          <div class="cheat-body">
+            <div class="cheat-row"><span class="cheat-code">Ctrl+A / E</span><span class="cheat-desc">行首 / 行尾</span></div>
+            <div class="cheat-row"><span class="cheat-code">Ctrl+U / K</span><span class="cheat-desc">剪切到行首 / 尾</span></div>
+            <div class="cheat-row"><span class="cheat-code">Ctrl+W</span><span class="cheat-desc">删除前一个单词</span></div>
+            <div class="cheat-row"><span class="cheat-code">Ctrl+R</span><span class="cheat-desc">搜索历史命令</span></div>
+            <div class="cheat-row"><span class="cheat-code">Ctrl+L</span><span class="cheat-desc">清屏</span></div>
+            <div class="cheat-row"><span class="cheat-code">!!</span><span class="cheat-desc">重复上一条命令</span></div>
+            <div class="cheat-row"><span class="cheat-code">!$</span><span class="cheat-desc">上条命令最后参数</span></div>
+          </div>
+        </div>
+        <div class="cheat-block">
+          <div class="cheat-head">🔲 tmux</div>
+          <div class="cheat-body">
+            <div class="cheat-row"><span class="cheat-code">tmux new -s main</span><span class="cheat-desc">创建命名会话</span></div>
+            <div class="cheat-row"><span class="cheat-code">tmux attach -t main</span><span class="cheat-desc">重新连接</span></div>
+            <div class="cheat-row"><span class="cheat-code">Prefix + c</span><span class="cheat-desc">新建窗口</span></div>
+            <div class="cheat-row"><span class="cheat-code">Prefix + %</span><span class="cheat-desc">垂直分割</span></div>
+            <div class="cheat-row"><span class="cheat-code">Prefix + "</span><span class="cheat-desc">水平分割</span></div>
+            <div class="cheat-row"><span class="cheat-code">Prefix + d</span><span class="cheat-desc">分离（保持运行）</span></div>
+          </div>
+        </div>
+        <div class="cheat-block">
+          <div class="cheat-head">🔍 find</div>
+          <div class="cheat-body">
+            <div class="cheat-row"><span class="cheat-code">find . -name "*.js"</span><span class="cheat-desc">按名称搜索</span></div>
+            <div class="cheat-row"><span class="cheat-code">find . -type f/d</span><span class="cheat-desc">仅文件 / 目录</span></div>
+            <div class="cheat-row"><span class="cheat-code">find . -mtime -7</span><span class="cheat-desc">7天内修改</span></div>
+            <div class="cheat-row"><span class="cheat-code">find . -size +10M</span><span class="cheat-desc">大于10MB</span></div>
+            <div class="cheat-row"><span class="cheat-code">find . -exec rm {} \;</span><span class="cheat-desc">对结果执行命令</span></div>
+          </div>
+        </div>
+        <div class="cheat-block">
+          <div class="cheat-head">✂ sed / awk</div>
+          <div class="cheat-body">
+            <div class="cheat-row"><span class="cheat-code">sed 's/old/new/g'</span><span class="cheat-desc">全局替换</span></div>
+            <div class="cheat-row"><span class="cheat-code">sed -i 's/a/b/g' f</span><span class="cheat-desc">原地修改文件</span></div>
+            <div class="cheat-row"><span class="cheat-code">awk '{print $1}'</span><span class="cheat-desc">打印第一列</span></div>
+            <div class="cheat-row"><span class="cheat-code">awk -F: '{print $NF}'</span><span class="cheat-desc">指定分隔符，最后列</span></div>
+            <div class="cheat-row"><span class="cheat-code">awk 'NR>1 && $3>100'</span><span class="cheat-desc">条件过滤</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar">
+          <div class="term-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="term-title">power combos</div>
+          <button class="term-copy" onclick="copyTerm(this)">copy</button>
+        </div>
+        <div class="term-body"><span class="comment"># 统计 TS 代码总行数</span>
+<span class="ps">$</span> <span class="cmd">find</span> <span class="path">src/</span> <span class="flag">-name "*.ts"</span> <span class="hi">|</span> <span class="cmd">xargs</span> <span class="cmd">grep</span> <span class="flag">-c</span> <span class="arg">""</span> <span class="hi">|</span> <span class="cmd">awk</span> <span class="arg">-F: '{sum+=$2} END{print sum}'</span>
+<span class="out">12847</span>
+
+<span class="comment"># 批量重命名 .txt → .md</span>
+<span class="ps">$</span> <span class="cmd">find</span> <span class="path">./notes</span> <span class="flag">-name "*.txt"</span> <span class="flag">-exec bash -c</span> <span class="arg">'mv "$1" "${1%.txt}.md"'</span> <span class="arg">_ {} \;</span>
+
+<span class="comment"># 实时 IP 访问排名</span>
+<span class="ps">$</span> <span class="cmd">tail</span> <span class="flag">-f</span> <span class="path">access.log</span> <span class="hi">|</span> <span class="cmd">awk</span> <span class="arg">'{print $1}'</span> <span class="hi">|</span> <span class="cmd">sort</span> <span class="hi">|</span> <span class="cmd">uniq</span> <span class="flag">-c</span> <span class="hi">|</span> <span class="cmd">sort</span> <span class="flag">-rn</span> <span class="hi">|</span> <span class="cmd">head</span> <span class="flag">-10</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section" id="sProgress">
+    <div class="progress-title">学习进度</div>
+    <p class="progress-sub">展开章节并完成测验以更新进度</p>
+    <div id="progContent"></div>
+  </div>
+
+</div><!-- /magazine -->
+
+<footer>
+  <div class="footer-left">Terminal Complete Guide</div>
+  <div class="footer-right">
+    Vol. I · April 2026<br>
+    <a href="#top">↑ 返回顶部</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+/* ── Section metadata ── */
+const SECS = [
+  {id:'s1',title:'终端是什么？',    lv:'入门', lvc:'lv-b'},
+  {id:'s2',title:'文件系统导航',    lv:'入门', lvc:'lv-b'},
+  {id:'s3',title:'查看与编辑文件',  lv:'入门', lvc:'lv-b'},
+  {id:'s4',title:'进程管理',        lv:'进阶', lvc:'lv-i'},
+  {id:'s5',title:'环境变量与配置',  lv:'进阶', lvc:'lv-i'},
+  {id:'s6',title:'Shell 脚本编程',  lv:'高阶', lvc:'lv-a'},
+  {id:'s7',title:'SSH 远程操作',    lv:'高阶', lvc:'lv-a'},
+  {id:'s8',title:'高级技巧',        lv:'专家', lvc:'lv-e'},
+];
+const DESCS = [
+  'Terminal / Shell / Kernel 概念',
+  'ls · cd · mkdir · rm · cp · mv',
+  'cat · grep · 管道 · 重定向',
+  'ps · kill · lsof · nohup · jobs',
+  '$PATH · alias · ~/.zshrc',
+  '变量 · 条件 · 循环 · 函数',
+  '密钥认证 · scp · rsync · 隧道',
+  '快捷键 · tmux · awk · sed · find',
+];
+
+/* ── Build TOC ── */
+const tocGrid = document.getElementById('tocGrid');
+SECS.forEach((s,i) => {
+  const a = document.createElement('a');
+  a.className = 'toc-item'; a.href = '#';
+  a.innerHTML = `<div class="toc-index">${String(i+1).padStart(2,'0')}</div>
+    <div class="toc-info">
+      <div class="toc-title">${s.title}</div>
+      <div class="toc-desc">${DESCS[i]}</div>
+    </div>
+    <span class="toc-level ${s.lvc}">${s.lv}</span>`;
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const el = document.getElementById(s.id);
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+    const body = el.querySelector('.article-body');
+    const icon = el.querySelector('.toggle-icon');
+    if (!body.classList.contains('open')) { body.classList.add('open'); icon.classList.add('open'); }
+    updateProg();
+  });
+  tocGrid.appendChild(a);
+});
+
+/* ── Build sticky nav ── */
+const sNav = document.getElementById('sNav');
+SECS.forEach(s => {
+  const btn = document.createElement('button');
+  btn.className = 'snav-item'; btn.dataset.id = s.id;
+  btn.innerHTML = `<span class="snav-label">${s.title}</span><div class="snav-dot"></div>`;
+  btn.addEventListener('click', () => document.getElementById(s.id).scrollIntoView({behavior:'smooth',block:'start'}));
+  sNav.appendChild(btn);
+});
+
+/* ── Scroll spy ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const btn = sNav.querySelector(`[data-id="${e.target.id}"]`);
+    if (btn) btn.classList.toggle('active', e.isIntersecting);
+  });
+}, {threshold:.25});
+SECS.forEach(s => { const el = document.getElementById(s.id); if(el) io.observe(el); });
+
+/* ── Toggle sections ── */
+function toggle(id) {
+  const art = document.getElementById(id);
+  const body = art.querySelector('.article-body');
+  const icon = art.querySelector('.toggle-icon');
+  const btn  = art.querySelector('.toggle-btn span:first-child');
+  const open = body.classList.toggle('open');
+  icon.classList.toggle('open', open);
+  if (btn) btn.textContent = open ? '收起' : '展开';
+  updateProg();
+}
+
+/* ── Copy terminal ── */
+function copyTerm(btn) {
+  const text = btn.closest('.terminal').querySelector('.term-body').innerText;
+  navigator.clipboard.writeText(text.replace(/^\$/mg,'').trim()).then(() => {
+    btn.textContent = '✓ copied';
+    setTimeout(() => btn.textContent = 'copy', 1500);
+  });
+}
+
+/* ── Quiz ── */
+function ans(btn, correct, qid) {
+  const quiz = document.getElementById(qid);
+  quiz.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
+  const res = document.getElementById(qid+'-r');
+  if (correct) {
+    btn.classList.add('correct');
+    res.textContent = '✓  正确！';
+    res.className = 'quiz-result correct';
+  } else {
+    btn.classList.add('wrong');
+    quiz.querySelector('[onclick*="true"]').classList.add('correct');
+    res.textContent = '✕  不对，已高亮正确答案。';
+    res.className = 'quiz-result wrong';
+  }
+  updateProg();
+}
+
+/* ── Progress ── */
+function updateProg() {
+  const opened  = SECS.filter(s => document.getElementById(s.id)?.querySelector('.article-body.open')).length;
+  const solved  = ['q1','q2','q3'].filter(q => document.getElementById(q)?.querySelector('.correct')).length;
+  const pc = document.getElementById('progContent');
+  pc.innerHTML = `
+    <div class="prog-wrap">
+      <div class="prog-label"><span class="prog-name">章节阅读</span><span class="prog-val">${opened} / ${SECS.length}</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${opened/SECS.length*100}%"></div></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-label"><span class="prog-name">测验完成</span><span class="prog-val">${solved} / 3</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${solved/3*100}%;background:linear-gradient(90deg,#9c6b10,var(--gold),var(--amber))"></div></div>
+    </div>`;
+}
+updateProg();
+
+/* ── Interactive terminal ── */
+const cmds = {
+  pwd:    () => '/Users/orion',
+  whoami: () => 'orion',
+  date:   () => new Date().toLocaleString('zh-CN',{hour12:false}),
+  uname:  () => 'Darwin Kernel Version 24.6.0',
+  ls:     () => 'Documents/\nDownloads/\nDesktop/\nprojects/\n.zshrc',
+  echo:   a  => a.join(' ').replace(/^["']|["']$/g,''),
+  clear:  () => { document.getElementById('out2').textContent=''; return null; },
+  help:   () => 'commands: pwd · ls · echo · whoami · date · uname · clear · help',
+};
+
+const inp = document.getElementById('in2');
+const out = document.getElementById('out2');
+
+inp.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const raw = inp.value.trim(); inp.value = '';
+  if (!raw) return;
+  const [c,...a] = raw.split(/\s+/);
+  const row = document.createElement('div');
+  row.style.color = 'var(--gold)';
+  row.textContent = '$ ' + raw;
+  out.appendChild(row);
+  const fn = cmds[c];
+  const res = document.createElement('div');
+  res.style.color = 'var(--muted)';
+  if (fn) {
+    const r = fn(a);
+    if (r !== null && r !== undefined) { res.textContent = r; out.appendChild(res); }
+  } else {
+    res.style.color = 'var(--crimson)';
+    res.textContent = `zsh: command not found: ${c}`;
+    out.appendChild(res);
+  }
+  out.parentElement.scrollTop = out.parentElement.scrollHeight;
+});
+
+/* ── Theme toggle ── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn  = document.getElementById('themeToggle');
+  const isLight = html.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    html.removeAttribute('data-theme');
+    btn.textContent = '◐ Dark';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    html.setAttribute('data-theme', 'light');
+    btn.textContent = '◑ Light';
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+/* Restore saved theme on load */
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    window.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = '◑ Light';
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
