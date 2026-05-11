@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 天 AI 从业者养成计划</title>
+<style>
+:root{
+  --bg:#FAF8F5; --surface:#FFFFFF; --surface-2:#F5F1EA; --border:#E8E2D8; --border-strong:#D6CDBE;
+  --text:#1A1916; --text-2:#5C5650; --text-3:#8A847C; --accent:#C4652A; --accent-soft:#FBE9D6;
+  --success:#5B8A4F; --warn:#B8862E; --danger:#C13B3B;
+  --radius:10px; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.04);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro SC","SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#16140F; --surface:#1F1C16; --surface-2:#272318; --border:#3A3527; --border-strong:#4D4633;
+  --text:#F0EBE0; --text-2:#B5AC9B; --text-3:#7E7766; --accent:#E08850; --accent-soft:#3A2818;
+  --success:#7DB070; --warn:#D4A24F; --danger:#E06060;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* 顶栏 */
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;z-index:100;backdrop-filter:saturate(180%) blur(8px)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.brand-mark{width:28px;height:28px;background:var(--accent);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;letter-spacing:-.5px}
+.topbar-spacer{flex:1}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+.icon-btn{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all .15s}
+.icon-btn:hover{background:var(--surface-2);color:var(--text)}
+.icon-btn svg{width:18px;height:18px}
+
+/* 布局 */
+.layout{display:flex;padding-top:56px;min-height:100vh}
+.sidebar{width:260px;border-right:1px solid var(--border);position:fixed;top:56px;bottom:0;left:0;overflow-y:auto;padding:24px 16px;background:var(--surface)}
+.sidebar h3{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;font-weight:600;padding:0 8px;margin-bottom:12px}
+.nav-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;font-size:14px;color:var(--text-2);transition:all .15s;margin-bottom:2px;cursor:pointer}
+.nav-link:hover{background:var(--surface-2);color:var(--text)}
+.nav-link.active{background:var(--accent-soft);color:var(--accent);font-weight:500}
+.nav-num{width:22px;height:22px;border-radius:5px;background:var(--surface-2);color:var(--text-3);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-link.active .nav-num{background:var(--accent);color:#fff}
+.nav-link.done .nav-num{background:var(--success);color:#fff}
+.progress-box{margin-top:24px;padding:14px;background:var(--surface-2);border-radius:8px}
+.progress-label{font-size:12px;color:var(--text-3);margin-bottom:8px;display:flex;justify-content:space-between}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--accent);transition:width .3s;width:0%}
+.progress-text{font-size:12px;color:var(--text-2);margin-top:8px}
+
+.main{margin-left:260px;flex:1;padding:32px 48px 80px;max-width:920px}
+
+/* Hero */
+.hero{padding:24px 0 32px;border-bottom:1px solid var(--border);margin-bottom:32px}
+.hero-tag{display:inline-block;padding:3px 10px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600;border-radius:4px;letter-spacing:.5px;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:700;letter-spacing:-.5px;line-height:1.2;margin-bottom:12px}
+.hero p{color:var(--text-2);font-size:15px;max-width:680px}
+.hero-meta{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap}
+.hero-meta-item{font-size:13px;color:var(--text-3)}
+.hero-meta-item strong{display:block;font-size:18px;color:var(--text);font-weight:600;margin-bottom:2px}
+
+/* Day Section */
+.section{margin-bottom:64px;scroll-margin-top:80px}
+.day-head{margin-bottom:24px}
+.day-tag{display:inline-block;padding:3px 8px;background:var(--accent);color:#fff;font-size:11px;font-weight:600;border-radius:4px;margin-bottom:8px;letter-spacing:.5px}
+.day-title{font-size:24px;font-weight:700;letter-spacing:-.3px;margin-bottom:8px}
+.day-goal{color:var(--text-2);font-size:14px;margin-bottom:12px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:3px 8px;background:var(--surface-2);color:var(--text-2);font-size:11px;border-radius:4px;border:1px solid var(--border)}
+
+/* Block */
+.block{margin-top:28px}
+.block-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.block-title::before{content:"";width:3px;height:14px;background:var(--accent);border-radius:2px}
+
+/* Knowledge Card */
+.kn-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;transition:all .15s}
+.kn-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow)}
+.kn-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.kn-num{flex-shrink:0;width:24px;height:24px;border-radius:5px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.kn-title{font-size:15px;font-weight:600;line-height:1.4}
+.kn-body{color:var(--text-2);font-size:14px;line-height:1.75}
+.kn-body p{margin-bottom:8px}
+.kn-body ul{margin:8px 0 8px 20px}
+.kn-body li{margin-bottom:4px}
+.kn-body strong{color:var(--text)}
+.kn-body code{padding:1px 6px;background:var(--surface-2);border-radius:4px;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;color:var(--accent)}
+
+/* Task */
+.task{display:flex;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.task:hover{border-color:var(--border-strong)}
+.task.done{background:var(--surface-2);opacity:.7}
+.task.done .task-text{text-decoration:line-through}
+.task-cb{width:18px;height:18px;border:1.5px solid var(--border-strong);border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.task.done .task-cb{background:var(--accent);border-color:var(--accent)}
+.task.done .task-cb svg{display:block}
+.task-cb svg{width:11px;height:11px;color:#fff;display:none}
+.task-body{flex:1}
+.task-text{font-size:14px;font-weight:500;margin-bottom:4px}
+.task-detail{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:6px}
+.task-est{font-size:11px;color:var(--text-3)}
+
+/* Quiz */
+.quiz{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--warn);border-radius:8px;padding:14px 16px;margin-bottom:10px}
+.quiz-q{font-size:14px;font-weight:500;margin-bottom:8px}
+.quiz-toggle{font-size:12px;color:var(--accent);cursor:pointer;font-weight:500}
+.quiz-a{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:13px;color:var(--text-2);line-height:1.7}
+.quiz-a.open{display:block}
+
+/* Resource */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.res{display:block;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;transition:all .15s}
+.res:hover{border-color:var(--accent);box-shadow:var(--shadow)}
+.res-title{font-size:14px;font-weight:500;margin-bottom:4px}
+.res-meta{font-size:12px;color:var(--text-3)}
+
+/* 响应式 */
+@media (max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0;padding:24px 20px 60px}
+  .hero h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">AI</div>
+    <span>7 天 AI 从业者养成计划</span>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="resetBtn" title="重置进度">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+    </button>
+    <button class="icon-btn" id="themeBtn" title="切换主题">
+      <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>学习路径</h3>
+    <nav id="nav"></nav>
+    <div class="progress-box">
+      <div class="progress-label"><span>整体进度</span><span id="progPct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+      <div class="progress-text" id="progText">完成 0 / 0 项任务</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <div class="hero-tag">7 DAY BOOTCAMP</div>
+      <h1>从零起步，七天搭起你的 AI 实战底座</h1>
+      <p>每天 60–90 分钟，知识 + 任务 + 自检三件套。第 7 天结束时，你能独立用 LLM 完成一个真实工作场景，并知道下一步该深入哪个方向。</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><strong>7 天</strong>系统化路径</div>
+        <div class="hero-meta-item"><strong>21 个</strong>核心知识点</div>
+        <div class="hero-meta-item"><strong>21 个</strong>实操任务</div>
+        <div class="hero-meta-item"><strong>21 道</strong>自检题</div>
+      </div>
+    </section>
+    <div id="content"></div>
+  </main>
+</div>
+
+<script>
+const DATA = [
+  {
+    id:"d1", num:"DAY 1", title:"认知地基：大模型到底是什么",
+    goal:"用最朴素的语言搞清楚 LLM 的本质、能做什么、不能做什么。", duration:"60 分钟", level:"入门",
+    tags:["概念","原理"],
+    knowledge:[
+      {t:"LLM 的本质：下一个 token 预测器", b:`<p>大语言模型（LLM）不是\"理解\"，而是<strong>基于海量文本训练出的概率预测机器</strong>——给定一段文字，预测下一个最可能出现的字（token）。</p><p>把这个动作循环几千次，就生成了一段看似有逻辑的文字。理解这一点，你就明白了为什么 LLM 会<strong>一本正经胡说八道（幻觉）</strong>：它在做概率匹配，不在做事实核查。</p>`},
+      {t:"三个核心能力 vs 三个根本短板", b:`<p><strong>能做：</strong>语言理解与生成、模式识别与提炼、代码与结构化输出。</p><p><strong>不能做：</strong>实时信息（训练截止后的事不知道）、精确计算（数字推理依赖外挂工具）、事实保真（会编造不存在的人名/论文/链接）。</p><p>清楚边界，才能用对地方。</p>`},
+      {t:"主流模型简史与选型直觉", b:`<p>主流玩家：OpenAI（GPT-4o/o1）、Anthropic（Claude 3.5/4）、Google（Gemini）、阿里（Qwen）、DeepSeek、Kimi。</p><p>选型粗略原则：<strong>写作/对话用 Claude，编程用 Claude/GPT，多模态用 GPT-4o/Gemini，性价比用 DeepSeek/Qwen。</strong>不要纠结哪个最好，开始用就行。</p>`}
+    ],
+    tasks:[
+      {x:"注册一个主流 AI 工具账号", d:"推荐 Claude.ai 或 chat.deepseek.com，准备好邮箱即可。已有账号跳过。", e:"10 分钟"},
+      {x:"做一次\"幻觉\"实测", d:"问 LLM 一个虚构人物的事迹，比如\"请介绍 2024 年图灵奖得主王小明的主要贡献\"。观察它是否会编造内容。", e:"15 分钟"},
+      {x:"用三个不同模型回答同一问题", d:"准备一个你工作中真实遇到的问题，分别问 ChatGPT、Claude、DeepSeek，对比回答风格和质量差异。", e:"30 分钟"}
+    ],
+    quiz:[
+      {q:"为什么 LLM 会出现幻觉？", a:"因为它本质是概率预测器，目标是\"生成最可能的下一个 token\"，而不是\"输出最真实的事实\"。当训练数据里没有相关信息时，它会用概率最高的语言模式拼凑出一个看起来合理但实际不存在的答案。"},
+      {q:"哪种场景不适合直接用 LLM？", a:"需要实时数据（如今天股价）、精确数值计算、引用必须真实的法律/医学/学术结论的场景。这些场景需要外挂搜索、计算器、知识库。"},
+      {q:"Claude 和 GPT 的最大差异是什么？", a:"风格上 Claude 更克制、长文写作更连贯；GPT 更外向、生态更全（插件/GPTs/语音）。能力差异在缩小，选哪个看你顺手，不用焦虑。"}
+    ],
+    resources:[
+      {t:"3Blue1Brown：神经网络可视化", m:"YouTube 视频系列", u:"https://www.youtube.com/watch?v=aircAruvnKk"},
+      {t:"《这就是 ChatGPT》Stephen Wolfram", m:"中文版图书 / 微信读书", u:"https://weread.qq.com/"},
+      {t:"OpenAI Cookbook 入门", m:"官方示例库", u:"https://cookbook.openai.com/"}
+    ]
+  },
+  {
+    id:"d2", num:"DAY 2", title:"Prompt 工程：从能用到好用",
+    goal:"掌握 6 要素 Prompt 框架，让 AI 输出从\"还行\"跳到\"惊艳\"。", duration:"75 分钟", level:"入门",
+    tags:["Prompt","实操"],
+    knowledge:[
+      {t:"6 要素 Prompt 框架", b:`<p>一个高质量 Prompt 包含：<strong>角色 + 任务 + 输入 + 输出格式 + 约束 + 示例</strong>。</p><ul><li><strong>角色</strong>：你是一名资深产品经理</li><li><strong>任务</strong>：评审下面的 PRD</li><li><strong>输入</strong>：[贴入 PRD]</li><li><strong>输出</strong>：按\"优点/风险/建议\"三段输出</li><li><strong>约束</strong>：每段不超过 100 字</li><li><strong>示例</strong>：参考下面这个示范输出</li></ul><p>缺哪个补哪个，质量立刻翻倍。</p>`},
+      {t:"Few-shot：用例子教 AI", b:`<p>当任务复杂或风格特殊时，<strong>给 2–3 个示范输入输出对</strong>，比写 500 字说明更有效。</p><p>原理：LLM 是模式匹配器，给它看模式比给它讲规则更直接。比如要写小红书爆款标题，与其描述\"要有数字、要有悬念\"，不如直接贴 3 个真实爆款标题让它学。</p>`},
+      {t:"思维链（CoT）：让它\"慢慢想\"", b:`<p>对于推理类任务，加一句 <code>请一步一步思考</code> 或 <code>先列出推理过程，再给结论</code>，准确率能显著提升。</p><p>原因：强制 LLM 把内部推理外显化，相当于多给它\"思考 token\"。这是 OpenAI o1 系列的底层逻辑，但你在普通模型上加这一句也能立竿见影。</p>`}
+    ],
+    tasks:[
+      {x:"用 6 要素重写一个旧 Prompt", d:"找一个之前用 ChatGPT 时效果不好的 Prompt，按角色/任务/输入/输出/约束/示例 6 要素重写，对比效果差异。", e:"20 分钟"},
+      {x:"做一次 Few-shot 实验", d:"找 3 个你欣赏的写作样本（如朋友圈文案、推文标题），把它们作为示范贴给 AI，让它按同样风格写新内容。", e:"25 分钟"},
+      {x:"对比加 vs 不加 CoT", d:"找一道逻辑/数学题，先不加任何提示让 AI 直接回答，再加\"请一步一步思考\"重新问，对比正确率和思路完整度。", e:"15 分钟"}
+    ],
+    quiz:[
+      {q:"6 要素中最容易被忽略的是哪个？为什么补上它效果最好？", a:"\"输出格式\"和\"示例\"。明确格式（如 Markdown 表格、JSON、三段式）能让 AI 输出可直接使用而不是再二次整理；示例则能让 AI 立刻学会你的风格，比文字描述高效 10 倍。"},
+      {q:"什么场景下 Few-shot 比 Zero-shot 更有效？", a:"任务风格特殊、专业领域规则复杂、输出格式严格的场景。如：医疗诊断报告、特定文风创作、结构化数据抽取。给示例 = 给模板。"},
+      {q:"思维链（CoT）的核心机制是什么？", a:"通过强制模型外显推理过程，让它使用更多\"思考 token\"，从而提高复杂推理的准确率。本质是用\"慢思考\"替代\"直觉跳答\"。"}
+    ],
+    resources:[
+      {t:"Anthropic Prompt Engineering 官方课", m:"免费交互课程", u:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview"},
+      {t:"OpenAI Prompt 最佳实践", m:"官方文档", u:"https://platform.openai.com/docs/guides/prompt-engineering"},
+      {t:"Lilian Weng 博客：Prompt Engineering", m:"深度博文", u:"https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/"}
+    ]
+  },
+  {
+    id:"d3", num:"DAY 3", title:"RAG：让 AI 用上你的私有知识",
+    goal:"理解检索增强生成的全流程，会用现成工具搭一个最小 RAG。", duration:"90 分钟", level:"进阶",
+    tags:["RAG","架构"],
+    knowledge:[
+      {t:"RAG 解决什么问题", b:`<p>LLM 知识截止 + 不能用你的私有数据 = 用不上你的公司文档/笔记/代码库。</p><p><strong>RAG（检索增强生成）</strong>的思路：先把你的文档切片存到向量库，提问时先检索最相关的片段，再把片段 + 问题一起塞给 LLM 让它基于片段回答。</p><p>等于给 LLM 配了一个\"开卷考试\"的资料夹。</p>`},
+      {t:"RAG 全流程 8 步", b:`<p><code>Document → Chunk → Embed → Vector DB → Retrieve → Rerank → Prompt → LLM → Answer</code></p><ul><li><strong>Chunk</strong>：把长文档切成 200–500 字的小块</li><li><strong>Embed</strong>：用嵌入模型把文本转成向量</li><li><strong>Vector DB</strong>：存到 Chroma / Pinecone / Milvus</li><li><strong>Retrieve</strong>：用问题向量查最相似的 top-k 片段</li><li><strong>Rerank</strong>：用更重的模型对 top-k 重排序</li><li><strong>Prompt</strong>：把片段拼进系统提示</li></ul>`},
+      {t:"开箱即用工具", b:`<p>不想写代码：<strong>NotebookLM</strong>（Google 出品，上传文档直接对话）、<strong>Cherry Studio</strong>（本地知识库 GUI）、<strong>Dify</strong>（开源 LLM 应用平台）。</p><p>想写代码：<strong>LangChain / LlamaIndex</strong>（Python 框架）。</p><p>建议从 NotebookLM 起步，10 分钟搭出一个能问答的私有知识库。</p>`}
+    ],
+    tasks:[
+      {x:"用 NotebookLM 搭一个个人知识库", d:"上传 3-5 份你常看的资料（PDF、网页、笔记），就一个具体问题问它，看它能否准确引用原文回答。", e:"30 分钟"},
+      {x:"对比 RAG vs 直接问 ChatGPT", d:"找一个只有你私域文档才能回答的问题，分别用 NotebookLM 和 ChatGPT 问，对比答案准确性和可溯源性。", e:"20 分钟"},
+      {x:"调试一次\"检索失败\"案例", d:"故意问一个文档里没有的问题，看 NotebookLM 怎么处理。理解 RAG 的边界——它不能凭空创造，只能基于检索到的片段回答。", e:"15 分钟"}
+    ],
+    quiz:[
+      {q:"为什么 RAG 比 fine-tuning 更适合多数企业知识场景？", a:"RAG 数据更新只需重新索引、可溯源、成本低；fine-tuning 需要重训、不可解释、改一条数据要重跑一次。多数场景下 RAG 是首选，除非你需要改变模型的\"风格\"或\"能力\"而不是\"知识\"。"},
+      {q:"Chunk 切得太大或太小会发生什么？", a:"太大：检索时容易掺杂无关内容、超出 LLM 上下文窗口；太小：上下文断裂、关键信息分散到多个 chunk 难以拼回。常见做法：200–500 字 + 50 字 overlap。"},
+      {q:"Rerank 这一步能不能省？", a:"小规模、对准确性要求不高时可省。但生产环境强烈建议加：embedding 检索召回的 top-20 里真正相关的可能只有 3 个，用 cross-encoder 重排能把准确率提升一个台阶。"}
+    ],
+    resources:[
+      {t:"NotebookLM 官方", m:"Google 出品 RAG 工具", u:"https://notebooklm.google.com/"},
+      {t:"LangChain RAG 教程", m:"代码教程", u:"https://python.langchain.com/docs/tutorials/rag/"},
+      {t:"《Building LLM Applications》", m:"实战手册", u:"https://www.oreilly.com/library/view/building-llm-applications/9781098176594/"}
+    ]
+  },
+  {
+    id:"d4", num:"DAY 4", title:"Agent：让 AI 自己干活",
+    goal:"理解 Agent 与 Workflow 的区别，会用现成 Agent 平台跑通一个任务。", duration:"75 分钟", level:"进阶",
+    tags:["Agent","自动化"],
+    knowledge:[
+      {t:"Agent vs Workflow", b:`<p><strong>Workflow（工作流）</strong>：人提前编排好步骤 A→B→C，AI 执行其中某些节点。流程固定、可预测。</p><p><strong>Agent（智能体）</strong>：给定目标，AI 自己决定下一步做什么、调用什么工具、什么时候停。流程动态、不可完全预测。</p><p>实战中：<strong>能用 Workflow 解决的别用 Agent</strong>，因为 Workflow 更稳定、可调试。Agent 适合任务边界模糊的场景。</p>`},
+      {t:"Agent 的三大能力", b:`<p>1. <strong>Planning（规划）</strong>：把大目标拆成可执行子任务<br>2. <strong>Tool Use（工具使用）</strong>：调用搜索、计算器、API、代码执行<br>3. <strong>Memory（记忆）</strong>：短期记当前对话，长期记跨会话偏好</p><p>三者缺一不可，少一项都不能称为完整 Agent。</p>`},
+      {t:"主流 Agent 框架与平台", b:`<p>无代码：<strong>Coze（字节）、Dify、扣子、n8n</strong>——拖拽搭建。</p><p>代码框架：<strong>LangGraph、AutoGen、CrewAI</strong>——多 Agent 协作。</p><p>桌面 Agent：<strong>Claude Code、Cursor Agent、Devin</strong>——自动写代码。</p><p>选型原则：先用平台跑通业务逻辑，再考虑用代码替换关键节点获得更高可控性。</p>`}
+    ],
+    tasks:[
+      {x:"用 Coze 或 Dify 搭一个简单 Agent", d:"目标随便选：自动总结网页、自动写日报、自动查询天气并推送。要求至少调用 1 个工具（搜索/HTTP）。", e:"40 分钟"},
+      {x:"观察 Agent 的失败模式", d:"故意让 Agent 处理一个边界模糊的任务，观察它在哪一步卡住、为什么卡住、是规划错了还是工具调用错了。", e:"20 分钟"},
+      {x:"用 Claude Code 完成一个小工具", d:"如果会编程，用 Claude Code 让它独立写一个文件批量重命名脚本，全程不动手，只用对话指挥。体验\"代码 Agent\"的工作方式。", e:"30 分钟"}
+    ],
+    quiz:[
+      {q:"什么时候应该用 Agent 而不是 Workflow？", a:"任务路径不固定、需要根据中间结果动态决策、工具调用顺序不可预先确定时。比如\"调研某竞品\"——需要先搜索、看结果决定下一步搜什么、汇总后判断是否需要补充。"},
+      {q:"为什么很多 Agent demo 看起来很酷但实际用不起来？", a:"长链路决策容易复合误差（每步 90% 准确，10 步就只剩 35%）；工具调用失败没有兜底；幻觉导致选错工具或编参数。生产 Agent 必须做大量护栏和重试机制。"},
+      {q:"Memory 在 Agent 里为什么重要？", a:"没有 Memory 的 Agent 每次都从零开始，无法积累对用户的认知、无法跨任务复用经验。长期 Memory 让 Agent 越用越懂你，是从\"工具\"到\"助理\"的关键。"}
+    ],
+    resources:[
+      {t:"Coze 字节扣子", m:"无代码 Agent 平台", u:"https://www.coze.cn/"},
+      {t:"Dify", m:"开源 LLM 应用平台", u:"https://dify.ai/"},
+      {t:"Lilian Weng：Agent 综述", m:"必读博文", u:"https://lilianweng.github.io/posts/2023-06-23-agent/"}
+    ]
+  },
+  {
+    id:"d5", num:"DAY 5", title:"多模态：图、声、视频也能玩",
+    goal:"了解多模态模型能力边界，跑通至少一个图像/语音任务。", duration:"60 分钟", level:"进阶",
+    tags:["多模态","视觉"],
+    knowledge:[
+      {t:"多模态模型的三种模态", b:`<p><strong>视觉理解</strong>：看图说话、OCR、图表分析（GPT-4o、Claude 3.5、Gemini）<br><strong>图像生成</strong>：文生图、图生图（Midjourney、DALL·E、即梦、可灵）<br><strong>语音 / 视频</strong>：语音对话（GPT-4o 语音）、视频生成（Sora、Runway、可灵）</p><p>2025 年的趋势是\"统一多模态\"——一个模型同时处理多种输入输出。</p>`},
+      {t:"高质量出图的核心技巧", b:`<p>结构化 Prompt：<strong>主体 + 风格 + 细节 + 镜头 + 光线 + 氛围</strong>。</p><p>例：<code>一只橘猫坐在窗台 / 极简插画 / 暖色调 / 特写 / 自然光 / 慵懒午后</code></p><p>常见误区：堆砌形容词（无效）；说\"高清精致\"（无效）；用否定词（多数模型不擅长理解\"不要\"）。</p>`},
+      {t:"图像理解的实用场景", b:`<p>把截图丢给 Claude/GPT，它能：识别 UI 元素、读手写笔记、解释复杂图表、抽取表格数据为 JSON、找设计稿的视觉问题。</p><p>对产品/设计/数据岗位极其实用——以前需要人工录入或转写的工作，现在拍张照就完成。</p>`}
+    ],
+    tasks:[
+      {x:"用 Midjourney 或即梦生成 3 张图", d:"主题自定。要求：第 1 张写一句话简单 Prompt；第 2 张用 6 要素结构化 Prompt；第 3 张在第 2 张基础上调整风格/构图。对比三次效果差异。", e:"25 分钟"},
+      {x:"让 LLM 读图分析", d:"截一张你工作中常见的图（PRD 截图、数据 dashboard、设计稿），用 GPT-4o 或 Claude 让它分析关键信息、找问题、提建议。", e:"20 分钟"},
+      {x:"用 GPT-4o 语音对话 5 分钟", d:"打开 ChatGPT App 的语音模式，用语音问它任何问题，体验真人感对话。注意它的打断、停顿、情绪反应。", e:"15 分钟"}
+    ],
+    quiz:[
+      {q:"为什么多数文生图模型不擅长理解\"不要 XX\"？", a:"训练数据里的图片描述都是正向描述（\"一只猫\"），很少有\"没有狗的房间\"这种否定描述。模型学到的是\"描述 → 图像\"的正向映射，否定词容易被忽略甚至反向触发。改用正向描述，比如把\"不要文字\"改成\"纯净画面\"。"},
+      {q:"图像理解模型在 OCR 上能完全替代专业 OCR 吗？", a:"不能完全替代。LLM 视觉模型在通用场景（截图、手写、表格）上很强，但对密集长文档、特定格式票据、低分辨率图，专业 OCR 仍然更准更快。组合使用是最优解。"},
+      {q:"多模态模型的最大瓶颈是什么？", a:"长上下文 + 高分辨率推理仍然昂贵；视频理解的时间维度还很弱；跨模态的细粒度对齐（如让生成图严格遵循文字布局）仍是开放问题。"}
+    ],
+    resources:[
+      {t:"Midjourney 官方", m:"图像生成", u:"https://www.midjourney.com/"},
+      {t:"即梦（字节）", m:"中文友好的图/视频生成", u:"https://jimeng.jianying.com/"},
+      {t:"Anthropic Vision 文档", m:"Claude 视觉能力指南", u:"https://docs.anthropic.com/en/docs/build-with-claude/vision"}
+    ]
+  },
+  {
+    id:"d6", num:"DAY 6", title:"AI 工程化：从玩具到生产",
+    goal:"了解 AI 应用从 demo 到上线要解决的核心工程问题。", duration:"75 分钟", level:"进阶",
+    tags:["工程","落地"],
+    knowledge:[
+      {t:"Demo 到生产的鸿沟", b:`<p>跑通一个 demo 只需要 1 小时；做成可用产品至少需要解决 7 个问题：<strong>稳定性、成本、延迟、安全、可观测、评估、合规</strong>。</p><p>多数 AI 项目死在第二步——demo 惊艳了所有人，但接入真实业务后准确率掉到 60%、成本爆表、用户骂体验差。这不是模型不行，是工程没做。</p>`},
+      {t:"评估（Eval）是 AI 工程的核心", b:`<p>传统软件靠单元测试；AI 应用靠 <strong>Eval</strong>——准备一批典型输入和期望输出，每次改动后跑一遍，看效果回归。</p><p>没有 Eval 就没有迭代——你不知道改 Prompt 是变好了还是变坏了，只能靠感觉。</p><p>常用工具：LangSmith、Phoenix、自建 Excel + LLM 自动打分。</p>`},
+      {t:"成本与延迟的实战取舍", b:`<p>三个层次的优化：<br>1. <strong>选模型</strong>：能用小模型不用大模型（GPT-4o-mini vs GPT-4o，成本差 10 倍）<br>2. <strong>缓存</strong>：相同 query 直接返回缓存结果，命中率 30% 就能省一大笔<br>3. <strong>路由</strong>：简单 query 走小模型/规则，复杂 query 才走大模型</p><p>这三招能让生产成本降到原来的 1/10。</p>`}
+    ],
+    tasks:[
+      {x:"为你的某个 AI 用法做一次评估", d:"挑一个你常用的 Prompt（如\"总结邮件\"），准备 10 条测试输入，用 3 个不同模型跑一遍，人工打分，找出最优组合。", e:"30 分钟"},
+      {x:"算一笔成本账", d:"用 OpenAI 或 Claude 的官网定价，估算\"如果你的整个团队 100 人每天用 30 次\"一个月要花多少钱。理解为什么大厂卷 token 成本。", e:"15 分钟"},
+      {x:"读一篇真实的 AI 翻车案例", d:"搜\"AI 应用 上线 翻车\"或\"LLM in production lessons\"，找一篇深度复盘文章（如 Gong、Notion AI 的事故复盘），看他们踩了哪些坑。", e:"25 分钟"}
+    ],
+    quiz:[
+      {q:"为什么 AI 产品的 demo 到生产更困难？", a:"传统软件输入空间有限、行为可预测；LLM 输入空间无限、输出概率性。Demo 时精心挑选的几个 case 都成功 ≠ 真实用户的千奇百怪输入都成功。需要大量边界 case 测试和兜底设计。"},
+      {q:"如果你只能在你的 AI 应用里加一个工程实践，应该是哪个？", a:"Eval 体系。没有评估就没有迭代方向，所有优化都是盲飞。哪怕只是一个 50 条 case 的 Excel + 人工打分，也比纯靠感觉强 10 倍。"},
+      {q:"什么是\"模型路由\"，它为什么重要？", a:"根据 query 难度动态分配到不同模型。简单问题（\"几点了\"）走小模型甚至规则；复杂问题（\"分析这份合同的风险\"）走大模型。能在不损失质量的前提下大幅降低成本和延迟，是规模化 AI 应用的必备设计。"}
+    ],
+    resources:[
+      {t:"《Building LLM-powered Applications》", m:"O'Reilly 实战书", u:"https://www.oreilly.com/library/view/building-llm-powered/9781098150945/"},
+      {t:"LangSmith 评估工具", m:"LangChain 官方", u:"https://docs.smith.langchain.com/"},
+      {t:"Hamel Husain：Your AI Product Needs Evals", m:"经典博文", u:"https://hamel.dev/blog/posts/evals/"}
+    ]
+  },
+  {
+    id:"d7", num:"DAY 7", title:"实战日：完成一个真实工作场景",
+    goal:"用前 6 天的知识，独立完成一个属于你自己的 AI 工作流，并规划下一步。", duration:"90 分钟", level:"实战",
+    tags:["实战","项目"],
+    knowledge:[
+      {t:"选题原则：高频 × 痛点 × 可落地", b:`<p>不要选\"听起来很酷但用不上\"的项目（如\"AI 男朋友\"）。选你<strong>每周至少做 3 次、且每次 30 分钟以上</strong>的工作场景。</p><p>例：<br>· 产品岗：用户反馈分类汇总<br>· 运营岗：素材创意批量生成<br>· 研发岗：代码 review 助手<br>· 销售岗：客户邮件起草<br>· 学习岗：长文章摘要 + 知识卡片</p>`},
+      {t:"实战项目的 5 步法", b:`<p>1. <strong>定义</strong>：用 1 句话说清\"输入是什么、输出是什么、谁会用、用多久\"<br>2. <strong>原型</strong>：在 ChatGPT 或 Claude 里手搓 Prompt，跑通最小可用版本<br>3. <strong>固化</strong>：把流程做成 GPTs / Claude Project / Coze Bot，避免每次复制粘贴<br>4. <strong>评估</strong>：用 5–10 个真实 case 测试，调整 Prompt 和流程<br>5. <strong>分享</strong>：把工具分享给同事，收一轮真实反馈</p>`},
+      {t:"持续学习路径", b:`<p>结业不等于结束。三个方向选一个深入：<br>· <strong>应用方向</strong>：成为团队里最会用 AI 的人，每月做 1 个工作流<br>· <strong>产品方向</strong>：做一款 AI 产品，跑商业化（独立开发者路径）<br>· <strong>技术方向</strong>：学 Python + LangChain，做工程师/算法工程师转型</p><p>资源：跟 3 个高质量博主（如宝玉、向阳乔木、Lilian Weng）+ 1 个社区（如 Datawhale、即刻 AI 圈）。</p>`}
+    ],
+    tasks:[
+      {x:"定义你的实战项目", d:"用 1 句话写下：输入 / 输出 / 用户 / 频率。在纸上或备忘录里写出来，写不清楚就改 Prompt 帮你梳理。", e:"15 分钟"},
+      {x:"完成 5 步法的前 3 步", d:"定义 → 原型 → 固化。用今天剩余的时间至少跑通最小可用版本，可以是一个 GPT、一个 Claude Project、或一个 Coze Bot。", e:"60 分钟"},
+      {x:"写一份个人学习总结", d:"回顾 7 天最大的收获和最大的盲区。在你常用的笔记软件里写 200 字总结，包括：我现在能做什么、我接下来要深入哪个方向、我下周第一个要落地的东西是什么。", e:"15 分钟"}
+    ],
+    quiz:[
+      {q:"如果你只能保留 7 天里学到的一个能力，你会选什么？为什么？", a:"开放题。多数情况下答案是\"6 要素 Prompt\"——它是所有 AI 用法的基石，无论 RAG、Agent、多模态都离不开 Prompt 设计能力。其他能力都是它的延伸。"},
+      {q:"AI 工具迭代这么快，怎么避免学的东西过时？", a:"学第一性原理而不是具体工具。Prompt 框架、RAG 流程、Eval 思维这些底层能力 5 年内都不会过时；具体某个产品的 UI、某个 SDK 的 API 会变。把时间花在前者，遇到新工具一上手就会用。"},
+      {q:"如何判断一个 AI 项目值不值得做？", a:"三个标准：(1) 是不是真痛点（你 / 同事每周抱怨 3 次以上）；(2) 用 LLM 是不是最优解（不要为了用 AI 而用 AI）；(3) 能不能持续迭代（有没有 Eval 数据、有没有用户反馈渠道）。三个都满足才动手。"}
+    ],
+    resources:[
+      {t:"宝玉的微博与博客", m:"中文 AI 圈 KOL", u:"https://baoyu.io/"},
+      {t:"向阳乔木 - 即刻", m:"独立开发者视角", u:"https://web.okjike.com/u/96D19062-B783-4F34-A4FE-91418CF8F3B4"},
+      {t:"Datawhale 开源社区", m:"系统化学习路径", u:"https://www.datawhale.cn/"}
+    ]
+  }
+];
+
+const KEY_PROG = "ai_bootcamp_progress_v2";
+const KEY_THEME = "ai_bootcamp_theme";
+let progress = JSON.parse(localStorage.getItem(KEY_PROG) || "{}");
+
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+
+function totalTasks(){let n=0;DATA.forEach(d=>n+=d.tasks.length);return n;}
+function doneTasks(){return Object.values(progress).filter(v=>v).length;}
+
+function renderNav(){
+  const html = DATA.map((d,idx)=>{
+    const dayDone = d.tasks.every((_,i)=>progress[`${d.id}_t${i}`]);
+    return `<a class="nav-link ${dayDone?'done':''}" data-id="${d.id}"><span class="nav-num">${idx+1}</span><span>${escapeHtml(d.title.split("：")[0])}</span></a>`;
+  }).join("");
+  document.getElementById("nav").innerHTML = html;
+  document.querySelectorAll(".nav-link").forEach(a=>{
+    a.addEventListener("click",e=>{
+      const id = a.getAttribute("data-id");
+      const target = document.getElementById(id);
+      if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+    });
+  });
+}
+
+function renderContent(){
+  const html = DATA.map(d=>{
+    const knHtml = d.knowledge.map((k,i)=>`
+      <div class="kn-card">
+        <div class="kn-head">
+          <div class="kn-num">${String(i+1).padStart(2,"0")}</div>
+          <div class="kn-title">${escapeHtml(k.t)}</div>
+        </div>
+        <div class="kn-body">${k.b}</div>
+      </div>`).join("");
+
+    const taskHtml = d.tasks.map((t,i)=>{
+      const tid = `${d.id}_t${i}`;
+      const done = progress[tid] ? "done" : "";
+      return `<div class="task ${done}" data-tid="${tid}">
+        <div class="task-cb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="task-body">
+          <div class="task-text">${escapeHtml(t.x)}</div>
+          <div class="task-detail">${escapeHtml(t.d)}</div>
+          <div class="task-est">建议用时：${escapeHtml(t.e)}</div>
+        </div>
+      </div>`;
+    }).join("");
+
+    const quizHtml = d.quiz.map(q=>`
+      <div class="quiz">
+        <div class="quiz-q">${escapeHtml(q.q)}</div>
+        <div class="quiz-toggle">查看参考答案</div>
+        <div class="quiz-a">${escapeHtml(q.a)}</div>
+      </div>`).join("");
+
+    const resHtml = d.resources.map(r=>`
+      <a class="res" href="${r.u}" target="_blank" rel="noopener">
+        <div class="res-title">${escapeHtml(r.t)}</div>
+        <div class="res-meta">${escapeHtml(r.m)}</div>
+      </a>`).join("");
+
+    return `
+      <section class="section" id="${d.id}">
+        <div class="day-head">
+          <div class="day-tag">${d.num}</div>
+          <h2 class="day-title">${escapeHtml(d.title)}</h2>
+          <p class="day-goal">${escapeHtml(d.goal)}</p>
+          <div class="chips">
+            <span class="chip">时长 ${d.duration}</span>
+            <span class="chip">难度 ${d.level}</span>
+            ${d.tags.map(t=>`<span class="chip">${escapeHtml(t)}</span>`).join("")}
+          </div>
+        </div>
+        <div class="block"><div class="block-title">核心知识</div>${knHtml}</div>
+        <div class="block"><div class="block-title">实操任务</div>${taskHtml}</div>
+        <div class="block"><div class="block-title">自检题</div>${quizHtml}</div>
+        <div class="block"><div class="block-title">推荐资源</div><div class="res-grid">${resHtml}</div></div>
+      </section>`;
+  }).join("");
+  document.getElementById("content").innerHTML = html;
+
+  // Task click
+  document.querySelectorAll(".task").forEach(t=>{
+    t.addEventListener("click",()=>{
+      const tid = t.getAttribute("data-tid");
+      progress[tid] = !progress[tid];
+      localStorage.setItem(KEY_PROG, JSON.stringify(progress));
+      t.classList.toggle("done", progress[tid]);
+      updateProgress();
+      renderNav();
+    });
+  });
+
+  // Quiz toggle
+  document.querySelectorAll(".quiz-toggle").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const a = btn.nextElementSibling;
+      a.classList.toggle("open");
+      btn.textContent = a.classList.contains("open") ? "收起答案" : "查看参考答案";
+    });
+  });
+}
+
+function updateProgress(){
+  const done = doneTasks(), total = totalTasks();
+  const pct = total ? Math.round(done/total*100) : 0;
+  document.getElementById("progPct").textContent = pct + "%";
+  document.getElementById("progFill").style.width = pct + "%";
+  document.getElementById("progText").textContent = `完成 ${done} / ${total} 项任务`;
+}
+
+function setupScrollSpy(){
+  const sections = DATA.map(d=>document.getElementById(d.id));
+  window.addEventListener("scroll",()=>{
+    const y = window.scrollY + 120;
+    let active = sections[0];
+    sections.forEach(s=>{ if(s && s.offsetTop <= y) active = s; });
+    if(active){
+      document.querySelectorAll(".nav-link").forEach(n=>n.classList.toggle("active", n.getAttribute("data-id") === active.id));
+    }
+  });
+}
+
+// 主题
+function applyTheme(theme){
+  document.documentElement.setAttribute("data-theme", theme);
+  const sun = document.getElementById("iconSun"), moon = document.getElementById("iconMoon");
+  if(sun) sun.style.display = theme==="dark" ? "none" : "block";
+  if(moon) moon.style.display = theme==="dark" ? "block" : "none";
+  localStorage.setItem(KEY_THEME, theme);
+}
+
+function init(){
+  try{
+    const savedTheme = localStorage.getItem(KEY_THEME) || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    applyTheme(savedTheme);
+    document.getElementById("themeBtn").addEventListener("click",()=>{
+      applyTheme(document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark");
+    });
+    document.getElementById("resetBtn").addEventListener("click",()=>{
+      if(confirm("确认清除所有任务进度？")){
+        progress = {};
+        localStorage.removeItem(KEY_PROG);
+        renderContent();
+        renderNav();
+        updateProgress();
+      }
+    });
+    renderNav();
+    renderContent();
+    updateProgress();
+    setupScrollSpy();
+    // 默认激活第一个
+    const first = document.querySelector(".nav-link");
+    if(first) first.classList.add("active");
+  }catch(e){
+    console.error("[AI Bootcamp] init failed:", e);
+    const c = document.getElementById("content");
+    if(c) c.innerHTML = `<div style="background:#fee;border:1px solid #faa;padding:16px;border-radius:8px;color:#900;font-family:monospace;font-size:13px"><strong>页面渲染出错</strong><br>${e.message}<br><pre style="white-space:pre-wrap;margin-top:8px">${e.stack||""}</pre></div>`;
+  }
+}
+
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", init);
+}else{
+  init();
+}
+</script>
+</body>
+</html>

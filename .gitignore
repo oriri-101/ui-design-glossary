@@ -1,5 +1,6 @@
 # WorkBuddy internal data (contains sensitive memory/preferences)
 .workbuddy/
+.codebuddy/
 
 # OS files
 .DS_Store

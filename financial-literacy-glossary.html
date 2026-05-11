@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ori's Financial Literacy Dictionary</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#666;--border:#e8e5e0;--accent:#c45c3e;--accent2:#2d6a4f;--tag-bg:#f0ede8;--hover:#faf8f5;--shadow:0 1px 3px rgba(0,0,0,.06);--code-bg:#f5f3ef;--nav-bg:rgba(248,247,244,.92);--up:#c62828;--down:#2e7d32}
+[data-theme="dark"]{--bg:#141413;--card:#1e1e1c;--text:#e8e5e0;--sub:#999;--border:#2e2e2a;--accent:#e07a5f;--accent2:#52b788;--tag-bg:#2a2a26;--hover:#252522;--shadow:0 1px 3px rgba(0,0,0,.3);--code-bg:#252522;--nav-bg:rgba(20,20,19,.92);--up:#ef5350;--down:#66bb6a}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","Noto Sans SC",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}
+a{color:var(--accent);text-decoration:none}
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 24px;justify-content:space-between}
+.top-bar h1{font-size:15px;font-weight:600;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.top-bar h1 .logo-icon{width:20px;height:20px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.theme-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent)}
+.theme-btn svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:240px;background:var(--card);border-right:1px solid var(--border);overflow-y:auto;padding:16px 0;z-index:50}
+.sidebar::-webkit-scrollbar{width:3px}.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.nav-group{margin-bottom:8px}
+.nav-group-title{padding:8px 20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--sub);cursor:pointer}
+.nav-group-title:hover{color:var(--accent)}
+.nav-item{display:block;padding:7px 20px 7px 28px;font-size:13px;color:var(--sub);cursor:pointer;transition:all .15s;border-left:2px solid transparent}
+.nav-item:hover{color:var(--text);background:var(--hover)}
+.nav-item.active{color:var(--accent);border-left-color:var(--accent);background:var(--hover);font-weight:500}
+.main{margin-left:240px;padding:80px 48px 80px;max-width:960px}
+.hero{margin-bottom:56px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.hero h2{font-size:32px;font-weight:700;line-height:1.3;margin-bottom:12px}
+.hero p{font-size:15px;color:var(--sub);max-width:600px;line-height:1.8}
+.hero .tag-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.hero .tag{font-size:11px;padding:4px 10px;border-radius:4px;background:var(--tag-bg);color:var(--sub);font-weight:500}
+.section{margin-bottom:64px}.section-head{margin-bottom:32px}
+.section-head h3{font-size:22px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.section-head h3 .num{font-size:13px;color:var(--accent);font-weight:600;min-width:24px}
+.section-head h3 .sec-icon{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.section-head p{font-size:13px;color:var(--sub)}
+.term-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.term-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all .2s}
+.term-card:hover{box-shadow:var(--shadow);border-color:var(--accent)}
+.term-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between}
+.term-header h4{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.term-header h4 .en{font-size:12px;color:var(--sub);font-weight:400}
+.term-header .arrow{font-size:12px;color:var(--sub);transition:transform .2s;display:flex}
+.term-header .arrow svg{width:12px;height:12px;stroke:var(--sub);fill:none;stroke-width:2}
+.term-card.open .arrow svg{transform:rotate(90deg)}
+.term-body{display:none;padding:0 20px 20px;animation:fadeIn .25s}
+.term-card.open .term-body{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.term-desc{font-size:13px;color:var(--sub);margin-bottom:16px;line-height:1.8}
+.demo-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;position:relative;overflow:hidden}
+.demo-label{position:absolute;top:8px;right:10px;font-size:10px;color:var(--sub);letter-spacing:.5px;font-weight:500}
+.callout{border-left:3px solid var(--accent);background:var(--tag-bg);border-radius:0 6px 6px 0;padding:12px 16px;font-size:13px;color:var(--sub);line-height:1.8;margin-bottom:12px}
+.callout b,.callout strong{color:var(--text);font-weight:600}
+.callout.green{border-left-color:var(--accent2)}.callout.amber{border-left-color:#d97706}.callout.red{border-left-color:#dc2626}
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.cmp-table th{text-align:left;padding:8px 12px;background:var(--tag-bg);font-weight:600;font-size:12px;border-bottom:2px solid var(--border)}
+.cmp-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table .good{color:var(--accent2);font-weight:500}.cmp-table .bad{color:#dc2626;font-weight:500}
+.val-up{color:var(--up);font-weight:600}.val-down{color:var(--down);font-weight:600}
+.code-block{background:var(--code-bg);border-radius:6px;padding:12px 16px;font-family:"SF Mono",Menlo,monospace;font-size:12px;color:var(--sub);overflow-x:auto;margin-top:12px;line-height:1.7;white-space:pre-wrap}
+.code-block .hl{color:var(--accent);font-weight:600}
+.dtag{display:inline-block;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500}
+.dtag.green{background:#ecfdf5;color:#065f46}.dtag.amber{background:#fefce8;color:#854d0e}.dtag.red{background:#fef2f2;color:#991b1b}.dtag.blue{background:#eff6ff;color:#1e40af}
+[data-theme="dark"] .dtag.green{background:#052e16;color:#86efac}[data-theme="dark"] .dtag.amber{background:#422006;color:#fde68a}[data-theme="dark"] .dtag.red{background:#450a0a;color:#fca5a5}[data-theme="dark"] .dtag.blue{background:#172554;color:#93c5fd}
+.search-wrap{padding:0 20px;margin-bottom:12px}
+.search-input{width:100%;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none}
+.search-input:focus{border-color:var(--accent)}
+.lock-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .4s}
+.lock-screen.hidden{opacity:0;pointer-events:none}
+.lock-icon{width:64px;height:64px;margin-bottom:24px;border-radius:50%;background:var(--tag-bg);display:flex;align-items:center;justify-content:center}
+.lock-icon svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lock-title{font-size:20px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.lock-sub{font-size:13px;color:var(--sub);margin-bottom:24px}
+.lock-form{display:flex;gap:8px;align-items:center}
+.lock-input{padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:15px;width:160px;outline:none;text-align:center;letter-spacing:4px;transition:border .2s}
+.lock-input:focus{border-color:var(--accent)}.lock-input.shake{animation:shake .4s}
+.lock-btn{padding:10px 20px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s}
+.lock-btn:hover{opacity:.9}
+.lock-error{font-size:12px;color:#c62828;margin-top:10px;min-height:18px}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.back-top{position:fixed;bottom:32px;right:32px;width:40px;height:40px;border-radius:10px;background:var(--card);border:1px solid var(--border);cursor:pointer;display:none;align-items:center;justify-content:center;z-index:80;transition:all .2s;box-shadow:var(--shadow)}
+.back-top:hover{border-color:var(--accent)}.back-top svg{width:18px;height:18px;stroke:var(--sub);fill:none;stroke-width:2}.back-top.show{display:flex}
+.stars{display:inline-flex;gap:1px;margin-left:8px;vertical-align:middle}
+.stars .star{width:14px;height:14px;fill:var(--accent);opacity:.25}.stars .star.active{opacity:1}
+.book-refs{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+.book-refs-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--sub);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.book-refs-title svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.book-ref{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:6px;background:var(--tag-bg);margin-bottom:6px;font-size:12px;line-height:1.6;transition:all .15s}
+.book-ref:hover{background:var(--hover)}.book-ref a{color:var(--accent);font-weight:500}.book-ref a:hover{text-decoration:underline}
+.book-ref .book-icon{width:16px;height:16px;stroke:var(--accent2);fill:none;stroke-width:2;flex-shrink:0;margin-top:2px}
+.book-ref .book-meta{color:var(--sub)}.book-ref .book-quote{font-style:italic;color:var(--sub);margin-top:4px;font-size:11px}
+.diagram{margin-bottom:16px;padding:16px;background:var(--tag-bg);border-radius:10px;overflow-x:auto}
+.diagram .dlbl{font-size:10px;color:var(--sub);text-align:center;margin-top:8px;letter-spacing:.5px}
+.quotes-box{margin-bottom:16px;position:relative;padding-left:28px}
+.quotes-box .quotes-icon{position:absolute;left:0;top:10px;width:20px;height:20px;color:var(--accent);opacity:.5}
+.quotes-box .quote-line{padding:10px 14px;border-radius:8px;background:linear-gradient(135deg,var(--tag-bg) 0%,transparent 100%);border-left:3px solid var(--accent);margin-bottom:6px;font-size:13px;font-weight:500;color:var(--text);line-height:1.7;letter-spacing:.3px;transition:all .2s}
+.quotes-box .quote-line:hover{transform:translateX(4px);border-left-color:var(--accent2)}
+.term-updated{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--sub);margin-left:12px}
+.term-updated svg{width:12px;height:12px}
+.nav-new{display:inline-block;font-size:8px;font-weight:700;color:#fff;background:#dc2626;padding:1px 4px;border-radius:3px;margin-left:4px;vertical-align:middle;line-height:1.4;letter-spacing:.5px}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0;padding:72px 20px 60px}.hero h2{font-size:24px}}
+</style>
+</head>
+<body>
+
+<div class="lock-screen" id="lockScreen">
+<div class="lock-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><line x1="17" y1="5" x2="7" y2="19"/><line x1="7" y1="5" x2="17" y2="19"/></svg></div>
+<div class="lock-title">Ori's Financial Literacy Dictionary</div>
+<div class="lock-sub">请输入访问密码</div>
+<div class="lock-form">
+<input class="lock-input" id="lockInput" type="password" maxlength="10" placeholder="····" autofocus/>
+<button class="lock-btn" onclick="tryUnlock()">进入</button>
+</div>
+<div class="lock-error" id="lockError"></div>
+</div>
+<div id="appShell" style="display:none">
+<div class="top-bar">
+<h1><svg class="logo-icon" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><line x1="17" y1="5" x2="7" y2="19"/><line x1="7" y1="5" x2="17" y2="19"/></svg>Ori's Financial Literacy Dictionary</h1>
+<button class="theme-btn" onclick="toggleTheme()" id="themeBtn"><svg viewBox="0 0 24 24" id="themeSvg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+</div>
+<aside class="sidebar" id="sidebar">
+<div class="search-wrap"><input class="search-input" placeholder="搜索理财术语..." oninput="filterTerms(this.value)"/></div>
+<div id="navList"></div>
+</aside>
+<main class="main" id="mainContent">
+<div class="hero">
+<h2>Ori's Financial Literacy Dictionary</h2>
+<p>个人理财知识体系构建专用 — 涵盖投资哲学、资产配置、基金实务、估值指标、风控框架、宏观周期、行为金融七大领域，每个概念配实战案例与量化模型。</p>
+<div class="tag-row">
+<span class="tag">7 大章节</span><span class="tag">48 核心概念</span><span class="tag">涨红跌绿</span><span class="tag">实战案例</span><span class="tag">量化模型</span><span class="tag">经典书籍引用</span><span class="tag">星级评分</span><span class="tag">记忆金句</span><span class="tag">深色模式</span>
+</div>
+</div>
+<div id="content"></div>
+</main>
+<div class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></div>
+</div>
+
+<script>
+const PASS_HASH='1109';
+function tryUnlock(){var v=document.getElementById('lockInput').value;if(v===PASS_HASH){sessionStorage.setItem('fl_unlocked','1');showApp()}else{var inp=document.getElementById('lockInput');inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');document.getElementById('lockError').textContent='密码错误，请重试';inp.value='';inp.focus()}}
+function showApp(){var lock=document.getElementById('lockScreen');lock.classList.add('hidden');setTimeout(function(){lock.style.display='none'},400);document.getElementById('appShell').style.display=''}
+document.getElementById('lockInput').addEventListener('keydown',function(e){if(e.key==='Enter')tryUnlock()});
+if(sessionStorage.getItem('fl_unlocked')==='1')showApp();
+
+function toggleTheme(){var d=document.documentElement;var t=d.getAttribute("data-theme")==="dark"?"light":"dark";d.setAttribute("data-theme",t);document.getElementById("themeSvg").innerHTML=t==="dark"?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>':'<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';localStorage.setItem("fl_theme",t)}
+(function(){var t=localStorage.getItem("fl_theme")||"light";document.documentElement.setAttribute("data-theme",t);if(t==="dark"){document.getElementById("themeSvg").innerHTML='<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'}})();
+
+window.addEventListener('scroll',function(){document.getElementById('backTop').classList.toggle('show',window.scrollY>400)});
+
+const DATA=[
+// ===== CH01 投资哲学与认知 =====
+{id:"philosophy",title:"投资哲学与认知",num:"01",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+desc:"投资的第一课不是选什么，而是理解自己的偏见、风险和人性弱点。",
+terms:[
+{name:"复利效应",en:"Compound Interest",stars:5,updated:"2026-04-15",books:[{title:"穷查理宝典",author:"查理·芒格",url:"https://weread.qq.com/web/bookDetail/2e0320e05cc92c2e0796c5a",quote:"复利是世界第八大奇迹"}],quotes:["雪球不是关键，关键是你要找到一条足够长的山坡。","年化15%，5年翻倍；年化20%，4年翻倍。时间是最强的杠杆。"],desc:"爱因斯坦称之为「世界第八大奇迹」。<strong>利息产生利息</strong>，时间越长效果越惊人。10万元年化15%，10年后变40.5万，20年后变163.7万。复利的敌人是频繁交易和高费率。",demo:'<div class="callout"><strong>复利公式：</strong>FV = PV × (1 + r)^n</div><table class="cmp-table"><tr><th>初始本金</th><th>年化收益</th><th>10年后</th><th>20年后</th><th>30年后</th></tr><tr><td>10万</td><td>10%</td><td>25.9万</td><td>67.3万</td><td>174.5万</td></tr><tr><td>10万</td><td>15%</td><td class="val-up">40.5万</td><td class="val-up">163.7万</td><td class="val-up">662.1万</td></tr><tr><td>10万</td><td>20%</td><td class="val-up">61.9万</td><td class="val-up">383.4万</td><td class="val-up">2373.8万</td></tr></table><div class="callout green" style="margin-top:12px"><strong>关键洞察：</strong>15%和20%看起来只差5个百分点，但30年后差了3.6倍。<strong>选对赛道比单次择时重要100倍。</strong></div>'},
+{name:"损失厌恶",en:"Loss Aversion",stars:5,updated:"2026-04-15",books:[{title:"思考，快与慢",author:"丹尼尔·卡尼曼",url:"https://weread.qq.com/web/reader/af83263058c217af81f8979",quote:"损失带来的痛苦大约是等量收益带来的快乐的两倍"}],quotes:["亏1万的痛苦 = 赚2.5万的快乐。这就是你总在最低点割肉的原因。","市场不是在惩罚你，是你的杏仁核在惩罚你。"],desc:"Kahneman & Tversky 前景理论的核心发现：<strong>人对损失的敏感度约为收益的2-2.5倍</strong>。这解释了为什么散户总是「赚小亏大」——赚了急着落袋为安，亏了死扛不肯止损。",demo:'<table class="cmp-table"><tr><th>场景</th><th>理性决策</th><th>损失厌恶下的行为</th></tr><tr><td>持仓盈利20%</td><td class="good">评估基本面是否支持继续持有</td><td class="bad">立刻卖出「落袋为安」</td></tr><tr><td>持仓亏损20%</td><td class="good">评估是否该止损</td><td class="bad">死扛不卖「回本再走」</td></tr><tr><td>大盘暴跌</td><td class="good">检查持仓质量</td><td class="bad">恐慌清仓</td></tr></table><div class="callout amber" style="margin-top:12px"><strong>应对策略：</strong>用规则替代情绪——提前设定止盈止损线，触发即执行，不做盘中决策。</div>'},
+{name:"均值回归",en:"Mean Reversion",stars:4,updated:"2026-04-15",quotes:["树不会长到天上去，但也不会扎根到地心。","极端终将回归平均——问题是你能不能扛到那一天。"],desc:"资产价格长期围绕<strong>内在价值</strong>上下波动。暴涨之后大概率回调，暴跌之后大概率修复。但均值回归不告诉你「什么时候」回归——可能是1个月，也可能是3年。",demo:'<table class="cmp-table"><tr><th>场景</th><th>信号</th><th>动作</th></tr><tr><td>行业PE远高于历史均值</td><td>偏离1.5个标准差以上</td><td>减仓/不追高</td></tr><tr><td>优质基金连续3年跑输</td><td>管理能力未变，风格不在风口</td><td>可能是买入机会</td></tr><tr><td>某赛道连续暴涨2年</td><td>资金过度拥挤</td><td>逐步止盈</td></tr></table><div class="callout red" style="margin-top:12px"><strong>陷阱：</strong>均值回归有个前提——「均值」本身没变。如果基本面恶化，股价跌了就是跌了，不会回归。</div>'},
+{name:"锚定效应",en:"Anchoring Bias",stars:4,updated:"2026-04-15",quotes:["你的成本价不是市场的锚，市场根本不知道你几块钱买的。","买入价是你的心理账户，不是资产的真实价值。"],desc:"人类决策严重依赖<strong>第一个接收到的数字</strong>作为参考点。在投资中，最常见的锚是「买入成本价」。",demo:'<table class="cmp-table"><tr><th style="width:50%">锚定思维（错误）</th><th>去锚化思维（正确）</th></tr><tr><td class="bad">「我30块买的，等回到30再卖」</td><td class="good">「以当前价格，值不值得买入？不值得买入就不值得持有」</td></tr><tr><td class="bad">「净值从2块跌到1.5，太便宜了」</td><td class="good">「净值高低不代表贵贱，要看持仓估值水平」</td></tr></table><div class="callout green" style="margin-top:12px"><strong>破解方法：</strong>每周问自己——「如果我现在空仓，会不会以当前价格买入这些持仓？」如果不会，就该卖。</div>'},
+{name:"安全边际",en:"Margin of Safety",stars:5,updated:"2026-04-15",books:[{title:"聪明的投资者",author:"本杰明·格雷厄姆",url:"https://weread.qq.com/web/bookDetail/98e32df05db0ab98e72ce07",quote:"投资的秘诀可以精炼为四个字：安全边际"}],quotes:["用7折的价格买1块钱的东西——即使算错了也不会亏太多。","安全边际不是为了赚更多，是为了在你犯错时不至于破产。"],desc:"格雷厄姆价值投资的基石。<strong>以显著低于内在价值的价格买入</strong>，给自己留出犯错空间。",demo:'<div class="diagram"><div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap"><div style="padding:12px 16px;border-radius:8px;background:var(--accent2);color:#fff;font-size:11px;text-align:center;font-weight:600">内在价值<br><span style="font-size:14px">10.00</span></div><div style="font-size:16px;color:var(--sub)">→</div><div style="padding:12px 16px;border-radius:8px;background:#d97706;color:#fff;font-size:11px;text-align:center;font-weight:600">安全边际<br><span style="font-size:14px">30%</span></div><div style="font-size:16px;color:var(--sub)">→</div><div style="padding:12px 16px;border-radius:8px;background:var(--accent);color:#fff;font-size:11px;text-align:center;font-weight:600">买入价≤7.00<br><span style="font-size:9px;opacity:.8">即使算错20%也不亏</span></div></div><div class="dlbl">留出犯错空间 · 这是价值投资的安全带</div></div>'},
+{name:"沉没成本谬误",en:"Sunk Cost Fallacy",stars:4,updated:"2026-04-15",quotes:["已经亏的钱回不来了，但你可以阻止未来继续亏。","「都已经投了这么多了」是最贵的一句话。"],desc:"已经付出且<strong>不可回收</strong>的成本不应影响未来决策。但投资者常因为「已经亏了20%」而拒绝止损。",demo:'<table class="cmp-table"><tr><th>思维模式</th><th>内心独白</th><th>结果</th></tr><tr><td class="bad">沉没成本思维</td><td>「都亏了3万了，不能卖」</td><td>从亏3万变成亏8万</td></tr><tr><td class="good">机会成本思维</td><td>「这笔钱放别的标的上半年能回多少？」</td><td>止损换仓，3个月回血</td></tr></table><div class="callout amber" style="margin-top:12px"><strong>检验：</strong>「如果我没有这个持仓，会不会以当前价格买入？」答案是否就该卖，不管成本价。</div>'}
+]},
+// ===== CH02 资产配置策略 =====
+{id:"allocation",title:"资产配置策略",num:"02",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+desc:"不要把所有鸡蛋放在一个篮子里——但也别放太多篮子让自己顾不过来。",
+terms:[
+{name:"核心-卫星策略",en:"Core-Satellite Strategy",stars:5,updated:"2026-04-15",quotes:["核心求稳、卫星求锐——用80%的确定性养20%的进攻性。","核心是底气，卫星是锐度。"],desc:"<strong>核心仓</strong>（60-80%）配置宽基指数/债券基金；<strong>卫星仓</strong>（20-40%）配置行业/主题基金。核心保证下限，卫星拉高上限。",demo:'<div class="diagram"><div style="display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:16px"><div style="text-align:center"><div style="width:120px;height:120px;border-radius:50%;background:var(--accent2);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff"><span style="font-size:18px;font-weight:700">60-80%</span><span style="font-size:10px;opacity:.8">核心仓</span></div><div style="font-size:10px;color:var(--sub);margin-top:6px">沪深300 / 中证500 / 债券</div></div><div style="text-align:center"><div style="width:80px;height:80px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff"><span style="font-size:16px;font-weight:700">20-40%</span><span style="font-size:9px;opacity:.8">卫星仓</span></div><div style="font-size:10px;color:var(--sub);margin-top:6px">科技 / 新能源 / 黄金</div></div></div><div class="dlbl">核心求稳 · 卫星求锐</div></div>'},
+{name:"股债平衡",en:"Stock-Bond Balance",stars:4,updated:"2026-04-15",books:[{title:"聪明的投资者",author:"本杰明·格雷厄姆",url:"https://weread.qq.com/web/bookDetail/98e32df05db0ab98e72ce07",quote:"防御型投资者应将资金在股票和债券之间平均分配"}],quotes:["股票给你收益，债券给你睡眠。比例取决于你的心脏。","牛市降股加债，熊市降债加股。"],desc:"<strong>股票和债券各持一定比例</strong>，定期再平衡。经典比例60:40（进取）或50:50（稳健）。本质是<strong>逆向操作的纪律化</strong>。",demo:'<table class="cmp-table"><tr><th>风险偏好</th><th>股票</th><th>债券</th><th>预期年化</th><th>最大回撤</th></tr><tr><td>保守型</td><td>30%</td><td>70%</td><td>5-7%</td><td>-8%</td></tr><tr><td>稳健型</td><td>50%</td><td>50%</td><td>7-10%</td><td>-15%</td></tr><tr><td>进取型</td><td>70%</td><td>30%</td><td class="val-up">10-15%</td><td>-25%</td></tr><tr><td>激进型</td><td>90%</td><td>10%</td><td class="val-up">12-18%</td><td class="val-down">-35%</td></tr></table>'},
+{name:"定投策略",en:"Dollar Cost Averaging",stars:5,updated:"2026-04-15",quotes:["不择时、不猜底——定投是普通人对抗人性弱点的最佳武器。","越跌越买，等反弹那一刻，你买了一整个底部。"],desc:"<strong>固定时间、固定金额</strong>持续买入。利用市场波动自动<strong>低位多买、高位少买</strong>。对抗「追涨杀跌」的制度化方案。",demo:'<div class="callout"><strong>定投的微笑曲线：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag green">下跌期</span> 净值从1.5跌到1.0 → 低位积累筹码<br><span class="dtag amber">底部期</span> 净值0.8-1.0震荡 → 大量低价筹码买入<br><span class="dtag red">反弹期</span> 净值涨回1.3 → 平均成本1.05，<strong>已盈利23.8%</strong></div><div class="callout amber" style="margin-top:12px"><strong>三个关键参数：</strong>1) 选对标的（宽基优于行业）2) 坚持够长（至少1个牛熊）3) 有止盈纪律</div>'},
+{name:"再平衡",en:"Rebalancing",stars:4,updated:"2026-04-15",quotes:["再平衡就是强制「高卖低买」——机械化的反人性操作。","不需要预判市场，只需要遵守比例纪律。"],desc:"定期将配置比例<strong>恢复到目标值</strong>。卖涨多的、买跌多的——自动实现逆向操作。",demo:'<table class="cmp-table"><tr><th></th><th>目标</th><th>波动后</th><th>操作</th></tr><tr><td>科技基金</td><td>40%</td><td>52%</td><td class="val-down">卖出12%</td></tr><tr><td>债券基金</td><td>30%</td><td>23%</td><td class="val-up">买入7%</td></tr><tr><td>黄金ETF</td><td>15%</td><td>13%</td><td class="val-up">买入2%</td></tr><tr><td>现金</td><td>15%</td><td>12%</td><td class="val-up">补入3%</td></tr></table>'},
+{name:"杠铃策略",en:"Barbell Strategy",stars:3,updated:"2026-04-15",books:[{title:"反脆弱",author:"纳西姆·塔勒布",url:"https://weread.qq.com/web/bookDetail/3c0327b0813ab7b40g018e34",quote:"杠铃策略让你从不确定性中获益"}],quotes:["90%极保守+10%极激进 = 比「全部中等风险」更安全。","中间地带最危险——你以为安全，其实哪边好处都没拿到。"],desc:"塔勒布《反脆弱》提出。<strong>避开中间风险，两头押注</strong>：90%极安全+10%高风险高回报。损失有限，收益无上限。",demo:'<div class="diagram"><div style="display:flex;align-items:center;justify-content:center;gap:12px"><div style="text-align:center"><div style="padding:12px 16px;border-radius:8px;background:var(--accent2);color:#fff;font-size:11px;font-weight:600">90% 极保守<br><span style="font-size:9px;opacity:.8">国债/货基</span></div></div><div style="text-align:center;color:var(--sub)"><div style="font-size:10px;text-decoration:line-through;opacity:.4">中等风险<br>被跳过</div></div><div style="text-align:center"><div style="padding:12px 16px;border-radius:8px;background:var(--accent);color:#fff;font-size:11px;font-weight:600">10% 极激进<br><span style="font-size:9px;opacity:.8">期权/小盘/加密</span></div></div></div><div class="dlbl">不是分散风险 · 是把风险推到两极</div></div>'}
+]},
+// ===== CH03 基金投资实务 =====
+{id:"fund",title:"基金投资实务",num:"03",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+desc:"从选基到持有到止盈——公募基金投资的核心操作系统。",
+terms:[
+{name:"净值与估值",en:"NAV & Valuation",stars:5,updated:"2026-04-15",quotes:["基金净值只是记分牌，不是价格标签。1块和3块没有贵贱之分。","盘中估值是AI猜的，收盘净值才是真的。"],desc:"<strong>单位净值</strong>=基金总资产/总份额。净值高不代表「贵」——关键看持仓估值水平。盘中估值基于上季度持仓模拟，主动型误差可达2-5%。",demo:'<table class="cmp-table"><tr><th>概念</th><th>含义</th><th>使用场景</th></tr><tr><td><strong>单位净值</strong></td><td>每份基金当前值多少</td><td>计算盈亏</td></tr><tr><td><strong>累计净值</strong></td><td>含历史分红的总收益</td><td>评估长期业绩</td></tr><tr><td><strong>盘中估值</strong></td><td>上季持仓模拟预估</td><td>仅供参考</td></tr><tr><td><strong>PE估值</strong></td><td>持仓股票市盈率</td><td>判断高估/低估</td></tr></table>'},
+{name:"指数基金 vs 主动基金",en:"Index vs Active Fund",stars:5,updated:"2026-04-15",books:[{title:"漫步华尔街",author:"伯顿·马尔基尔",url:"https://weread.qq.com/web/bookDetail/0cd326c0813ab6c30g014c97",quote:"低成本指数基金是大多数投资者最明智的投资"}],quotes:["80%主动基金跑不赢指数——这不是观点，是统计事实。","指数买国运，主动买基金经理的脑子。"],desc:"<strong>指数基金</strong>跟踪指数，费率低、透明；<strong>主动基金</strong>经理选股，试图跑赢基准。A股约60-70%主动基金长期跑输基准。",demo:'<table class="cmp-table"><tr><th></th><th>指数基金</th><th>主动基金</th></tr><tr><td>费率</td><td class="good">0.15-0.5%</td><td class="bad">1.2-1.5%</td></tr><tr><td>透明度</td><td class="good">持仓公开</td><td>季报才公布</td></tr><tr><td>经理依赖</td><td class="good">几乎不依赖</td><td class="bad">高度依赖</td></tr><tr><td>超额收益</td><td>无</td><td class="good">优秀者+5-15%</td></tr></table>'},
+{name:"最大回撤",en:"Maximum Drawdown",stars:5,updated:"2026-04-15",quotes:["最大回撤告诉你：最坏时亏多少。承受不了就减仓。","年化20%、回撤40%=你得先亏40%才能赚20%。"],desc:"历史最高点到最低点的<strong>最大跌幅</strong>。直接回答「我最多会亏多少」。<strong>Calmar比率（年化/回撤）>0.5</strong>算合格。",demo:'<table class="cmp-table"><tr><th>最大回撤</th><th>回本所需涨幅</th><th>难度</th></tr><tr><td>-10%</td><td>+11.1%</td><td>容易</td></tr><tr><td>-20%</td><td>+25.0%</td><td>需要耐心</td></tr><tr><td>-30%</td><td class="val-up">+42.9%</td><td>很难</td></tr><tr><td>-50%</td><td class="val-up">+100.0%</td><td>极难（翻倍才回本）</td></tr></table><div class="callout green" style="margin-top:12px"><strong>核心洞察：</strong>回撤和回本不对称。亏50%需涨100%才回本。<strong>控制回撤比追求收益更重要。</strong></div>'},
+{name:"夏普比率",en:"Sharpe Ratio",stars:4,updated:"2026-04-15",quotes:["不看风险的收益是耍流氓。","夏普>1算好，>2算优秀，>3可能是骗人的。"],desc:"（基金收益-无风险收益）/波动率。每承受一单位风险获得的超额收益。同样收益下夏普高的性价比更好。",demo:'<table class="cmp-table"><tr><th>基金</th><th>年化</th><th>波动率</th><th>夏普</th><th>评价</th></tr><tr><td>A</td><td>25%</td><td>30%</td><td>0.73</td><td>收益高但波动大</td></tr><tr><td>B</td><td>15%</td><td>12%</td><td class="good">1.08</td><td>性价比更高</td></tr><tr><td>C</td><td>8%</td><td>5%</td><td class="good">1.20</td><td>稳健优选</td></tr></table>'},
+{name:"基金选择四维框架",en:"4D Fund Selection",stars:4,updated:"2026-04-15",quotes:["选基不是选明星——要选体系，不选个人。","过去3年前10%的基金，未来大概率跑不进前30%。"],desc:"从<strong>业绩</strong>、<strong>风险</strong>、<strong>费用</strong>、<strong>基金经理</strong>四维综合评估。",demo:'<table class="cmp-table"><tr><th>维度</th><th>关键指标</th><th>及格线</th><th>优秀线</th></tr><tr><td><strong>业绩</strong></td><td>近3年年化</td><td>跑赢基准</td><td class="good">≥15%</td></tr><tr><td><strong>风险</strong></td><td>回撤/夏普</td><td>MDD<30%</td><td class="good">MDD<20%/Sharpe>1</td></tr><tr><td><strong>费用</strong></td><td>综合费率</td><td><2%/年</td><td class="good"><1%/年</td></tr><tr><td><strong>经理</strong></td><td>任职/规模</td><td>>2年</td><td class="good">>5年/20-80亿</td></tr></table><div class="callout red" style="margin-top:12px"><strong>规模陷阱：</strong>规模>200亿的主动基金很难做出超额——大船难掉头。10-80亿是甜蜜区。</div>'}
+]},
+// ===== CH04 估值与核心指标 =====
+{id:"valuation",title:"估值与核心指标",num:"04",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
+desc:"看懂估值才能分辨价格和价值——数字是投资世界的通用语言。",
+terms:[
+{name:"市盈率",en:"P/E Ratio",stars:5,updated:"2026-04-15",quotes:["PE就是你为每1块钱利润付了多少钱。","低PE不等于便宜，高PE不等于贵——关键看增长速度。"],desc:"<strong>股价/每股收益</strong>。PE=20意味着以当前利润需20年回本。但PE要结合行业看——科技股PE40可能合理，银行PE20可能偏高。",demo:'<div class="callout"><strong>PE百分位用法：</strong></div><div style="font-size:13px;color:var(--sub);line-height:2;margin-top:8px"><span class="dtag green">百分位<30%</span> 历史低位→可能是买入机会<br><span class="dtag amber">百分位30-70%</span> 正常区间→持有观望<br><span class="dtag red">百分位>70%</span> 历史高位→考虑减仓</div>'},
+{name:"市净率",en:"P/B Ratio",stars:4,updated:"2026-04-15",quotes:["PB<1意味着市场觉得这家公司死了比活着值钱。","银行看PB，科技看PE——不同行业有不同的估值语言。"],desc:"<strong>股价/每股净资产</strong>。PB<1意味着「破净」。重资产行业（银行/地产）适合用PB估值，轻资产行业不适用。",demo:'<table class="cmp-table"><tr><th>PB范围</th><th>含义</th><th>典型行业</th></tr><tr><td class="val-down">PB<1</td><td>破净，极度悲观</td><td>银行（常年0.5-0.8）</td></tr><tr><td>PB 1-3</td><td>合理估值</td><td>制造/消费</td></tr><tr><td class="val-up">PB>5</td><td>轻资产/高成长</td><td>互联网/医药</td></tr></table>'},
+{name:"ROE",en:"Return on Equity",stars:5,updated:"2026-04-15",books:[{title:"巴菲特致股东的信",author:"沃伦·巴菲特",url:"https://weread.qq.com/web/bookDetail/80a32b205d6f8080abb2ed6",quote:"如果只能用一个指标选股，那就选ROE"}],quotes:["ROE>15%持续5年=优质公司标配。","ROE衡量用股东的钱赚钱的效率——越高越不费力。"],desc:"<strong>净利润/股东权益</strong>。巴菲特选股标准之一：<strong>ROE连续5年>15%</strong>。可用杜邦分析拆解为利润率×周转率×杠杆率。",demo:'<div class="callout"><strong>杜邦分析拆解：</strong>ROE = 净利率 × 资产周转率 × 权益乘数</div><table class="cmp-table"><tr><th>驱动力</th><th>高利润型</th><th>高周转型</th><th>高杠杆型</th></tr><tr><td>代表行业</td><td class="good">医药/白酒</td><td class="good">零售/快消</td><td class="bad">银行/地产</td></tr><tr><td>赚钱方式</td><td>卖贵的</td><td>卖多的</td><td>借钱生钱</td></tr><tr><td>质量</td><td class="good">最健康</td><td>良好</td><td class="bad">有风险</td></tr></table>'},
+{name:"PEG",en:"Price/Earnings to Growth",stars:4,updated:"2026-04-15",quotes:["PE看现在，PEG看未来。用增长给PE打折。","PEG<1是彼得·林奇的核心秘密。"],desc:"<strong>PE/利润增速</strong>。PEG<1意味着相对增速被低估。PE=30但增速40%时PEG=0.75，比PE=10增速5%（PEG=2）更便宜。",demo:'<table class="cmp-table"><tr><th>股票</th><th>PE</th><th>增速</th><th>PEG</th><th>评估</th></tr><tr><td>A</td><td>30</td><td>40%</td><td class="good">0.75</td><td>被低估</td></tr><tr><td>B</td><td>15</td><td>10%</td><td>1.50</td><td>表面便宜实际偏贵</td></tr><tr><td>C</td><td>50</td><td>60%</td><td class="good">0.83</td><td>高PE但增长匹配</td></tr></table>'},
+{name:"股息率",en:"Dividend Yield",stars:3,updated:"2026-04-15",quotes:["股息率>3%且能持续，基本不会让你亏太多。","分红是检验真实盈利的试金石。"],desc:"<strong>年度分红/当前股价</strong>。高股息=即使不涨每年也有现金流。A股高股息集中在银行、公用事业、煤炭。",demo:'<table class="cmp-table"><tr><th>股息率</th><th>评价</th><th>典型标的</th></tr><tr><td><2%</td><td>低于余额宝</td><td>大部分成长股</td></tr><tr><td>3-5%</td><td class="good">不错的现金奶牛</td><td>大型银行/公用事业</td></tr><tr><td>5-8%</td><td class="good">高股息（检查持续性）</td><td>煤炭/高速</td></tr><tr><td>>8%</td><td class="bad">可能是估值陷阱</td><td>利润不可持续</td></tr></table>'}
+]},
+// ===== CH05 风险管理框架 =====
+{id:"risk",title:"风险管理框架",num:"05",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+desc:"真正的高手不是赚得多，是亏得少。风控是投资体系的免疫系统。",
+terms:[
+{name:"止损纪律",en:"Stop Loss Discipline",stars:5,updated:"2026-04-15",quotes:["止损不是认输，是给下一次机会腾出子弹。","永远不要让一次亏损超过总资产的5%。"],desc:"<strong>预设亏损阈值，触发即执行</strong>。核心不是预测市场，是控制单次伤害。",demo:'<table class="cmp-table"><tr><th>类型</th><th>方法</th><th>适用场景</th></tr><tr><td><strong>固定比例</strong></td><td>亏-10%~-20%即卖</td><td>波段/短期</td></tr><tr><td><strong>技术止损</strong></td><td>跌破关键均线</td><td>趋势跟踪</td></tr><tr><td><strong>基本面止损</strong></td><td>买入逻辑被证伪</td><td class="good">价值投资（最推荐）</td></tr><tr><td><strong>时间止损</strong></td><td>持有X月未达预期</td><td>机会成本管理</td></tr></table><div class="callout red" style="margin-top:12px"><strong>铁律：</strong>止损线在买入前就设好，不是亏了再想。到了就执行。</div>'},
+{name:"仓位管理",en:"Position Sizing",stars:5,updated:"2026-04-15",quotes:["仓位决定生死，选股决定贫富。","单只不超过20%——这不是保守，是生存法则。"],desc:"单一标的不超过总资产20%，单一行业不超过40%，保留10-20%现金。",demo:'<div style="font-size:13px;color:var(--sub);line-height:2"><span class="dtag green">底仓 40%</span> 宽基指数→长期不动<br><span class="dtag blue">主力 30%</span> 2-3只行业基金→季度调整<br><span class="dtag amber">机动 20%</span> 卫星基金→严格止盈止损<br><span class="dtag red">现金 10%</span> 货基→应急弹药</div>'},
+{name:"黑天鹅风险",en:"Black Swan Risk",stars:4,updated:"2026-04-15",books:[{title:"黑天鹅",author:"纳西姆·塔勒布",url:"https://weread.qq.com/web/bookDetail/3c0327b0813ab7b40g018e34",quote:"我们不能预测黑天鹅，但可以不那么脆弱"}],quotes:["你不需要预测黑天鹅——你需要在它面前活着。","2015/2018/2020/2022——每次你都说没想到。"],desc:"极端罕见、冲击巨大、事后才合理化。无法预测，但可通过分散、保留现金、杠铃策略<strong>降低脆弱性</strong>。",demo:'<table class="cmp-table"><tr><th>A股历史黑天鹅</th><th>沪深300跌幅</th><th>恢复时间</th></tr><tr><td>2015股灾</td><td class="val-down">-47%</td><td>~5年</td></tr><tr><td>2018贸易摩擦</td><td class="val-down">-32%</td><td>~1.5年</td></tr><tr><td>2020新冠</td><td class="val-down">-16%</td><td>~3个月</td></tr><tr><td>2022年4月</td><td class="val-down">-28%</td><td>~1年</td></tr></table><div class="callout green" style="margin-top:12px"><strong>反脆弱清单：</strong>1) 保留10-15%现金 2) 单行业<40% 3) 避免杠杆 4) 压力测试：明天跌30%，我还能活吗？</div>'},
+{name:"相关性与分散",en:"Correlation & Diversification",stars:4,updated:"2026-04-15",quotes:["买5只科技基金不叫分散——那叫5倍集中。","真正的分散是找到下跌时不同步的资产。"],desc:"相关系数ρ衡量同步程度。有效分散需配置<strong>低相关甚至负相关</strong>的资产。",demo:'<table class="cmp-table"><tr><th>资产组合</th><th>相关性</th><th>分散效果</th></tr><tr><td>科技A+科技B</td><td class="bad">ρ≈0.92</td><td class="bad">几乎无分散</td></tr><tr><td>沪深300+中证500</td><td>ρ≈0.85</td><td>略有分散</td></tr><tr><td>A股+债券</td><td class="good">ρ≈-0.2~0.3</td><td class="good">有效分散</td></tr><tr><td>A股+黄金</td><td class="good">ρ≈-0.1~0.2</td><td class="good">优质对冲</td></tr></table>'},
+{name:"流动性风险",en:"Liquidity Risk",stars:3,updated:"2026-04-15",quotes:["流动性像空气——平时不觉得珍贵，窒息时才知道致命。","能赎回的钱才是你的钱。"],desc:"资产无法在合理价格、时间内变现的风险。投资规划必须预留6个月生活费的高流动性资产。",demo:'<table class="cmp-table"><tr><th>资产类型</th><th>变现时间</th><th>流动性</th></tr><tr><td>余额宝/货基</td><td>T+0</td><td class="good">极高</td></tr><tr><td>开放式公募</td><td>T+1~T+3</td><td class="good">高</td></tr><tr><td>银行理财</td><td>到期赎回</td><td>中</td></tr><tr><td>私募基金</td><td>锁定1-3年</td><td class="bad">低</td></tr><tr><td>不动产</td><td>数月~年</td><td class="bad">极低</td></tr></table>'}
+]},
+// ===== CH06 宏观与市场周期 =====
+{id:"macro",title:"宏观与市场周期",num:"06",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+desc:"个股是树，宏观是风。顺风时猪都能飞，逆风时鹰也得低头。",
+terms:[
+{name:"美林时钟",en:"Investment Clock",stars:5,updated:"2026-04-15",quotes:["春种夏长秋收冬藏——经济周期也一样。","搞清楚现在几点，比猜明天涨不涨重要100倍。"],desc:"将经济分为<strong>复苏→过热→滞胀→衰退</strong>四阶段，每阶段有对应最优资产。核心变量：经济增长+通胀。",demo:'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px"><div style="padding:14px;background:var(--tag-bg);border-radius:8px;border-left:3px solid var(--accent2)"><strong>复苏（春）</strong><br><span style="font-size:11px;color:var(--sub)">GDP↑ CPI↓</span><br><span class="dtag green" style="margin-top:4px">最优：股票</span></div><div style="padding:14px;background:var(--tag-bg);border-radius:8px;border-left:3px solid var(--accent)"><strong>过热（夏）</strong><br><span style="font-size:11px;color:var(--sub)">GDP↑ CPI↑</span><br><span class="dtag amber" style="margin-top:4px">最优：大宗商品</span></div><div style="padding:14px;background:var(--tag-bg);border-radius:8px;border-left:3px solid #dc2626"><strong>滞胀（秋）</strong><br><span style="font-size:11px;color:var(--sub)">GDP↓ CPI↑</span><br><span class="dtag red" style="margin-top:4px">最优：现金</span></div><div style="padding:14px;background:var(--tag-bg);border-radius:8px;border-left:3px solid #3b82f6"><strong>衰退（冬）</strong><br><span style="font-size:11px;color:var(--sub)">GDP↓ CPI↓</span><br><span class="dtag blue" style="margin-top:4px">最优：债券</span></div></div>'},
+{name:"利率与债券跷跷板",en:"Rate-Bond Seesaw",stars:4,updated:"2026-04-15",quotes:["利率涨，债券跌；利率跌，债券涨。金融世界最可靠的跷跷板。","降息周期=债券基金的黄金时代。"],desc:"债券价格与市场利率<strong>反向变动</strong>。降息时已发行债券的固定利息更有吸引力，价格上涨。",demo:'<table class="cmp-table"><tr><th>利率变化</th><th>债券价格</th><th>股票</th><th>策略</th></tr><tr><td class="val-down">央行降息</td><td class="val-up">上涨</td><td class="val-up">利好</td><td class="good">增配长久期债基+成长股</td></tr><tr><td class="val-up">央行加息</td><td class="val-down">下跌</td><td class="val-down">利空</td><td>减长债，转短债/货基</td></tr></table>'},
+{name:"A股市场特征",en:"A-Share Characteristics",stars:4,updated:"2026-04-15",quotes:["A股是政策市+散户市——读懂政策比读懂K线重要。","牛短熊长、暴涨暴跌——这是A股的DNA。"],desc:"散户交易量>60%、政策驱动强、牛短熊长、T+1制度、涨跌停限制。与美股有本质区别。",demo:'<table class="cmp-table"><tr><th>维度</th><th>A股</th><th>美股</th></tr><tr><td>投资者</td><td class="bad">散户>60%</td><td class="good">机构>80%</td></tr><tr><td>涨跌限制</td><td>主板±10%</td><td>无限制</td></tr><tr><td>交易制度</td><td>T+1</td><td>T+0</td></tr><tr><td>牛熊特征</td><td class="bad">牛短熊长</td><td class="good">长牛居多</td></tr></table>'},
+{name:"通胀与购买力侵蚀",en:"Inflation Erosion",stars:4,updated:"2026-04-15",quotes:["你的钱没变少，但能买到的东西变少了——这就是通胀。","年通胀3%看起来不多，30年后购买力只剩40%。"],desc:"<strong>实际收益=名义收益-通胀率</strong>。理财年化4%但通胀3%，实际只赚1%。",demo:'<table class="cmp-table"><tr><th>投资工具</th><th>名义年化</th><th>扣除通胀3%</th><th>10年实际购买力</th></tr><tr><td>银行活期</td><td>0.3%</td><td class="val-down">-2.7%</td><td class="val-down">10万→76万</td></tr><tr><td>货基</td><td>1.8%</td><td class="val-down">-1.2%</td><td class="val-down">10万→89万</td></tr><tr><td>纯债</td><td>4.5%</td><td class="val-up">+1.5%</td><td>10万→116万</td></tr><tr><td>股债混合</td><td>10%</td><td class="val-up">+7.0%</td><td class="val-up">10万→197万</td></tr></table><div class="callout red" style="margin-top:12px"><strong>核心：</strong>跑不赢通胀的投资=<strong>慢慢变穷</strong>。即使风险厌恶者也需要一定权益配置。</div>'}
+]},
+// ===== CH07 行为金融与决策纪律 =====
+{id:"behavioral",title:"行为金融与决策纪律",num:"07",
+icon:'<svg class="sec-icon" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+desc:"最大的敌人不是市场，是你自己的大脑。用规则驯服情绪。",
+terms:[
+{name:"追涨杀跌",en:"Chasing Rallies & Panic Selling",stars:5,updated:"2026-04-15",quotes:["3000点恐惧，4000点犹豫，5000点All in，3000点割肉。","如果你总在涨后才买、跌后才卖——你就是市场的提款机。"],desc:"散户亏损核心原因。本质是<strong>情绪驱动而非逻辑驱动</strong>的决策模式。上涨时贪婪入场，下跌时恐惧出逃。",demo:'<div class="diagram"><div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap"><div style="padding:10px 14px;border-radius:8px;background:var(--accent2);color:#fff;font-size:11px;text-align:center;font-weight:600">3000点<br><span style="font-size:9px;opacity:.8">恐惧不敢买</span></div><div style="color:var(--sub);font-size:16px">→</div><div style="padding:10px 14px;border-radius:8px;background:#d97706;color:#fff;font-size:11px;text-align:center;font-weight:600">4000点<br><span style="font-size:9px;opacity:.8">犹豫观望</span></div><div style="color:var(--sub);font-size:16px">→</div><div style="padding:10px 14px;border-radius:8px;background:#dc2626;color:#fff;font-size:11px;text-align:center;font-weight:600">5000点<br><span style="font-size:9px;opacity:.8">All in追高</span></div><div style="color:var(--sub);font-size:16px">→</div><div style="padding:10px 14px;border-radius:8px;background:var(--accent);color:#fff;font-size:11px;text-align:center;font-weight:600">3000点<br><span style="font-size:9px;opacity:.8">恐慌割肉</span></div></div><div class="dlbl">高买低卖的死亡螺旋</div></div>'},
+{name:"从众效应",en:"Herd Behavior",stars:4,updated:"2026-04-15",quotes:["当出租车司机都在聊股票的时候，就是该离场的时候。","群体的智慧？在投资市场里，群体只有疯狂。"],desc:"当所有人都在买入时你觉得「不买就亏了」，这不是理性判断，是<strong>社会压力</strong>。凯恩斯说投资是「选美博弈」——你不是选最美的，是选大多数人觉得最美的。",demo:'<table class="cmp-table"><tr><th>市场情绪</th><th>从众行为</th><th>逆向策略</th></tr><tr><td>全民炒股/基金上热搜</td><td class="bad">跟风追高</td><td class="good">分批止盈</td></tr><tr><td>媒体唱衰/基金赎回潮</td><td class="bad">恐慌赎回</td><td class="good">分批建仓</td></tr><tr><td>某行业人人看好</td><td class="bad">重仓单一赛道</td><td class="good">保持分散</td></tr></table><div class="callout amber" style="margin-top:12px"><strong>巴菲特法则：</strong>「在别人贪婪时恐惧，在别人恐惧时贪婪。」说起来容易，做起来需要纪律。</div>'},
+{name:"过度自信",en:"Overconfidence Bias",stars:4,updated:"2026-04-15",quotes:["90%的司机认为自己开车水平高于平均——投资者也一样。","赚钱了归功于自己的才华，亏钱了怪市场不好——这叫自我归因偏差。"],desc:"大多数投资者高估自己的选股能力和择时能力。赚钱时归因于能力（其实可能是牛市），亏钱时归因于运气。过度自信导致<strong>交易频率过高</strong>、<strong>仓位过于集中</strong>。",demo:'<table class="cmp-table"><tr><th style="width:50%">过度自信的表现</th><th>后果</th></tr><tr><td class="bad">「这次绝对能抄底」→ 重仓抄底</td><td>底部还有十八层地下室</td></tr><tr><td class="bad">「我看准了趋势」→ 频繁交易</td><td>手续费+滑点吃掉大部分收益</td></tr><tr><td class="bad">「这只股票我研究透了」→ 单一重仓</td><td>黑天鹅一来损失惨重</td></tr></table><div class="callout green" style="margin-top:12px"><strong>解药：</strong>记投资日记。每笔交易写下理由和预期，3个月后回看——你会发现自己没有想象中那么准。</div>'},
+{name:"投资检查清单",en:"Investment Checklist",stars:5,updated:"2026-04-15",quotes:["飞行员靠检查清单保命，投资者也应该。","好的投资系统不依赖灵感，依赖流程。"],desc:"将投资决策<strong>流程化</strong>。每次买入/卖出前必须过一遍清单，避免情绪化操作。这是从航空业借鉴的方法——飞行员不靠记忆，靠清单。",demo:'<div class="code-block"><span class="hl">买入检查清单：</span>\n□ 这个标的的核心逻辑是什么？一句话能说清吗？\n□ PE/PB百分位在历史什么位置？\n□ 买入后如果跌30%，我能承受吗？\n□ 止损线设在哪里？什么条件下卖出？\n□ 仓位占比是否超过20%？\n□ 是否有足够的安全边际？\n\n<span class="hl">卖出检查清单：</span>\n□ 买入时的核心逻辑还成立吗？\n□ 是因为恐惧还是因为逻辑在卖？\n□ 如果现在空仓，会不会以当前价买入？\n□ 是否到了止盈目标位？\n□ 资金是否有更好的去处（机会成本）？</div>'},
+{name:"心理账户",en:"Mental Accounting",stars:3,updated:"2026-04-15",quotes:["你赌赢了1000块觉得可以挥霍，自己赚的1000块却舍不得花——钱是一样的。","心理账户让你用不同标准对待同一笔钱。"],desc:"Richard Thaler（诺奖）提出。人会在心里把钱分成不同「账户」，对各账户的风险容忍度不同。「赚来的钱」更敢冒险，「工资」更保守——但钱就是钱，不应区别对待。",demo:'<table class="cmp-table"><tr><th>心理账户</th><th>典型行为</th><th>理性对策</th></tr><tr><td class="bad">「浮盈不算钱」→ 利润部分加大风险</td><td>牛市浮盈追加杠杆</td><td class="good">浮盈=真实资产，同样需要风控</td></tr><tr><td class="bad">「这笔钱反正是多余的」→ 赌博心态</td><td>年终奖/奖金随意投机</td><td class="good">所有钱适用同一套投资纪律</td></tr></table>'},
+{name:"定期复盘",en:"Periodic Review",stars:4,updated:"2026-04-15",quotes:["不复盘的投资和赌博没有区别。","月度复盘15分钟，胜过盘中盯盘15天。"],desc:"<strong>每月/每季度</strong>对投资组合做系统性回顾。包括：收益归因（赚在哪/亏在哪）、风险检查（集中度/回撤）、计划调整。",demo:'<div class="callout"><strong>月度复盘模板（15分钟完成）：</strong></div><div class="code-block"><span class="hl">1. 收益检查</span>\n   - 本月总收益率：___% | 基准(沪深300)：___%\n   - 贡献最大的3只持仓：\n   - 拖后腿最大的3只持仓：\n\n<span class="hl">2. 风险检查</span>\n   - 当前最大持仓占比：___%（是否>20%？）\n   - 单一行业最大暴露：___%（是否>40%？）\n   - 现金储备：___%（是否>10%？）\n\n<span class="hl">3. 计划调整</span>\n   - 需要再平衡吗？（偏离目标>5%？）\n   - 有没有该止损但还没止损的持仓？\n   - 下月关注的机会/风险事件：</div>'}
+]}
+];
+
+// === Updated badge ===
+function isNew(t){if(!t.updated)return false;var d=new Date(t.updated),now=new Date();return(now-d)/(1000*60*60*24)<7}
+function updatedBadge(t){if(!t.updated)return '';return '<span class="term-updated"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+t.updated+'</span>'}
+function render(){
+var nav=document.getElementById('navList'),ct=document.getElementById('content'),navH='',ctH='';
+DATA.forEach(function(sec){sec.terms.sort(function(a,b){return(b.stars||0)-(a.stars||0)});
+navH+='<div class="nav-group"><div class="nav-group-title" onclick="navScrollTo(&quot;sec-'+sec.id+'&quot;)">' +sec.num+' '+sec.title+'</div>';
+sec.terms.forEach(function(t,i){navH+='<div class="nav-item" data-target="'+sec.id+'-'+i+'" onclick="navScrollTo(&quot;'+sec.id+'-'+i+'&quot;)">' +t.name+(isNew(t)?'<span class="nav-new">NEW</span>':'')+'</div>'});
+navH+='</div>';
+ctH+='<div class="section" id="sec-'+sec.id+'"><div class="section-head"><h3>'+sec.icon+'<span class="num">'+sec.num+'</span>'+sec.title+'</h3><p>'+sec.desc+'</p></div><div class="term-grid">';
+sec.terms.forEach(function(t,i){
+var starsH='<span class="stars">';for(var s=0;s<5;s++){starsH+='<svg class="star '+(s<t.stars?'active':'')+'" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'}starsH+='</span>';
+var booksH='';if(t.books&&t.books.length){booksH='<div class="book-refs"><div class="book-refs-title"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>经典著作</div>';t.books.forEach(function(b){booksH+='<div class="book-ref"><svg class="book-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><div><a href="'+b.url+'" target="_blank" rel="noopener">'+b.title+'</a> <span class="book-meta">— '+b.author+'</span>'+(b.quote?'<div class="book-quote">“'+b.quote+'”</div>':'')+'</div></div>'});booksH+='</div>'}
+var quotesH='';if(t.quotes&&t.quotes.length){quotesH='<div class="quotes-box"><svg class="quotes-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>'+t.quotes.map(function(q){return '<div class="quote-line">'+q+'</div>'}).join('')+'</div>'}
+ctH+='<div class="term-card" id="'+sec.id+'-'+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span>'+starsH+updatedBadge(t)+'</h4><span class="arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div>'+quotesH+'<div class="demo-box"><span class="demo-label">EXAMPLE</span>'+t.demo+'</div>'+booksH+'</div></div>'
+});
+ctH+='</div></div>'});
+nav.innerHTML=navH;ct.innerHTML=ctH}
+function toggleCard(el){el.parentElement.classList.toggle('open')}
+function navScrollTo(id){var el=document.getElementById(id);if(!el)return;el.classList.add('open');var top=el.getBoundingClientRect().top+window.pageYOffset-72;window.scrollTo({top:top,behavior:'smooth'});el.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(function(){el.style.boxShadow=''},1200)}
+function filterTerms(v){var q=v.toLowerCase();document.querySelectorAll('.term-card').forEach(function(c){c.style.display=c.textContent.toLowerCase().includes(q)?'':'none'});document.querySelectorAll('.nav-item').forEach(function(n){n.style.display=n.textContent.toLowerCase().includes(q)?'':'none'});document.querySelectorAll('.nav-group').forEach(function(g){var vis=g.querySelectorAll('.nav-item[style=""],.nav-item:not([style])');g.style.display=vis.length?'':'none'})}
+var ticking=false;window.addEventListener('scroll',function(){if(!ticking){window.requestAnimationFrame(function(){var cards=document.querySelectorAll('.term-card');var currentId='';for(var i=0;i<cards.length;i++){if(cards[i].getBoundingClientRect().top<=120)currentId=cards[i].id}document.querySelectorAll('.nav-item').forEach(function(n){var isAct=n.getAttribute('data-target')===currentId;n.classList.toggle('active',isAct);if(isAct){var sidebar=document.getElementById('sidebar');var nr=n.getBoundingClientRect();var sr=sidebar.getBoundingClientRect();if(nr.top<sr.top+60||nr.bottom>sr.bottom-20)n.scrollIntoView({block:'center',behavior:'smooth'})}});ticking=false});ticking=true}});
+render();
+document.querySelectorAll('.term-card').forEach(function(c){c.classList.add('open')});
+</script>
+</body>
+</html>
