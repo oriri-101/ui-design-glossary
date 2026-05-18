@@ -182,16 +182,11 @@ a{color:var(--accent);text-decoration:none}
 .lock-error{font-size:12px;color:#c62828;margin-top:10px;min-height:18px}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 
-/* 资源链接卡片 */
-.resource-link{display:flex;align-items:center;gap:12px;padding:14px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);transition:all .2s;text-decoration:none;color:var(--text)}
-.resource-link:hover{border-color:var(--accent);box-shadow:var(--shadow);background:var(--hover)}
-.resource-link .r-icon{width:36px;height:36px;border-radius:8px;background:var(--tag-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.resource-link .r-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.resource-link .r-info{flex:1;min-width:0}
-.resource-link .r-name{font-size:14px;font-weight:600;margin-bottom:2px}
-.resource-link .r-url{font-size:11px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.resource-link .r-arrow{color:var(--border);font-size:12px;transition:color .2s,transform .2s}
-.resource-link:hover .r-arrow{color:var(--accent);transform:translateX(2px)}
+/* 资源链接行（轻量） */
+.resource-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--accent);text-decoration:none;transition:opacity .15s}
+.resource-link:hover{opacity:.75}
+.resource-link .r-url{font-size:12px;color:var(--sub);font-weight:400}
+.resource-link .r-arrow{font-size:12px;color:var(--sub)}
 
 /* Responsive */
 @media(max-width:768px){
@@ -290,10 +285,10 @@ const DATA=[
   terms:[
     {name:"单页设计",en:"One Page Love",
      desc:"收录全球最佳单页网站设计的灵感库，涵盖落地页、产品页、作品集等类型，是单页设计参考的首选。",
-     demo:'<a class="resource-link" href="https://onepagelove.com/page/5" target="_blank" rel="noopener"><div class="r-icon"><svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div><div class="r-info"><div class="r-name">单页设计 One Page Love</div><div class="r-url">onepagelove.com/page/5</div></div><span class="r-arrow">&#8594;</span></a>'},
+     demo:'<a class="resource-link" href="https://onepagelove.com/page/5" target="_blank" rel="noopener">单页设计 One Page Love<span class="r-url">onepagelove.com/page/5</span><span class="r-arrow">&#8594;</span></a>'},
     {name:"wrapmarket",en:"Website Design",
      desc:"精选网站设计模板与灵感市场，涵盖各类网站风格参考，适合快速找到设计方向。",
-     demo:'<a class="resource-link" href="https://wrapmarket.com/" target="_blank" rel="noopener"><div class="r-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="r-info"><div class="r-name">wrapmarket 网站设计</div><div class="r-url">wrapmarket.com</div></div><span class="r-arrow">&#8594;</span></a>'}
+     demo:'<a class="resource-link" href="https://wrapmarket.com/" target="_blank" rel="noopener">wrapmarket 网站设计<span class="r-url">wrapmarket.com</span><span class="r-arrow">&#8594;</span></a>'}
   ]
 },
 // ========== 第1章 设计风格 ==========
@@ -506,7 +501,10 @@ function render(){
     navH+="</div>";
     ctH+='<div class="section" id="sec-'+sec.id+'"><div class="section-head"><h3><span class="num">'+sec.num+'</span>'+sec.title+'</h3><p>'+sec.desc+'</p></div><div class="term-grid">';
     sec.terms.forEach((t,i)=>{
-      ctH+='<div class="term-card" id="'+sec.id+"-"+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span></h4><span class="arrow">&#9654;</span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div><div class="demo-box"><span class="demo-label">DEMO</span>'+t.demo+'</div></div></div>';
+      const demoHtml=sec.id==="sites"
+        ? t.demo
+        : '<div class="demo-box"><span class="demo-label">DEMO</span>'+t.demo+'</div>';
+      ctH+='<div class="term-card" id="'+sec.id+"-"+i+'"><div class="term-header" onclick="toggleCard(this)"><h4>'+t.name+' <span class="en">'+t.en+'</span></h4><span class="arrow">&#9654;</span></div><div class="term-body"><div class="term-desc">'+t.desc+'</div>'+demoHtml+'</div></div>';
     });
     ctH+="</div></div>";
   });
