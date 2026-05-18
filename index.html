@@ -182,6 +182,17 @@ a{color:var(--accent);text-decoration:none}
 .lock-error{font-size:12px;color:#c62828;margin-top:10px;min-height:18px}
 @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 
+/* 资源链接卡片 */
+.resource-link{display:flex;align-items:center;gap:12px;padding:14px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);transition:all .2s;text-decoration:none;color:var(--text)}
+.resource-link:hover{border-color:var(--accent);box-shadow:var(--shadow);background:var(--hover)}
+.resource-link .r-icon{width:36px;height:36px;border-radius:8px;background:var(--tag-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.resource-link .r-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.resource-link .r-info{flex:1;min-width:0}
+.resource-link .r-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.resource-link .r-url{font-size:11px;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.resource-link .r-arrow{color:var(--border);font-size:12px;transition:color .2s,transform .2s}
+.resource-link:hover .r-arrow{color:var(--accent);transform:translateX(2px)}
+
 /* Responsive */
 @media(max-width:768px){
   .sidebar{display:none}
@@ -225,8 +236,8 @@ a{color:var(--accent);text-decoration:none}
     <h2>ORI的UI设计专业词典</h2>
     <p>AI 精准校准专用 — 涵盖设计风格、布局、组件、视觉、交互、Prompt 指令六大领域，每个术语配可交互形态案例。</p>
     <div class="tag-row">
-      <span class="tag">8 大章节</span>
-      <span class="tag">56 术语 + 12 配色 + 项目经验</span>
+      <span class="tag">9 大章节</span>
+      <span class="tag">56 术语 + 12 配色 + 项目经验 + 设计资源</span>
       <span class="tag">可交互案例</span>
       <span class="tag">深色模式</span>
     </div>
@@ -272,6 +283,16 @@ function toggleTheme(){
 
 // === 数据 ===
 const DATA=[
+// ========== 设计网站 ==========
+{
+  id:"sites",title:"设计网站",num:"00",
+  desc:"精选设计资源与灵感站点，持续收录中。",
+  terms:[
+    {name:"单页设计",en:"One Page Love",
+     desc:"收录全球最佳单页网站设计的灵感库，涵盖落地页、产品页、作品集等类型，是单页设计参考的首选。",
+     demo:'<a class="resource-link" href="https://onepagelove.com/page/5" target="_blank" rel="noopener"><div class="r-icon"><svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg></div><div class="r-info"><div class="r-name">单页设计 One Page Love</div><div class="r-url">onepagelove.com/page/5</div></div><span class="r-arrow">&#8594;</span></a>'}
+  ]
+},
 // ========== 第1章 设计风格 ==========
 {
   id:"style",title:"设计风格体系",num:"01",
