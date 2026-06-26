@@ -35,8 +35,6 @@ a{color:var(--accent);text-decoration:none}
 .hero p{font-size:15px;color:var(--sub);max-width:600px}
 .hero .tag-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
 .hero .tag{font-size:11px;padding:4px 10px;border-radius:4px;background:var(--tag-bg);color:var(--sub);font-weight:500}
-.new-badge{display:inline-block;vertical-align:middle;font-size:11px;font-weight:700;letter-spacing:1px;color:#fff;background:var(--accent);padding:3px 8px;border-radius:4px;margin-left:8px;animation:newPulse 2.4s ease-in-out infinite}
-@keyframes newPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,92,62,.5)}50%{box-shadow:0 0 0 6px rgba(196,92,62,0)}}
 
 /* 章节 */
 .section{margin-bottom:64px}
@@ -230,11 +228,11 @@ a{color:var(--accent);text-decoration:none}
 
 <main class="main" id="mainContent">
   <div class="hero">
-    <h2>ORI的UI设计专业词典 <span class="new-badge">NEW · v2</span></h2>
-    <p>AI 精准校准专用 — 涵盖设计风格、布局、组件、视觉、交互、Prompt 指令六大领域，每个术语配可交互形态案例。<br><span style="font-size:12px;color:var(--accent)">📌 这是常态更新的新版（ui-design-dict），旧版 ui-design-glossary 已停止维护。</span></p>
+    <h2>ORI的UI设计专业词典</h2>
+    <p>AI 精准校准专用 — 涵盖设计风格、布局、组件、视觉、交互、Prompt 指令六大领域，每个术语配可交互形态案例。</p>
     <div class="tag-row">
-      <span class="tag">10 大章节</span>
-      <span class="tag">56 术语 + 12 配色 + 项目经验 + 灵感优化 + 设计资源</span>
+      <span class="tag">9 大章节</span>
+      <span class="tag">56 术语 + 12 配色 + 项目经验 + 设计资源</span>
       <span class="tag">可交互案例</span>
       <span class="tag">深色模式</span>
     </div>
@@ -290,34 +288,7 @@ const DATA=[
      demo:'<a class="resource-link" href="https://onepagelove.com/page/5" target="_blank" rel="noopener">单页设计 One Page Love<span class="r-url">onepagelove.com/page/5</span><span class="r-arrow">&#8594;</span></a>'},
     {name:"wrapmarket",en:"Website Design",
      desc:"精选网站设计模板与灵感市场，涵盖各类网站风格参考，适合快速找到设计方向。",
-     demo:'<a class="resource-link" href="https://wrapmarket.com/" target="_blank" rel="noopener">wrapmarket 网站设计<span class="r-url">wrapmarket.com</span><span class="r-arrow">&#8594;</span></a>'},
-    {name:"Behance",en:"全球顶级作品集殿堂 · 全能审美天花板",
-     desc:"Adobe 旗下全球设计师作品集平台。覆盖品牌、UI、插画、摄影、3D、动态设计全领域，从顶级排版到完整项目叙事逻辑都能学到。每天刷10个精选项目，1个月整体审美明显拔高。",
-     demo:'<a class="resource-link" href="https://www.behance.net/" target="_blank" rel="noopener">Behance 顶级作品集<span class="r-url">behance.net</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>顶级排版 / 色彩 / 作品叙事 / 完整项目逻辑<br><b style="color:var(--text)">适合：</b>每天刷10个精选项目，系统性拔高整体审美</div>'},
-    {name:"Awwwards",en:"网页设计奥斯卡 · 高级感+交互标杆",
-     desc:"全球网页设计奖项平台，只收录高分获奖网页，质量极高。学界布局层次、动效节奏、视觉焦点、极简高级感的标杆参考。",
-     demo:'<a class="resource-link" href="https://www.awwwards.com/" target="_blank" rel="noopener">Awwwards 网页设计奖<span class="r-url">awwwards.com</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>布局层次 / 动效节奏 / 视觉焦点 / 极简高级感<br><b style="color:var(--text)">适合：</b>想把界面/官网做「精致、克制、有质感」</div>'},
-    {name:"Dribbble",en:"设计师朋友圈 · 细节精致度之王",
-     desc:"主打单张高质量「Shot」展示，以 UI 图标、插画、微动效居多。校准「干净不廉价」的细节审美，刷新对小面积配色和 icon 审美的认知。",
-     demo:'<a class="resource-link" href="https://dribbble.com/" target="_blank" rel="noopener">Dribbble 设计师社区<span class="r-url">dribbble.com</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>细节打磨 / 精致感 / 小面积配色 / icon 审美<br><b style="color:var(--text)">适合：</b>通勤碎片时间刷，校准细节审美</div>'},
-    {name:"Minimal Gallery",en:"极简主义集中营 · 专治杂乱",
-     desc:"全站极致留白、克制色彩、简洁排版，干净到治愈。专治「页面脏、乱、堆砌」综合症，10分钟即可校准视觉。",
-     demo:'<a class="resource-link" href="https://minimal.gallery/" target="_blank" rel="noopener">Minimal Gallery 极简画廊<span class="r-url">minimal.gallery</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>留白逻辑 / 色彩克制 / 信息层级 / 极简高级感<br><b style="color:var(--text)">适合：</b>感觉页面「脏、乱、堆砌」时强行校准</div>'},
-    {name:"站酷",en:"ZCOOL · 国内顶尖设计师社区",
-     desc:"国内大神聚集地，覆盖品牌、海报、包装、UI、插画全领域。结合本土落地性与东方审美，避免「好看但不接地气」。",
-     demo:'<a class="resource-link" href="https://www.zcool.com.cn/" target="_blank" rel="noopener">站酷 ZCOOL<span class="r-url">zcool.com.cn</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>中国市场商业审美 / 东方韵味 / 落地性强的方案<br><b style="color:var(--text)">适合：</b>国际审美 + 本土落地结合，避免脱离实际</div>'},
-    {name:"React Bits",en:"动效组件库 · Animated UI Components",
-     desc:"React 动效组件库，开箱即用的高质量交互动画组件——文字动效、背景特效、卡片悬停、转场过渡等。代码可直接复制使用，是给页面注入「灵动感」的高效弹药库。",
-     demo:'<a class="resource-link" href="https://reactbits.dev/" target="_blank" rel="noopener">React Bits 动效组件库<span class="r-url">reactbits.dev</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>文字动效 / 背景特效 / 微交互节奏 / 转场设计<br><b style="color:var(--text)">适合：</b>需要给页面快速加「灵动感」时，直接复制组件落地</div>'},
-    {name:"TDesign",en:"腾讯设计规范 · Tencent Design System",
-     desc:"腾讯官方企业级设计语言，覆盖 Web / 小程序 / 移动端全场景。包含完整设计原则、组件库、Starter 模板、Figma 资源。沉稳克制、专业可信，国内大厂设计规范的代表之一。",
-     demo:'<a class="resource-link" href="https://tdesign.tencent.com/starter/" target="_blank" rel="noopener">TDesign 腾讯设计规范<span class="r-url">tdesign.tencent.com/starter</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>企业级组件规范 / 中后台模板 / 设计 Token 体系 / 多端适配<br><b style="color:var(--text)">适合：</b>做 B 端中后台 / 企业 SaaS，需要可落地的成熟规范打底</div>'},
-    {name:"Ant Design",en:"阿里设计规范 · Alibaba Design Language",
-     desc:"蚂蚁集团出品的企业级 UI 设计语言，国内 B 端设计规范的事实标准。设计原则、视觉语言、模式库、React/Vue 组件全套齐备，文档详尽，落地性极强。",
-     demo:'<a class="resource-link" href="https://012x.ant.design/docs/react/introduce" target="_blank" rel="noopener">Ant Design 阿里设计规范<span class="r-url">012x.ant.design</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>B 端设计原则 / 组件模式库 / 表单表格最佳实践 / 设计价值观<br><b style="color:var(--text)">适合：</b>做后台/SaaS/数据型产品，找最权威的中后台设计语言参考</div>'},
-    {name:"Arco Design",en:"字节设计规范 · ByteDance Design System",
-     desc:"字节跳动出品的企业级设计语言，强调「克制、效率、简洁」。组件现代利落，交互节奏克制，是新一代设计规范的代表，特别适合 SaaS 与数据型产品。",
-     demo:'<a class="resource-link" href="https://arco.design/" target="_blank" rel="noopener">Arco Design 字节设计规范<span class="r-url">arco.design</span><span class="r-arrow">&#8594;</span></a><div style="margin-top:8px;font-size:11px;color:var(--sub);line-height:1.8"><b style="color:var(--text)">能学到：</b>现代克制风组件 / 数据可视化模式 / 暗色模式规范 / 微交互节奏<br><b style="color:var(--text)">适合：</b>做现代感强、数据密集型 B 端产品，对标 Linear/Vercel 美学</div>'}
+     demo:'<a class="resource-link" href="https://wrapmarket.com/" target="_blank" rel="noopener">wrapmarket 网站设计<span class="r-url">wrapmarket.com</span><span class="r-arrow">&#8594;</span></a>'}
   ]
 },
 // ========== 第1章 设计风格 ==========
@@ -513,16 +484,6 @@ const DATA=[
     {name:"IP管理驾驶舱",en:"IP Dashboard Platform",
      desc:"数据驾驶舱类产品的设计方法论沉淀。核心理念：「高级来自减法」——通过去框线、降饱和、缩状态标识，用克制的视觉语言承载复杂数据。",
      demo:'<div class="palette-use" style="margin-bottom:16px"><b>项目概述</b><br>话题 IP 营销驾驶舱 · 数据看板型产品，含 Hero 指标卡、时间轴甘特图、多维筛选面板。<br>设计周期 2026.05，持续迭代中。</div><div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">设计哲学 · 五原则</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--text)">① 减法优先</b> — 删冗余框线、降饱和度、缩状态标识到最小单位<br><b style="color:var(--text)">② Show don\'t tell</b> — 可视化自解释就不额外加文字判定行<br><b style="color:var(--text)">③ 结构同构</b> — 同类卡片用相同骨架（meta → vis → judge），内容贴合各指标本质<br><b style="color:var(--text)">④ 数据视图分离</b> — 元数据与数值拆开，接入真实业务只替换数值层<br><b style="color:var(--text)">⑤ 路径完备</b> — 任何开关态必须双向可达，状态机无死节点</div></div><div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">色彩方法论</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--text)">核心规则：状态色永远用低透明度</b><br>• 背景层暖白 #FAFAF7 + 品牌色暖陶 #C4652A（仅 CTA 和活跃态）<br>• 状态三色：绿 #2D6A4F / 琥珀 #B8860B / 红 #B23A3A<br>• <b style="color:var(--accent)">关键方法论</b>：chip 背景用 rgba 8-10% 透明度，bar 用 14%，永远不实填<br>• 深色模式只切换 bg/text/divider 四个底层 token，accent 与 status 不变</div></div><div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">组件模式库</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--text)">三段式信息卡</b> — 主数字(serif居中) → meta行(左对齐) → 可视化层 → judge行(可选)<br><b style="color:var(--text)">阈值色条</b> — 6px底条 + rgba14%双段淡填 + 1px阈值线 + 游标竖条<br><b style="color:var(--text)">甘特日历</b> — CSS Grid + 贪心lane装箱，左侧3px色条标识进行中/计划中/已结案<br><b style="color:var(--text)">翻页器</b> — 替代平铺Tab，配合独立toggle按钮，data属性记住来源<br><b style="color:var(--text)">状态Chip</b> — 胶囊形，6px圆点+文字，rgba低透明度底色</div></div><div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">排版与交互规则</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--text)">混合对齐</b> — 主数字居中（给主角）+ 细节左对齐（给正文）= 杂志版面<br><b style="color:var(--text)">证据→结论</b> — 数据/事实在左，判定/chip在右，顺应阅读心理<br><b style="color:var(--text)">hover克制</b> — 默认无阴影用1px border，hover才上shadow-sm + translateY(-1px)<br><b style="color:var(--text)">动效分级</b> — 微交互140ms → 通用200ms → 面板300ms → 数据动画1200ms</div></div><div class="palette-prompt"><span class="hl">复用此设计体系的 AI 指令：</span>\n设计一个数据驾驶舱页面。风格：暖白底(#FAFAF7)+赤褐强调(#C4652A)，去AI感，Notion式克制。核心原则：\n1. 减法优先——状态用rgba 8-14%低透明度表达，不实填；默认无阴影用1px border\n2. 三段式卡片骨架：主数字(76px serif居中) → meta行 → 可视化层 → judge行\n3. 字号11级阶梯(76→9.5px)，大字负字距，小字正字距\n4. 间距阶梯4-56px，卡片padding28px，圆角由外向内递减(12→6→3px)\n5. 动效easeOut曲线cubic-bezier(0.22,0.61,0.36,1)，禁用linear\n6. 所有开关/切换组件必须双向可达，用data属性记住来源状态</div>'}
-  ]
-},
-// ========== 灵感优化（项目经验续） ==========
-{
-  id:"inspiration",title:"灵感优化",num:"08B",
-  desc:"从灵感收集到落地执行的工作流方法论——如何把散乱的参考高效转化为可执行的设计决策。",
-  terms:[
-    {name:"灵感优化工作流",en:"Inspiration to Execution",
-     desc:"灵感不等于解决方案。真正的「灵感优化」是一套从泛化参考→聚焦提炼→指令转化→落地验收的完整工作流，而非随机收藏截图。",
-     demo:'<div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">四阶段工作流</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--text)">① 泛化收集</b> — 不设过滤地广撒网，按视觉感受打标（沉稳 / 活泼 / 极简 / 复杂），来源：Pinterest / Dribbble / Mobbin / 截图<br><b style="color:var(--text)">② 聚焦提炼</b> — 3×3矩阵筛选：横轴「风格匹配度」，纵轴「可执行性」，留右上角9宫格内的参考<br><b style="color:var(--text)">③ 拆解还原</b> — 对每张参考图做「结构拆解」：配色逻辑 / 字重层级 / 间距节奏 / 交互反馈，写成文字描述而非只看图<br><b style="color:var(--text)">④ 指令转化</b> — 将拆解结论转成 AI / 设计工具可直接消费的约束指令（颜色值、字号比例、组件模式）</div></div><div style="background:var(--tag-bg);border-radius:8px;padding:20px;margin-bottom:16px"><b style="font-size:13px;color:var(--text)">常见误区 → 正确做法</b><div style="margin-top:12px;font-size:12px;color:var(--sub);line-height:2"><b style="color:var(--accent)">误区①</b> 收藏100张图但从不回看 → <b style="color:var(--text)">每次收藏时写一句「我要借用的是什么」</b><br><b style="color:var(--accent)">误区②</b> 把整体风格当参考 → <b style="color:var(--text)">只借用「一个具体决策」：如它的间距节奏、或它的悬停反馈</b><br><b style="color:var(--accent)">误区③</b> 灵感与项目脱节 → <b style="color:var(--text)">收集时标注「适用场景标签」，与当前项目情境挂钩</b><br><b style="color:var(--accent)">误区④</b> 同时参考风格差异过大的作品 → <b style="color:var(--text)">锁定一个主参考 + 最多2个辅助参考，强制聚焦</b></div></div><div style="background:var(--tag-bg);border-radius:8px;padding:20px"><b style="font-size:13px;color:var(--text)">AI 协作指令模板</b><div class="palette-prompt" style="margin-top:12px"><span class="hl">灵感转指令模板：</span>\n我正在设计 [产品类型]，目标用户 [人群]，核心气质 [3个形容词]。\n参考方向：[参考A的XX特征] + [参考B的XX特征]，不要[明确排除项]。\n约束：主色 [色值]，字重范围 [400-700]，圆角 [Xpx]，间距基准 [8px倍数]。\n交付形式：[HTML组件 / Figma描述 / CSS变量]</div></div>'}
   ]
 }
 ];
